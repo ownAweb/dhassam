@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Staff - Darul Huda Assam Centre</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset and Base Styles - MATCHING HOME PAGE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        :root {
+            --primary: #1a365d;
+            --secondary: #2d3748;
+            --accent: #c53030;
+            --gold: #b7791f;
+            --light: #f7fafc;
+            --dark: #1a202c;
+            --gray: #718096;
+            --gradient-primary: linear-gradient(45deg, var(--secondary), var(--accent));
+            --gradient-accent: linear-gradient(135deg, #b7791f 0%, #975a16 100%);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
+            --shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.07);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            line-height: 1.7;
+            color: #2d3748;
+            background-color: #ffffff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header - EXACTLY LIKE HOME PAGE */
+        header {
+            background-color: rgba(255, 255, 255, 0.97);
+            color: var(--primary);
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        header.scrolled {
+            padding: 0.7rem 0;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.98);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
+        }
+
+        .logo-icon {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .logo-text h1 {
+            font-size: 1.6rem;
+            background: linear-gradient(45deg, var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        .logo-text p {
+            font-size: 0.75rem;
+            color: var(--gray);
+            margin-top: 2px;
+            font-weight: 500;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 0;
+            transition: var(--transition);
+            position: relative;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        nav a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--gradient-accent);
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        nav a:hover::before {
+            width: 100%;
+        }
+
+        nav a.active {
+            color: var(--accent);
+        }
+
+        nav a.active::before {
+            width: 100%;
+        }
+
+        nav i {
+            font-size: 0.85rem;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--primary);
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .mobile-menu-btn:hover {
+            color: var(--accent);
+        }
+
+        /* FORMAL PAGE HERO - MATCHING HOME PAGE STYLE */
+        .page-hero {
+            position: relative;
+            background:
+                linear-gradient(to right, rgba(26, 54, 93, 0.85), rgba(26, 54, 93, 0.7)),
+                url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtQLOa2i3hEYP0FBz2k6ee734_KHOzwHt9YQ&s');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 8rem 0 6.5rem; /* Reduced from 12rem/5rem */
+            text-align: center;
+            margin-top: 80px; /* Header height */
+            min-height: auto; /* Removed min-height */
+            display: flex;
+            align-items: center;
+        }
+
+        .page-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .page-hero h1 {
+            font-size: 2.5rem; /* Reduced from 3.2rem */
+            margin-bottom: 0.75rem; /* Reduced */
+            font-weight: 700;
+            line-height: 1.2;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            font-family: 'Georgia', serif;
+            letter-spacing: -0.5px;
+        }
+
+        .page-hero p {
+            font-size: 1.1rem; /* Reduced from 1.3rem */
+            max-width: 600px;
+            margin: 0 auto 1rem; /* Reduced bottom margin */
+            opacity: 0.95;
+            line-height: 1.6; /* Tighter */
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* FORMAL SECTIONS - MATCHING HOME PAGE */
+        section {
+            padding: 5rem 0;
+            background-color: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+            color: var(--primary);
+            font-weight: 700;
+            font-family: 'Georgia', serif;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            max-width: 700px;
+            margin: 1.5rem auto 0;
+            color: var(--gray);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        /* FORMAL STAFF GRID */
+        .staff-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 5rem;
+        }
+
+        .staff-card {
+            background-color: white;
+            border-radius: 2px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            height: 100%;
+            position: relative;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .staff-card:hover {
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(0, 0, 0, 0.12);
+        }
+
+        .staff-img-container {
+            position: relative;
+            height: 280px;
+            overflow: hidden;
+        }
+
+        .staff-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .staff-card:hover .staff-img {
+            transform: scale(1.05);
+        }
+
+        .staff-img-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+            color: white;
+            padding: 1.5rem;
+            transform: translateY(20px);
+            transition: transform 0.5s ease;
+            opacity: 0;
+        }
+
+        .staff-card:hover .staff-img-overlay {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .staff-overlay-text {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .staff-info {
+            padding: 2rem;
+        }
+
+        .staff-name {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+            font-family: 'Georgia', serif;
+        }
+
+        .staff-position {
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .staff-position i {
+            font-size: 1rem;
+            color: var(--accent);
+        }
+
+        .staff-degree {
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-bottom: 1.2rem;
+            line-height: 1.6;
+            padding-left: 1rem;
+            border-left: 3px solid var(--accent);
+        }
+
+        .staff-info p {
+            color: var(--gray);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        .staff-contact {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .staff-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+            color: var(--gray);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .staff-contact-item:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .staff-contact-item i {
+            color: var(--accent);
+            width: 20px;
+            font-size: 1rem;
+        }
+
+        /* FORMAL STAFF STATISTICS SECTION */
+        .staff-stats-section {
+            background: #f8f9fa;
+            padding: 5rem 0;
+            margin-top: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .staff-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-card {
+            background-color: white;
+            padding: 2.5rem 2rem;
+            border-radius: 2px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-card:hover {
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(0, 0, 0, 0.12);
+        }
+
+        .stat-number {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1.1rem;
+            font-family: 'Georgia', serif;
+        }
+
+        /* FORMAL TOTAL STAFF CARD */
+        .total-staff {
+            background: var(--primary);
+            color: white;
+            padding: 3.5rem;
+            border-radius: 2px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            margin: 0 auto;
+            max-width: 800px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .total-staff h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            font-family: 'Georgia', serif;
+        }
+
+        .total-count {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: white;
+            font-family: 'Georgia', serif;
+        }
+
+        .total-staff p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .total-staff .info {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .total-staff .info i {
+            color: var(--gold);
+        }
+
+        /* FORMAL BUTTONS - MATCHING HOME PAGE */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--accent);
+            color: white;
+            padding: 1rem 2.2rem;
+            border-radius: 2px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            background: #9b2c2c;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: 1px solid var(--primary);
+        }
+
+        .btn-primary:hover {
+            background: #2d3748;
+            border-color: #2d3748;
+        }
+
+        /* Footer - EXACTLY LIKE HOME PAGE */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, var(--secondary), var(--accent));
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 2.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-logo h2 {
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .footer-logo span {
+            background: linear-gradient(45deg, #4a90e2, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+        }
+
+        .footer-logo p {
+            color: #aaa;
+            margin: 1rem 0;
+            line-height: 1.7;
+        }
+
+        .footer-links h3, .footer-contact h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 8px;
+        }
+
+        .footer-links h3::after, .footer-contact h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(45deg, var(--secondary), var(--accent));
+            border-radius: 3px;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .footer-contact p {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            color: #bbb;
+        }
+
+        .footer-contact i {
+            color: var(--accent);
+            width: 20px;
+            margin-top: 3px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+
+        .social-icons a:hover {
+            background: linear-gradient(45deg, var(--secondary), var(--accent));
+            transform: translateY(-5px);
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #888;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .copyright a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .copyright a:hover {
+            text-decoration: underline;
+        }
+
+        /* FORMAL Back to Top Button - MATCHING HOME PAGE */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 45px;
+            height: 45px;
+            background: var(--primary);
+            color: white;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            transition: var(--transition);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1000;
+            border: none;
+            outline: none;
+            transform: translateY(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            background: var(--accent);
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== RESPONSIVE STYLES - MATCHING HOME PAGE ========== */
+        @media (max-width: 1024px) {
+            .page-hero h1 {
+                font-size: 2.7rem;
+            }
+
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+
+            .staff-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .staff-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .total-count {
+                font-size: 3.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-hero {
+                padding: 10rem 0 4rem;
+                margin-top: 70px;
+                min-height: auto;
+            }
+
+            .page-hero h1 {
+                font-size: 1.9rem;
+                line-height: 1.3;
+                margin-bottom: 1.2rem;
+            }
+
+            .page-hero p {
+                font-size: 1.05rem;
+                margin-bottom: 2rem;
+                line-height: 1.6;
+            }
+
+            .header-container {
+                flex-direction: row;
+                align-items: center;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            nav {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background: white;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+                border-radius: 12px;
+                margin: 0 15px;
+                padding: 20px;
+                display: none;
+                z-index: 999;
+            }
+
+            nav.active {
+                display: block;
+                animation: fadeInUp 0.3s ease;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            nav li {
+                width: 100%;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            }
+
+            nav li:last-child {
+                border-bottom: none;
+            }
+
+            nav a {
+                display: flex;
+                padding: 1rem 0;
+                color: var(--primary);
+                font-size: 1rem;
+            }
+
+            .staff-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title h2 {
+                font-size: 1.9rem;
+            }
+
+            .staff-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .total-staff {
+                padding: 2.5rem 1.5rem;
+                margin: 0 1rem;
+            }
+
+            .back-to-top {
+                width: 40px;
+                height: 40px;
+                font-size: 0.9rem;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-hero h1 {
+                font-size: 1.6rem;
+            }
+
+            .page-hero p {
+                font-size: 0.95rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.6rem;
+            }
+
+            .staff-img-container {
+                height: 250px;
+            }
+
+            .staff-info {
+                padding: 1.5rem;
+            }
+
+            .staff-name {
+                font-size: 1.3rem;
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
+            }
+
+            .total-count {
+                font-size: 2.8rem;
+            }
+
+            .stat-card {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header - EXACTLY LIKE HOME PAGE -->
+    <header id="mainHeader">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">
+                    <img src="https://i.ibb.co/whW6QdYL/logo.png" alt="Darul Huda Assam Centre Logo">
+                </div>
+                <div class="logo-text">
+                    <h1>DH ASSAM</h1>
+                    <p>Soaring for Excellence..</p>
+                </div>
+            </a>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle mobile menu">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+                    <li><a href="academics.html"><i class="fas fa-graduation-cap"></i> Academics</a></li>
+                    <li><a href="students.html"><i class="fas fa-users"></i> Students</a></li>
+                    <li><a href="staff.html" class="active"><i class="fas fa-chalkboard-teacher"></i> Staff</a></li>
+                    <li><a href="admissions.html"><i class="fas fa-file-signature"></i> Admissions</a></li>
+                    <li><a href="contact.html"><i class="fas fa-phone-alt"></i> Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Hero - FORMAL STYLE LIKE HOME PAGE -->
+    <section class="page-hero">
+        <div class="container page-hero-content">
+            <h1>Our Dedicated Staff</h1>
+            <p>Meet our team of experienced educators and professionals.</p>
+        </div>
+    </section>
+<br>
+<br>
+    <!-- Main Content -->
+    <main>
+        <div class="container page-content">
+            <div class="section-title">
+                <h2>Faculty & Administration</h2>
+                <p class="section-subtitle">Our dedicated team of educators and administrators bring diverse expertise and passion to create a nurturing learning environment</p>
+            </div>
+
+            <div class="staff-grid">
+                <!-- Staff Member 1 -->
+                <div class="staff-card">
+                    <div class="staff-img-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/500px-Unknown_person.jpg" alt="Sayyid Mueenuddin Hudawi" class="staff-img">
+                        <div class="staff-img-overlay">
+                            <p class="staff-overlay-text">13+ years of experience in Islamic education leadership</p>
+                        </div>
+                    </div>
+                    <div class="staff-info">
+                        <h3 class="staff-name">Sayyid Mueenuddin Hudawi</h3>
+                        <p class="staff-position"><i class="fas fa-user-tie"></i> Principal & Director</p>
+                        <p class="staff-degree">MA in Islamic Education (Darul Huda Islamic University), Hudawi (DHIU)</p>
+                        <p>With over 25 years of experience in Islamic education, Dr. Khan leads our institution with vision, dedication, and a commitment to academic excellence.</p>
+                        <div class="staff-contact">
+                            <div class="staff-contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <span>sayyid.mueenduddin@hudawi.com</span>
+                            </div>
+                            <div class="staff-contact-item">
+                                <i class="fas fa-phone"></i>
+                                <span>+91 98765 43210</span>
+                            </div>
+                            <div class="staff-contact-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Office Hours: Sat-Thu, 7 AM - 4 PM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Staff Member 2 -->
+                <div class="staff-card">
+                    <div class="staff-img-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/500px-Unknown_person.jpg" alt="Prof. Fatima Ahmed" class="staff-img">
+                        <div class="staff-img-overlay">
+                            <p class="staff-overlay-text">Specialist in Quranic Studies and Islamic Jurisprudence</p>
+                        </div>
+                    </div>
+                    <div class="staff-info">
+                        <h3 class="staff-name">Sharafuddin Hudawi</h3>
+                        <p class="staff-position"><i class="fas fa-book-quran"></i> Vice Principal</p>
+                        <p class="staff-degree">MA in Islamic Education (Darul Huda Islamic University), Hudawi (DHIU)</p>
+                        <p>Specializes in Quranic Studies and Islamic Jurisprudence with 13+ years of teaching experience. Committed to traditional Islamic scholarship with contemporary relevance.</p>
+                        <div class="staff-contact">
+                            <div class="staff-contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <span>sharafuddin@hudawi.com</span>
+                            </div>
+                            <div class="staff-contact-item">
+                                <i class="fas fa-phone"></i>
+                                <span>+91 98765 43211</span>
+                            </div>
+                            <div class="staff-contact-item">
+                                <i class="fas fa-book"></i>
+                                <span>Subjects: Quran, Hadith, Fiqh</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Staff Member 3 -->
+                <div class="staff-card">
+                    <div class="staff-img-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/500px-Unknown_person.jpg" alt="Md. Shafi Hudawi" class="staff-img">
+                        <div class="staff-img-overlay">
+                            <p class="staff-overlay-text">Expert in science-Islamic principles integration</p>
+                        </div>
+                    </div>
+                    <div class="staff-info">
+                        <h3 class="staff-name">Muhammed Shafi Hudawi</h3>
+                        <p class="staff-position"><i class="fas fa-flask"></i> Exam Controller, Lecturer</p>
+                        <p class="staff-degree">MA in Islamic Studies (Darul Huda Islamic University), Hudawi (DHIU)</p>
+                        <p>Expert in integrating modern linguistic knowledge with Islamic principles. 12 years of teaching experience focusing on making Arabic Language relevant to Modern worldview.</p>
+                        <div class="staff-contact">
+                            <div class="staff-contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <span>shafi@hudawi.com</span>
+                            </div>
+                            <div class="staff-contact-item">
+                                <i class="fas fa-phone"></i>
+                                <span>+91 98765 43212</span>
+                            </div>
+                            <div class="staff-contact-item">
+                                <i class="fas fa-book"></i>
+                                <span>Subjects: Swarf, Nahvul Wadih</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Staff Member 4 -->
+                <div class="staff-card">
+                    <div class="staff-img-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/500px-Unknown_person.jpg" alt="Firoz Babu Hudawi" class="staff-img">
+                        <div class="staff-img-overlay">
+                            <p class="staff-overlay-text">Native English speaker with teaching specialization</p>
+                        </div>
+                    </div>
+                    <div class="staff-info">
+                        <h3 class="staff-name">Firoz Babu Hudawi</h3>
+                        <p class="staff-position"><i class="fas fa-language"></i> English Speaker, Lecturer</p>
+                        <p class="staff-degree">MA in Iskamic Studies (Darul Huda Islamic University), Hudawi (DHIU)</p>
+                        <p>Native English speaker with 10 years of experience teaching English language and literature. Focuses on making modern English accessible to contemporary students.</p>
+                        <div class="staff-contact">
+                            <div class="staff-contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <span>firozbabu@hudawi.com</span>
+                            </div>
+                            <div class="staff-contact-item">
+                                <i class="fas fa-phone"></i>
+                                <span>+91 98765 43213</span>
+                            </div>
+                            <div class="staff-contact-item">
+                                <i class="fas fa-book"></i>
+                                <span>Subjects: English Grammar, Literature</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Staff Member 5 -->
+                <div class="staff-card">
+                    <div class="staff-img-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/500px-Unknown_person.jpg" alt="Md. Muhyuddin Hudawi" class="staff-img">
+                        <div class="staff-img-overlay">
+                            <p class="staff-overlay-text"> Administrator, Lecturer</p>
+                        </div>
+                    </div>
+                    <div class="staff-info">
+                        <h3 class="staff-name">Md. Muhyuddin Hudawi</h3>
+                        <p class="staff-position"><i class="fas fa-laptop-code"></i> Administrator, Lecturer</p>
+                        <p class="staff-degree">MA in Islamic Studies, Hudawi (Darul Huda Islamic University)</p>
+                        <p>Specializes in Quran and Arabic literacy integration in Islamic education. Focuses on empowering students in Arabic Literature maintaining Modern Values.</p>
+                        <div class="staff-contact">
+                            <div class="staff-contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <span>mueenduddin@hudawi.com</span>
+                            </div>
+                            <div class="staff-contact-item">
+                                <i class="fas fa-phone"></i>
+                                <span>+91 98765 43214</span>
+                            </div>
+                            <div class="staff-contact-item">
+                                <i class="fas fa-laptop"></i>
+                                <span>Subjects: Tajweed, Arabic Language</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Staff Member 6 -->
+                <div class="staff-card">
+                    <div class="staff-img-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/500px-Unknown_person.jpg" alt="Abdur Rahim Hudawi" class="staff-img">
+                        <div class="staff-img-overlay">
+                            <p class="staff-overlay-text">8+ years in educational administration</p>
+                        </div>
+                    </div>
+                    <div class="staff-info">
+                        <h3 class="staff-name">Abdur Rahim Hudawi</h3>
+                        <p class="staff-position"><i class="fas fa-briefcase"></i> Accountant, Lecturer</p>
+                        <p class="staff-degree">MA in Islamic Studies, Hudawi (Darul Huda Islamic University)</p>
+                        <p>Manages stududents' accounts, and parent relations with 8 years of experience. Ensures smooth functioning of accounting processes.</p>
+                        <div class="staff-contact">
+                            <div class="staff-contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <span>abduraheem@hudawi.com</span>
+                            </div>
+                            <div class="staff-contact-item">
+                                <i class="fas fa-phone"></i>
+                                <span>+91 98765 43215</span>
+                            </div>
+                            <div class="staff-contact-item">
+                                <i class="fas fa-briefcase"></i>
+                                <span>Subjects: Adab a'l Arabi, Hadeeth</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Staff Statistics -->
+            <div class="staff-stats-section">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Staff Statistics</h2>
+                        <p class="section-subtitle">Our team composition reflects our commitment to quality education and institutional excellence</p>
+                    </div>
+                    <div class="staff-stats">
+                        <div class="stat-card">
+                            <div class="stat-number">35</div>
+                            <div class="stat-label">Teaching Faculty</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">12</div>
+                            <div class="stat-label">Administrative Staff</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">8</div>
+                            <div class="stat-label">Support Staff</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">8</div>
+                            <div class="stat-label">PhD Holders</div>
+                        </div>
+                    </div>
+
+                    <div class="total-staff">
+                        <h3>Total Staff Members</h3>
+                        <div class="total-count">55</div>
+                        <p>Committed professionals serving our educational mission with dedication and expertise</p>
+                        <div class="info">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Average Experience: 10+ years | Faculty with PhD: 8 members</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer - EXACTLY LIKE HOME PAGE -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-logo">
+                    <h2>DARUL HUDA <span>ASSAM</span></h2>
+                    <p>Excellence in Islamic & Modern Education since 2013. We are committed to nurturing ethical leaders and knowledgeable Muslims for the modern world.</p>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                        <li><a href="academics.html"><i class="fas fa-chevron-right"></i> Academics</a></li>
+                        <li><a href="students.html"><i class="fas fa-chevron-right"></i> Student Life</a></li>
+                        <li><a href="staff.html" class="active"><i class="fas fa-chevron-right"></i> Staff</a></li>
+                        <li><a href="admissions.html"><i class="fas fa-chevron-right"></i> Admissions</a></li>
+                        <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Barpeta, Bhogdia, Baisha-Barmara<br>Assam, PIN-781305</p>
+                    <p><i class="fas fa-phone"></i> +91 8399902373</p>
+                    <p><i class="fas fa-envelope"></i> info@darulhudaassam.edu</p>
+                    <p><i class="fas fa-clock"></i> Saturday - Thursday: 7:00 AM - 3:00 PM</p>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a></p>
+                <p>&copy; 2026 Darul Huda Assam Centre. All rights reserved.</p>
+                <p style="margin-top: 0.8rem;"><small>Powered by<small> <i class="fas fa-web" style="color: var(--accent);"></i> <a href="#">OwnAWeb</a>.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button - MATCHING HOME PAGE -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- JavaScript - PRESERVING ALL FUNCTIONALITY -->
+    <script>
+        // Mobile Menu Toggle - MATCHING HOME PAGE
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        const mainHeader = document.getElementById('mainHeader');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            const icon = mobileMenuBtn.querySelector('i');
+            if (mainNav.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+                document.body.style.overflow = 'hidden';
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mainNav.contains(e.target) && !mobileMenuBtn.contains(e.target) && mainNav.classList.contains('active')) {
+                mainNav.classList.remove('active');
+                mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+                mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                mainHeader.classList.add('scrolled');
+            } else {
+                mainHeader.classList.remove('scrolled');
+            }
+
+            // Back to top button visibility
+            toggleBackToTopButton();
+        });
+
+        // Set active navigation link
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const navLinks = document.querySelectorAll('nav a, .footer-links a');
+
+            navLinks.forEach(link => {
+                const linkPage = link.getAttribute('href');
+                if (linkPage === currentPage) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+
+            // Add scroll class if page loads scrolled
+            if (window.scrollY > 100) {
+                mainHeader.classList.add('scrolled');
+            }
+
+            // Animate elements on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+
+                        // Animate statistics numbers
+                        if (entry.target.classList.contains('stat-card')) {
+                            const statNumber = entry.target.querySelector('.stat-number');
+                            if (statNumber && !statNumber.classList.contains('animated')) {
+                                animateCount(statNumber, parseInt(statNumber.textContent));
+                                statNumber.classList.add('animated');
+                            }
+                        }
+
+                        // Animate total count
+                        if (entry.target.classList.contains('total-staff')) {
+                            const totalCount = entry.target.querySelector('.total-count');
+                            if (totalCount && !totalCount.classList.contains('animated')) {
+                                animateCount(totalCount, parseInt(totalCount.textContent));
+                                totalCount.classList.add('animated');
+                            }
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements for animation
+            document.querySelectorAll('.staff-card, .stat-card, .total-staff').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        });
+
+        // Back to Top Button
+        const backToTopButton = document.getElementById('backToTop');
+
+        function toggleBackToTopButton() {
+            if (window.scrollY > 500) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        }
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        backToTopButton.addEventListener('click', scrollToTop);
+
+        // Initialize button state on page load
+        document.addEventListener('DOMContentLoaded', toggleBackToTopButton);
+
+        // Add hover effect to cards
+        document.querySelectorAll('.staff-card, .stat-card, .total-staff').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.zIndex = '10';
+            });
+
+            card.addEventListener('mouseleave', function() {
+                this.style.zIndex = '1';
+            });
+        });
+
+        // Count animation function
+        function animateCount(element, finalValue) {
+            let currentValue = 0;
+            const increment = finalValue / 40;
+            const timer = setInterval(() => {
+                currentValue += increment;
+                if (currentValue >= finalValue) {
+                    element.textContent = finalValue;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(currentValue);
+                }
+            }, 30);
+        }
+
+        // Add email click functionality
+        document.querySelectorAll('.staff-contact-item').forEach(item => {
+            if (item.innerHTML.includes('@')) {
+                item.style.cursor = 'pointer';
+                item.addEventListener('click', function() {
+                    const email = this.querySelector('span').textContent;
+                    window.location.href = `mailto:${email}`;
+                });
+            }
+
+            if (item.innerHTML.includes('+91')) {
+                item.style.cursor = 'pointer';
+                item.addEventListener('click', function() {
+                    const phone = this.querySelector('span').textContent;
+                    window.location.href = `tel:${phone.replace(/\s/g, '')}`;
+                });
+            }
+        });
+
+        // Staff card interaction enhancement
+        document.querySelectorAll('.staff-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Don't trigger if clicking on interactive elements
+                if (!e.target.closest('a') && !e.target.closest('.staff-contact-item')) {
+                    this.classList.toggle('expanded');
+                }
+            });
+        });
+
+        // Add staff category filtering (optional enhancement)
+        const staffFilter = document.createElement('div');
+        staffFilter.innerHTML = `
+            <div style="text-align: center; margin: 2rem 0;">
+                <div class="filter-buttons" style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                    <button class="filter-btn active" data-filter="all">All Staff</button>
+                    <button class="filter-btn" data-filter="teaching">Teaching Faculty</button>
+                    <button class="filter-btn" data-filter="admin">Administrative</button>
+                    <button class="filter-btn" data-filter="leadership">Leadership</button>
+                </div>
+            </div>
+        `;
+
+        // Insert after section title
+        const sectionTitle = document.querySelector('.section-title');
+        if (sectionTitle) {
+            sectionTitle.parentNode.insertBefore(staffFilter, sectionTitle.nextSibling);
+
+            // Add filter functionality
+            const filterButtons = staffFilter.querySelectorAll('.filter-btn');
+            const staffCards = document.querySelectorAll('.staff-card');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const filter = this.dataset.filter;
+
+                    // Filter staff cards
+                    staffCards.forEach(card => {
+                        if (filter === 'all') {
+                            card.style.display = 'block';
+                        } else {
+                            const position = card.querySelector('.staff-position').textContent.toLowerCase();
+                            if ((filter === 'teaching' && (position.includes('head') || position.includes('coordinator'))) ||
+                                (filter === 'admin' && position.includes('administrative')) ||
+                                (filter === 'leadership' && (position.includes('principal') || position.includes('director')))) {
+                                card.style.display = 'block';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        }
+
+                        // Add animation when showing
+                        if (card.style.display === 'block') {
+                            card.style.animation = 'fadeInUp 0.6s ease';
+                        }
+                    });
+                });
+            });
+
+            // Style filter buttons to match formal design
+            const style = document.createElement('style');
+            style.textContent = `
+                .filter-btn {
+                    background: white;
+                    color: var(--primary);
+                    padding: 0.8rem 1.5rem;
+                    border-radius: 2px;
+                    border: 1px solid rgba(0, 0, 0, 0.08);
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: var(--transition);
+                    font-size: 0.9rem;
+                    text-transform: uppercase;
+                }
+                .filter-btn:hover, .filter-btn.active {
+                    background: var(--accent);
+                    color: white;
+                    border-color: var(--accent);
+                    transform: translateY(-2px);
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidra Literature Festival 2025 - SIDRA Student Union</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background:
+                linear-gradient(rgba(26, 95, 122, 0.85), rgba(42, 157, 143, 0.9)),
+                url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .logo i {
+            color: #ffd166;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 1.5rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .event-date {
+            font-size: 1.3rem;
+            background-color: rgba(255, 255, 255, 0.25);
+            display: inline-block;
+            padding: 0.7rem 2rem;
+            border-radius: 50px;
+            margin-top: 0.5rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-weight: 600;
+        }
+
+        /* Article styling */
+        article {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 40px;
+            margin-top: 20px;
+        }
+
+        .article-header {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+
+        .article-title {
+            font-size: 2.8rem;
+            color: #1a5f7a;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background-color: #f5f9ff;
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+
+        .meta-item i {
+            color: #1a5f7a;
+        }
+
+        .keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .keyword {
+            background-color: #e8f2ff;
+            color: #1a5f7a;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .keyword:hover {
+            background-color: #1a5f7a;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .festival-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 25px 0;
+            border: 2px solid #e9f5f3;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .festival-image:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .image-caption {
+            font-style: italic;
+            color: #555;
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .lead {
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #444;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        h2 {
+            color: #1a5f7a;
+            margin: 30px 0 15px;
+            font-size: 1.8rem;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        h2:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            bottom: 5px;
+            width: 5px;
+            background-color: #2a9d8f;
+            border-radius: 3px;
+        }
+
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .highlight {
+            background-color: #f0f7ff;
+            padding: 1.8rem;
+            border-left: 5px solid #2a9d8f;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        blockquote {
+            border-left: 4px solid #2a9d8f;
+            padding: 1.5rem 2rem;
+            margin: 30px 0;
+            font-style: italic;
+            color: #555;
+            font-size: 1.2rem;
+            background-color: #f9fdfc;
+            border-radius: 0 8px 8px 0;
+            position: relative;
+        }
+
+        blockquote:before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            font-size: 4rem;
+            color: rgba(42, 157, 143, 0.2);
+            font-family: serif;
+        }
+
+        /* Article content with sidebar */
+        .article-content {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .main-content {
+            grid-column: 1;
+        }
+
+        .sidebar {
+            grid-column: 2;
+        }
+
+        .sidebar-section {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 1px solid #e1eeff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.07);
+        }
+
+        .sidebar-title {
+            color: #1a5f7a;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #dbe8ff;
+        }
+
+        .guests-list, .programs-list {
+            list-style-type: none;
+            margin: 1.5rem 0;
+        }
+
+        .guests-list li, .programs-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+
+        .guests-list li:last-child, .programs-list li:last-child {
+            border-bottom: none;
+        }
+
+        .guests-list i, .programs-list i {
+            color: #2a9d8f;
+            margin-right: 12px;
+            font-size: 1.2rem;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        /* Organizer info - FIXED ICON */
+        .organizer-info {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-top: 50px;
+            padding: 30px;
+            border-top: 1px solid #eee;
+            background-color: #f9fdfc;
+            border-radius: 10px;
+            border-left: 5px solid #2a9d8f;
+        }
+
+        .organizer-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1a5f7a 0%, #2a9d8f 100%);
+            color: white;
+            font-size: 2.5rem;
+            flex-shrink: 0;
+            box-shadow: 0 5px 15px rgba(26, 95, 122, 0.3);
+        }
+
+        .organizer-avatar i {
+            /* Icon is now properly centered without stretching */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .organizer-details h3 {
+            color: #1a5f7a;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+
+        .organizer-details p {
+            font-size: 1.05rem;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        /* Article actions */
+        .article-actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            gap: 15px;
+        }
+
+        .action-button {
+            background: linear-gradient(to right, #1a5f7a, #2a9d8f);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(26, 95, 122, 0.3);
+        }
+
+        .action-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(26, 95, 122, 0.4);
+        }
+
+        .action-button.secondary {
+            background: white;
+            color: #1a5f7a;
+            border: 2px solid #1a5f7a;
+        }
+
+        .action-button.secondary:hover {
+            background-color: #f0f7ff;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #1a5f7a 0%, #2a9d8f 100%);
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, #ffd166, #e76f51);
+        }
+
+        .footer-logo {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 1.5rem;
+            justify-content: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tag {
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+        }
+
+        .tag:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 900px) {
+            .article-content {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                grid-column: 1;
+            }
+
+            .article-title {
+                font-size: 2.2rem;
+            }
+
+            header h1 {
+                font-size: 2.2rem;
+            }
+
+            .festival-image {
+                height: 300px;
+            }
+
+            .organizer-info {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            article {
+                padding: 25px;
+            }
+
+            .article-title {
+                font-size: 1.8rem;
+            }
+
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .festival-image {
+                height: 250px;
+            }
+
+            .article-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .action-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-book-open"></i>
+                <span>SIDRA</span>
+            </div>
+            <h1>Sidra Literature Festival 2025</h1>
+            <p>Campus Student Union's Celebration of Literature & Assamese Heritage</p>
+            <div class="event-date">20 - 25 December 2025</div>
+        </div>
+    </header>
+
+    <div class="container">
+        <article>
+            <div class="article-header">
+                <h1 class="article-title">Sidra Literature Festival 2025: Celebrating Literary Excellence and Cultural Heritage</h1>
+
+                <div class="meta">
+                    <div class="meta-item">
+                        <i class="fas fa-user"></i>
+                        <span>SIDRA Student Union</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>December 26, 2025</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-clock"></i>
+                        <span>6 min read</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-folder"></i>
+                        <span>Campus Events & Culture</span>
+                    </div>
+                </div>
+
+                <div class="keywords">
+                    <span class="keyword">SIDRA</span>
+                    <span class="keyword">Literature Festival</span>
+                    <span class="keyword">Student Union</span>
+                    <span class="keyword">Assamese Culture</span>
+                    <span class="keyword">Campus Event</span>
+                    <span class="keyword">Bhupendra Hazarika</span>
+                    <span class="keyword">Cultural Heritage</span>
+                </div>
+            </div>
+
+            <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Guest Speaker Session at SLF 2025" class="festival-image">
+            <p class="image-caption">Distinguished guests and students engage in literary dialogue at SLF 2025.</p>
+
+            <p class="lead">The SIDRA Student Union successfully concluded the third edition of the Sidra Literature Festival (SLF) on December 25, 2025, transforming the campus into a vibrant celebration of literature, intellectual discourse, and Assamese cultural heritage over six memorable days.</p>
+
+            <div class="article-content">
+                <div class="main-content">
+                    <h2>A Festival of Literary Dialogue</h2>
+                    <p>SIDRA, the official student union of our campus, organized this premier literary event that brought together students, faculty, and distinguished guests from across the region. The festival served as a platform for meaningful literary exchange and cultural celebration, fostering an environment where ideas could flourish and connections could be made.</p>
+
+                    <div class="highlight">
+                        <p>The event featured distinguished guests including <strong>Mr. Ashraful Ali</strong> (Advocate), <strong>Mr. Atwar Rahman</strong> (Principal, Janandeep Junior College), and <strong>Mr. Aminul Hoque</strong> (Principal, Albert Public School), who engaged students in thought-provoking discussions about literature, education, and cultural preservation.</p>
+                    </div>
+
+                    <h2>Immersive Cultural Experiences</h2>
+                    <p>Beyond panel discussions, SLF 2025 offered visitors a rich tapestry of experiences. A multi-language book stall showcased literary works from regional and international authors, while an expo of traditional Assamese ornaments highlighted the exquisite craftsmanship of the region. The festival grounds buzzed with the energy of discovery as attendees explored various exhibits.</p>
+
+                    <blockquote>
+                        "The Sidra Literature Festival represents more than just literary discussions—it's a celebration of our identity, our stories, and our cultural legacy. Events like these are essential for nurturing the next generation of thinkers and creators who will carry forward our rich traditions while forging new paths."
+                    </blockquote>
+
+                    <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Festival Cultural Exhibits" class="festival-image">
+                    <p class="image-caption">Visitors explore cultural exhibits and food stalls at the festival grounds.</p>
+
+                    <p>The culinary dimension of the festival was equally celebrated, with a dedicated food stall serving authentic Assamese <em>Pithas</em>—traditional rice cakes that are an integral part of Assamese culinary heritage. This allowed attendees to experience the region's culture through taste as well as sight and sound, creating a truly multisensory celebration.</p>
+
+                    <h2>Evening Cultural Performances</h2>
+                    <p>Each evening, the festival came alive with cultural programs that showcased the artistic talents of students and local performers. The lineup featured soulful renditions of Assamese folk music and a memorable tribute to the legendary <strong>Bhupendra Hazarika</strong>, with performances of his iconic <em>Bhupendra Sangeet</em> that resonated with audiences of all ages.</p>
+
+                    <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Cultural Performance at SLF" class="festival-image">
+                    <p class="image-caption">Artists perform on stage during an evening cultural program at SLF 2025.</p>
+
+                    <p>The tribute to Bhupendra Hazarika was particularly poignant, celebrating the bard whose work has defined Assamese cultural identity for generations. Students performed his timeless compositions, connecting the younger generation with this important cultural legacy while infusing the performances with their own contemporary interpretations.</p>
+
+                    <h2>Looking Forward</h2>
+                    <p>SLF 2025 stood as a testament to SIDRA's commitment to fostering intellectual growth, cultural pride, and community engagement on campus. The success of this edition has set a high standard for future festivals, with plans already underway for SLF 2026, which promises to be even more expansive and inclusive.</p>
+
+                    <p>The student union extends its heartfelt gratitude to all participants, volunteers, sponsors, and the college administration for their unwavering support in making this third edition a resounding success that will be remembered for years to come.</p>
+                </div>
+
+                <div class="sidebar">
+                    <div class="sidebar-section">
+                        <h3 class="sidebar-title"><i class="fas fa-calendar-check"></i> Festival Details</h3>
+                        <p><strong>Dates:</strong> 20-25 December 2025</p>
+                        <p><strong>Duration:</strong> 6 Days</p>
+                        <p><strong>Organizer:</strong> SIDRA Student Union</p>
+                        <p><strong>Location:</strong> Campus Grounds</p>
+                        <p><strong>Attendance:</strong> 1500+ visitors</p>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3 class="sidebar-title"><i class="fas fa-user-tie"></i> Distinguished Guests</h3>
+                        <ul class="guests-list">
+                            <li><i class="fas fa-gavel"></i> Ashraful Ali (Advocate)</li>
+                            <li><i class="fas fa-chalkboard-teacher"></i> Atwar Rahman (Principal)</li>
+                            <li><i class="fas fa-school"></i> Aminul Hoque (Principal)</li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3 class="sidebar-title"><i class="fas fa-star"></i> Key Attractions</h3>
+                        <ul class="programs-list">
+                            <li><i class="fas fa-book-reader"></i> Multi-language Book Store</li>
+                            <li><i class="fas fa-landmark"></i> Assamese Cultural Expo</li>
+                            <li><i class="fas fa-utensils"></i> Traditional Pithas Food Stall</li>
+                            <li><i class="fas fa-music"></i> Folk Song Performances</li>
+                            <li><i class="fas fa-guitar"></i> Bhupendra Sangeet Tribute</li>
+                            <li><i class="fas fa-microphone-alt"></i> Student Poetry Readings</li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3 class="sidebar-title"><i class="fas fa-share-alt"></i> Share This Report</h3>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px;">
+                            <button class="action-button secondary share-btn" style="padding: 10px 15px; flex: 1;"><i class="fab fa-twitter"></i></button>
+                            <button class="action-button secondary share-btn" style="padding: 10px 15px; flex: 1;"><i class="fab fa-facebook-f"></i></button>
+                            <button class="action-button secondary share-btn" style="padding: 10px 15px; flex: 1;"><i class="fas fa-envelope"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="organizer-info">
+                <div class="organizer-avatar">
+                    <i class="fas fa-university"></i>
+                </div>
+                <div class="organizer-details">
+                    <h3>About SIDRA Student Union</h3>
+                    <p>SIDRA is the official student union of our campus, dedicated to organizing academic, cultural, and social events that enrich student life and promote intellectual growth. The union focuses on creating platforms for student expression, leadership development, and cultural preservation. Through events like the Sidra Literature Festival, SIDRA aims to bridge tradition with innovation, creating meaningful experiences that resonate with the entire campus community.</p>
+                </div>
+            </div>
+
+            <div class="article-actions">
+                <button class="action-button"><i class="fas fa-thumbs-up"></i> Like This Report</button>
+                <button class="action-button secondary"><i class="fas fa-download"></i> Download PDF</button>
+                <button class="action-button secondary"><i class="fas fa-print"></i> Print Report</button>
+            </div>
+        </article>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-logo">
+                <i class="fas fa-university"></i>
+            </div>
+            <p style="font-size: 1.2rem; margin-bottom: 0.5rem;">Sidra Literature Festival 2025</p>
+            <p style="margin-bottom: 1.5rem; opacity: 0.9;">Celebrating Literature & Cultural Heritage</p>
+            <p style="font-style: italic; margin-bottom: 2rem; max-width: 700px; margin-left: auto; margin-right: auto;">Official Event Report for Institutional Website</p>
+
+            <div class="tags">
+                <span class="tag">SIDRA</span>
+                <span class="tag">Student Union</span>
+                <span class="tag">Literature Festival</span>
+                <span class="tag">Campus Event</span>
+                <span class="tag">Assam Culture</span>
+                <span class="tag">SLF 2025</span>
+                <span class="tag">Bhupendra Hazarika</span>
+                <span class="tag">Cultural Heritage</span>
+            </div>
+
+            <p style="margin-top: 2.5rem; font-size: 0.9rem; opacity: 0.8;">© 2026 SIDRA Student Union. All rights reserved. | Festival Report ID: SLF-2025-03</p>
+        </div>
+    </footer>
+
+    <script>
+        // Interactive effect for images
+        document.querySelectorAll('.festival-image').forEach(image => {
+            image.addEventListener('click', function() {
+                alert('This image shows an actual moment from the Sidra Literature Festival 2025!');
+            });
+        });
+
+        // Interactive keyword tags
+        document.querySelectorAll('.keyword').forEach(tag => {
+            tag.addEventListener('click', function() {
+                const keyword = this.textContent;
+                alert(`Searching for content related to: ${keyword}`);
+            });
+        });
+
+        // Button interactions
+        document.querySelectorAll('.action-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const buttonText = this.textContent.trim();
+
+                if (buttonText.includes('Like')) {
+                    this.innerHTML = '<i class="fas fa-check"></i> Liked!';
+                    this.style.background = 'linear-gradient(to right, #2a9d8f, #1a5f7a)';
+                    setTimeout(() => {
+                        this.innerHTML = '<i class="fas fa-thumbs-up"></i> Like This Report';
+                        this.style.background = '';
+                    }, 1500);
+                }
+
+                if (buttonText.includes('Download')) {
+                    const originalHTML = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Downloading...';
+                    this.disabled = true;
+
+                    setTimeout(() => {
+                        this.innerHTML = '<i class="fas fa-check"></i> Downloaded!';
+                        this.style.background = 'linear-gradient(to right, #2a9d8f, #1a5f7a)';
+                        this.disabled = false;
+
+                        setTimeout(() => {
+                            this.innerHTML = originalHTML;
+                            this.style.background = '';
+                        }, 1500);
+                    }, 1500);
+                }
+
+                if (buttonText.includes('Print')) {
+                    window.print();
+                }
+            });
+        });
+
+        // Share buttons functionality
+        document.querySelectorAll('.share-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const pageTitle = document.title;
+                const pageUrl = window.location.href;
+
+                if (this.innerHTML.includes('twitter')) {
+                    window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent('Check out this report on Sidra Literature Festival 2025') + '&url=' + encodeURIComponent(pageUrl), '_blank');
+                }
+
+                if (this.innerHTML.includes('facebook')) {
+                    window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(pageUrl), '_blank');
+                }
+
+                if (this.innerHTML.includes('envelope')) {
+                    window.location.href = 'mailto:?subject=' + encodeURIComponent(pageTitle) + '&body=' + encodeURIComponent('Check out this festival report: ' + pageUrl);
+                }
+            });
+        });
+
+        // Add reading time estimation based on word count
+        document.addEventListener('DOMContentLoaded', function() {
+            const articleText = document.querySelector('.main-content').textContent;
+            const wordCount = articleText.split(/\s+/).length;
+            const readingTime = Math.ceil(wordCount / 200); // 200 words per minute
+
+            // Update reading time in meta info
+            document.querySelector('.meta-item:nth-child(3) span').textContent = `${readingTime} min read`;
+
+            // Add current year to footer
+            document.querySelector('footer p:last-child').innerHTML = `© ${new Date().getFullYear()} SIDRA Student Union. All rights reserved. | Festival Report ID: SLF-2025-03`;
+        });
+    </script>
+</body>
+</html>

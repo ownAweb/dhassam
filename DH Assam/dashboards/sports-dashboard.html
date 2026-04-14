@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Complex Statistics Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1a1a1a;
+            line-height: 1.6;
+            background-image: linear-gradient(to right, #f1f5f9 1px, transparent 1px),
+                              linear-gradient(to bottom, #f1f5f9 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(30, 58, 138, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(30%, -30%);
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .complex-info {
+            flex: 1;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            font-weight: 800;
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.1rem;
+            max-width: 600px;
+        }
+
+        .complex-status {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            min-width: 280px;
+        }
+
+        .status-indicator {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: #10b981;
+            margin-right: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        .status-text {
+            font-weight: 700;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .peak-hours {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            text-align: center;
+        }
+
+        .live-count {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fbbf24;
+            margin-top: 5px;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 18px;
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.08);
+            padding: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 6px solid #2563eb;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .card-icon {
+            width: 65px;
+            height: 65px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 18px;
+            font-size: 2rem;
+            color: white;
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-title {
+            font-size: 1.6rem;
+            color: #1e3a8a;
+            font-weight: 700;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .stat-item {
+            background-color: #f8fafc;
+            padding: 22px;
+            border-radius: 14px;
+            text-align: center;
+            transition: background-color 0.2s;
+            border: 1px solid #e5e7eb;
+        }
+
+        .stat-item:hover {
+            background-color: #f0f9ff;
+        }
+
+        .stat-value {
+            font-size: 2.6rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: #4b5563;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .facility-list {
+            list-style-type: none;
+        }
+
+        .facility-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 18px;
+            border-radius: 12px;
+            transition: background-color 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .facility-item:hover {
+            background-color: #f8fafc;
+            border-color: #e5e7eb;
+        }
+
+        .facility-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .facility-info {
+            flex: 1;
+        }
+
+        .facility-name {
+            font-weight: 700;
+            margin-bottom: 6px;
+            font-size: 1.2rem;
+        }
+
+        .facility-stats {
+            color: #4b5563;
+            font-size: 0.95rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .progress-container {
+            margin-top: 12px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background-color: #e5e7eb;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 5px;
+        }
+
+        .team-schedule {
+            margin-top: 20px;
+        }
+
+        .match-item {
+            display: flex;
+            align-items: center;
+            padding: 18px 0;
+            border-bottom: 2px dashed #e5e7eb;
+        }
+
+        .match-item:last-child {
+            border-bottom: none;
+        }
+
+        .match-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 18px;
+            color: white;
+            font-size: 1.3rem;
+        }
+
+        .match-info {
+            flex: 1;
+        }
+
+        .match-teams {
+            font-weight: 700;
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+
+        .match-details {
+            color: #4b5563;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .live-match {
+            background-color: #f0f9ff;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 10px;
+            border: 2px solid #2563eb;
+        }
+
+        .performance-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .performance-item {
+            background-color: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .performance-value {
+            font-size: 1.9rem;
+            font-weight: 800;
+            color: #1e3a8a;
+            margin-bottom: 6px;
+        }
+
+        .performance-label {
+            color: #4b5563;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .member-stats {
+            margin-top: 20px;
+        }
+
+        .member-item {
+            display: flex;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px dashed #e5e7eb;
+        }
+
+        .member-item:last-child {
+            border-bottom: none;
+        }
+
+        .member-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 18px;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .member-info {
+            flex: 1;
+        }
+
+        .member-name {
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .member-sport {
+            color: #4b5563;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .booking-tracker {
+            margin-top: 20px;
+        }
+
+        .booking-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .booking-time {
+            width: 120px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .booking-bar-container {
+            flex: 1;
+            margin-left: 20px;
+        }
+
+        .booking-availability {
+            width: 80px;
+            text-align: right;
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .booking-bar {
+            height: 24px;
+            background-color: #e5e7eb;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .booking-fill {
+            height: 100%;
+            border-radius: 12px;
+        }
+
+        .achievement-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .achievement-item {
+            background-color: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .achievement-value {
+            font-size: 1.9rem;
+            font-weight: 800;
+            color: #10b981;
+            margin-bottom: 6px;
+        }
+
+        .achievement-label {
+            color: #4b5563;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .leaderboard {
+            background: linear-gradient(135deg, #f8fafc 0%, #f0f9ff 100%);
+            border: 2px solid #e5e7eb;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .leaderboard-title {
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .leaderboard-entry {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            background-color: white;
+        }
+
+        .leaderboard-rank {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: 700;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .rank-1 {
+            background-color: #fbbf24;
+        }
+
+        .rank-2 {
+            background-color: #9ca3af;
+        }
+
+        .rank-3 {
+            background-color: #d97706;
+        }
+
+        .rank-other {
+            background-color: #6b7280;
+        }
+
+        .leaderboard-name {
+            flex: 1;
+            font-weight: 600;
+        }
+
+        .leaderboard-score {
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+
+        .alert-banner {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 2px solid #f59e0b;
+            border-radius: 12px;
+            padding: 18px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .alert-icon {
+            color: #92400e;
+            font-size: 1.8rem;
+            margin-right: 20px;
+        }
+
+        .alert-content {
+            flex: 1;
+        }
+
+        .alert-title {
+            font-weight: 700;
+            color: #92400e;
+            margin-bottom: 6px;
+            font-size: 1.2rem;
+        }
+
+        .alert-message {
+            color: #92400e;
+            font-size: 1rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            background: white;
+            padding: 18px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .tab-btn {
+            padding: 14px 28px;
+            background-color: #f8fafc;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+            color: #4b5563;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.05rem;
+        }
+
+        .tab-btn:hover {
+            background-color: #f0f9ff;
+            border-color: #2563eb;
+            color: #1e3a8a;
+        }
+
+        .tab-btn.active {
+            background-color: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        .tab-btn i {
+            font-size: 1.2rem;
+        }
+
+        .sport-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        .sport-badminton {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+
+        .sport-basketball {
+            background-color: #fce7f3;
+            color: #be185d;
+        }
+
+        .sport-tennis {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+
+        .sport-swimming {
+            background-color: #e0f2fe;
+            color: #0c4a6e;
+        }
+
+        .sport-gym {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 2px solid #e5e7eb;
+            color: #4b5563;
+            font-size: 0.95rem;
+        }
+
+        .update-time {
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .motto {
+            font-style: italic;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            color: #1e3a8a;
+            font-weight: 600;
+        }
+
+        .live-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #ef4444;
+            margin-right: 8px;
+            animation: pulse 1s infinite;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid, .performance-grid, .achievement-metrics {
+                grid-template-columns: 1fr;
+            }
+
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .complex-status {
+                margin-top: 25px;
+                align-self: stretch;
+            }
+
+            .tabs {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="complex-info">
+                    <h1>Champions Sports Complex</h1>
+                    <div class="tagline">Where Champions Train & Communities Play</div>
+                    <p class="subtitle">Tracking facility usage, team performance, member engagement, and athletic excellence</p>
+                </div>
+                <div class="complex-status">
+                    <div class="status-text">
+                        <div class="status-indicator"></div>
+                        <span>Complex Open • Peak Hours</span>
+                    </div>
+                    <div class="peak-hours">Currently Active Members</div>
+                    <div class="live-count" id="active-members">184</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-sport="all">
+                <i class="fas fa-globe"></i> All Sports
+            </button>
+            <button class="tab-btn" data-sport="indoor">
+                <i class="fas fa-home"></i> Indoor Facilities
+            </button>
+            <button class="tab-btn" data-sport="outdoor">
+                <i class="fas fa-sun"></i> Outdoor Facilities
+            </button>
+            <button class="tab-btn" data-sport="aquatic">
+                <i class="fas fa-swimmer"></i> Aquatic Center
+            </button>
+            <button class="tab-btn" data-sport="gym">
+                <i class="fas fa-dumbbell"></i> Fitness Center
+            </button>
+        </div>
+
+        <div class="dashboard">
+            <!-- Complex Overview Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);">
+                        <i class="fas fa-running"></i>
+                    </div>
+                    <h2 class="card-title">Complex Overview</h2>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="total-members">2,428</div>
+                        <div class="stat-label">Total Members</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="today-visits">342</div>
+                        <div class="stat-label">Today's Visits</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">78%</div>
+                        <div class="stat-label">Facility Utilization</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">4.8</div>
+                        <div class="stat-label">Avg Member Rating</div>
+                    </div>
+                </div>
+
+                <div class="facility-list">
+                    <div class="facility-item">
+                        <div class="facility-icon" style="background-color: #2563eb;">
+                            <i class="fas fa-basketball-ball"></i>
+                        </div>
+                        <div class="facility-info">
+                            <div class="facility-name">Basketball Courts</div>
+                            <div class="facility-stats">
+                                <span>4 courts • 2 available</span>
+                                <span>85% occupied</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 85%; background-color: #2563eb;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="facility-item">
+                        <div class="facility-icon" style="background-color: #10b981;">
+                            <i class="fas fa-swimmer"></i>
+                        </div>
+                        <div class="facility-info">
+                            <div class="facility-name">Swimming Pool</div>
+                            <div class="facility-stats">
+                                <span>Olympic size • 8 lanes</span>
+                                <span>62% occupied</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 62%; background-color: #10b981;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="facility-item">
+                        <div class="facility-icon" style="background-color: #f59e0b;">
+                            <i class="fas fa-dumbbell"></i>
+                        </div>
+                        <div class="facility-info">
+                            <div class="facility-name">Fitness Center</div>
+                            <div class="facility-stats">
+                                <span>85 machines • Personal trainers</span>
+                                <span>92% occupied</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 92%; background-color: #f59e0b;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live Matches & Events Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h2 class="card-title">Live Matches & Events</h2>
+                </div>
+
+                <div class="live-match">
+                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                        <span class="live-dot"></span>
+                        <div style="font-weight: 700; color: #dc2626;">LIVE NOW</div>
+                    </div>
+                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                        <div class="match-icon" style="background-color: #dc2626;">
+                            <i class="fas fa-volleyball-ball"></i>
+                        </div>
+                        <div>
+                            <div class="match-teams" style="color: #1e3a8a;">City Hawks vs. Thunder Bolts</div>
+                            <div class="match-details">
+                                <span>Volleyball Championship • Court 3</span>
+                                <span>Set 3 • 21-18</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding-left: 68px;">
+                        <div style="font-weight: 600; color: #1a1a1a; margin-bottom: 5px;">420 spectators • 32 minutes remaining</div>
+                        <div style="display: flex; gap: 15px; font-size: 0.9rem; color: #4b5563;">
+                            <span><i class="fas fa-clock"></i> Live since 4:20 PM</span>
+                            <span><i class="fas fa-users"></i> 85% capacity</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-schedule">
+                    <div class="match-item">
+                        <div class="match-icon" style="background-color: #8b5cf6;">
+                            <i class="fas fa-table-tennis"></i>
+                        </div>
+                        <div class="match-info">
+                            <div class="match-teams">Table Tennis Finals</div>
+                            <div class="match-details">
+                                <span>Starting in 1 hour 30 min</span>
+                                <span>Hall B • 16 participants</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-item">
+                        <div class="match-icon" style="background-color: #10b981;">
+                            <i class="fas fa-swimming-pool"></i>
+                        </div>
+                        <div class="match-info">
+                            <div class="match-teams">Swimming Gala - 100m Freestyle</div>
+                            <div class="match-details">
+                                <span>Today, 6:00 PM</span>
+                                <span>Lanes 1-8 • 24 swimmers</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-item">
+                        <div class="match-icon" style="background-color: #f59e0b;">
+                            <i class="fas fa-basketball-ball"></i>
+                        </div>
+                        <div class="match-info">
+                            <div class="match-teams">Junior Basketball Tournament</div>
+                            <div class="match-details">
+                                <span>Tomorrow, 9:00 AM</span>
+                                <span>Courts 1-2 • 8 teams</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="performance-grid">
+                    <div class="performance-item">
+                        <div class="performance-value">18</div>
+                        <div class="performance-label">Events This Week</div>
+                    </div>
+                    <div class="performance-item">
+                        <div class="performance-value">142</div>
+                        <div class="performance-label">Teams Registered</div>
+                    </div>
+                    <div class="performance-item">
+                        <div class="performance-value">2,850</div>
+                        <div class="performance-label">Total Spectators</div>
+                    </div>
+                    <div class="performance-item">
+                        <div class="performance-value">₹1.24L</div>
+                        <div class="performance-label">Event Revenue</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Member Engagement Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h2 class="card-title">Member Engagement</h2>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="active-now">184</div>
+                        <div class="stat-label">Currently Active</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">68%</div>
+                        <div class="stat-label">Weekly Attendance</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">142</div>
+                        <div class="stat-label">New Members This Month</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">92%</div>
+                        <div class="stat-label">Retention Rate</div>
+                    </div>
+                </div>
+
+                <div class="member-stats">
+                    <h3 style="margin: 20px 0 15px 0; color: #1e3a8a;">Top Members This Week</h3>
+                    <div class="member-item">
+                        <div class="member-avatar" style="background-color: #2563eb;">
+                            RS
+                        </div>
+                        <div class="member-info">
+                            <div class="member-name">Rahul Sharma</div>
+                            <div class="member-sport">
+                                <span>
+                                    <span class="sport-badge sport-badminton">Badminton</span>
+                                    <span class="sport-badge sport-gym">Gym</span>
+                                </span>
+                                <span>18 visits</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="member-item">
+                        <div class="member-avatar" style="background-color: #10b981;">
+                            PT
+                        </div>
+                        <div class="member-info">
+                            <div class="member-name">Priya Talwar</div>
+                            <div class="member-sport">
+                                <span>
+                                    <span class="sport-badge sport-swimming">Swimming</span>
+                                    <span class="sport-badge sport-tennis">Tennis</span>
+                                </span>
+                                <span>16 visits</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="member-item">
+                        <div class="member-avatar" style="background-color: #f59e0b;">
+                            AK
+                        </div>
+                        <div class="member-info">
+                            <div class="member-name">Arjun Kumar</div>
+                            <div class="member-sport">
+                                <span>
+                                    <span class="sport-badge sport-basketball">Basketball</span>
+                                    <span class="sport-badge sport-gym">Gym</span>
+                                </span>
+                                <span>14 visits</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="member-item">
+                        <div class="member-avatar" style="background-color: #8b5cf6;">
+                            SM
+                        </div>
+                        <div class="member-info">
+                            <div class="member-name">Sneha Mehta</div>
+                            <div class="member-sport">
+                                <span>
+                                    <span class="sport-badge sport-tennis">Tennis</span>
+                                </span>
+                                <span>12 visits</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Facility Booking Status Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h2 class="card-title">Facility Booking Status</h2>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">248</div>
+                        <div class="stat-label">Today's Bookings</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">94%</div>
+                        <div class="stat-label">Booking Accuracy</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">28</div>
+                        <div class="stat-label">Coaches Available</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">₹42,850</div>
+                        <div class="stat-label">Booking Revenue</div>
+                    </div>
+                </div>
+
+                <div class="booking-tracker">
+                    <h3 style="margin: 20px 0 15px 0; color: #1e3a8a;">Peak Hour Availability (Today)</h3>
+                    <div class="booking-item">
+                        <div class="booking-time">6:00 - 8:00 AM</div>
+                        <div class="booking-bar-container">
+                            <div class="booking-bar">
+                                <div class="booking-fill" style="width: 88%; background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);"></div>
+                            </div>
+                        </div>
+                        <div class="booking-availability">12% free</div>
+                    </div>
+                    <div class="booking-item">
+                        <div class="booking-time">8:00 - 10:00 AM</div>
+                        <div class="booking-bar-container">
+                            <div class="booking-bar">
+                                <div class="booking-fill" style="width: 65%; background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);"></div>
+                            </div>
+                        </div>
+                        <div class="booking-availability">35% free</div>
+                    </div>
+                    <div class="booking-item">
+                        <div class="booking-time">4:00 - 6:00 PM</div>
+                        <div class="booking-bar-container">
+                            <div class="booking-bar">
+                                <div class="booking-fill" style="width: 95%; background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);"></div>
+                            </div>
+                        </div>
+                        <div class="booking-availability">5% free</div>
+                    </div>
+                    <div class="booking-item">
+                        <div class="booking-time">6:00 - 8:00 PM</div>
+                        <div class="booking-bar-container">
+                            <div class="booking-bar">
+                                <div class="booking-fill" style="width: 92%; background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);"></div>
+                            </div>
+                        </div>
+                        <div class="booking-availability">8% free</div>
+                    </div>
+                </div>
+
+                <div class="alert-banner">
+                    <div class="alert-icon">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="alert-content">
+                        <div class="alert-title">Evening Slots Almost Full</div>
+                        <div class="alert-message">Only 8% availability for 6-8 PM. Consider morning or afternoon slots.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance & Achievements Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h2 class="card-title">Performance & Achievements</h2>
+                </div>
+
+                <div class="achievement-metrics">
+                    <div class="achievement-item">
+                        <div class="achievement-value">42</div>
+                        <div class="achievement-label">Tournaments Won</div>
+                    </div>
+                    <div class="achievement-item">
+                        <div class="achievement-value">18</div>
+                        <div class="achievement-label">Records Broken</div>
+                    </div>
+                    <div class="achievement-item">
+                        <div class="achievement-value">128</div>
+                        <div class="achievement-label">Certified Coaches</div>
+                    </div>
+                    <div class="achievement-item">
+                        <div class="achievement-value">24</div>
+                        <div class="achievement-label">National Players</div>
+                    </div>
+                </div>
+
+                <div class="leaderboard">
+                    <div class="leaderboard-title">Monthly Fitness Challenge Leaderboard</div>
+                    <div class="leaderboard-entry">
+                        <div class="leaderboard-rank rank-1">1</div>
+                        <div class="leaderboard-name">Vikram Singh</div>
+                        <div class="leaderboard-score">4,850 pts</div>
+                    </div>
+                    <div class="leaderboard-entry">
+                        <div class="leaderboard-rank rank-2">2</div>
+                        <div class="leaderboard-name">Anjali Patel</div>
+                        <div class="leaderboard-score">4,520 pts</div>
+                    </div>
+                    <div class="leaderboard-entry">
+                        <div class="leaderboard-rank rank-3">3</div>
+                        <div class="leaderboard-name">Raj Mehta</div>
+                        <div class="leaderboard-score">4,280 pts</div>
+                    </div>
+                    <div class="leaderboard-entry">
+                        <div class="leaderboard-rank rank-other">4</div>
+                        <div class="leaderboard-name">Sanjay Kumar</div>
+                        <div class="leaderboard-score">4,150 pts</div>
+                    </div>
+                    <div class="leaderboard-entry">
+                        <div class="leaderboard-rank rank-other">5</div>
+                        <div class="leaderboard-name">Neha Sharma</div>
+                        <div class="leaderboard-score">3,980 pts</div>
+                    </div>
+                </div>
+
+                <div class="performance-grid" style="margin-top: 20px;">
+                    <div class="performance-item">
+                        <div class="performance-value">+12%</div>
+                        <div class="performance-label">Avg Performance Gain</div>
+                    </div>
+                    <div class="performance-item">
+                        <div class="performance-value">98%</div>
+                        <div class="performance-label">Goal Achievement Rate</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Equipment & Maintenance Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h2 class="card-title">Equipment & Maintenance</h2>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">428</div>
+                        <div class="stat-label">Total Equipment</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">96%</div>
+                        <div class="stat-label">Operational Status</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">12</div>
+                        <div class="stat-label">Under Maintenance</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">0</div>
+                        <div class="stat-label">Safety Incidents</div>
+                    </div>
+                </div>
+
+                <div class="team-schedule">
+                    <h3 style="margin: 20px 0 15px 0; color: #1e3a8a;">Equipment Status</h3>
+                    <div class="match-item">
+                        <div class="match-icon" style="background-color: #10b981;">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="match-info">
+                            <div class="match-teams">Treadmills & Cardio Machines</div>
+                            <div class="match-details">
+                                <span>42 machines • All operational</span>
+                                <span>Optimal</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-item">
+                        <div class="match-icon" style="background-color: #f59e0b;">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="match-info">
+                            <div class="match-teams">Weight Training Equipment</div>
+                            <div class="match-details">
+                                <span>3 benches need maintenance</span>
+                                <span>Attention Required</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-item">
+                        <div class="match-icon" style="background-color: #10b981;">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="match-info">
+                            <div class="match-teams">Swimming Pool Systems</div>
+                            <div class="match-details">
+                                <span>Filtration at 100%</span>
+                                <span>Optimal</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert-banner" style="margin-top: 20px; background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); border-color: #10b981;">
+                    <div class="alert-icon" style="color: #065f46;">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <div class="alert-content">
+                        <div class="alert-title" style="color: #065f46;">Scheduled Maintenance</div>
+                        <div class="alert-message" style="color: #065f46;">Court 3 resurfacing scheduled for next week. Alternate courts available.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Champions Sports Complex Dashboard • Last updated: <span class="update-time" id="update-time"></span> • Real-time tracking active</p>
+            <p class="motto">"Excellence is not a skill, it's an attitude. Train like a champion today!"</p>
+            <p style="margin-top: 8px;">© 2023 Champions Sports Complex • ISO 9001 Certified • <i class="fas fa-phone-alt"></i> Reception: 1800-SPORT-123</p>
+        </div>
+    </div>
+
+    <script>
+        // Set current update time
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('update-time').textContent = timeString;
+        }
+
+        // Initial call
+        updateTime();
+
+        // Update time every second
+        setInterval(updateTime, 1000);
+
+        // Tab buttons functionality
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+
+                // Add active class to clicked button
+                this.classList.add('active');
+
+                const sport = this.getAttribute('data-sport');
+                updateSportStats(sport);
+            });
+        });
+
+        // Function to update statistics based on selected sport category
+        function updateSportStats(sport) {
+            let totalMembers, todayVisits, activeNow;
+
+            switch(sport) {
+                case 'indoor':
+                    totalMembers = "1,428";
+                    todayVisits = "218";
+                    activeNow = "124";
+                    break;
+                case 'outdoor':
+                    totalMembers = "1,842";
+                    todayVisits = "284";
+                    activeNow = "142";
+                    break;
+                case 'aquatic':
+                    totalMembers = "842";
+                    todayVisits = "128";
+                    activeNow = "68";
+                    break;
+                case 'gym':
+                    totalMembers = "1,248";
+                    todayVisits = "192";
+                    activeNow = "98";
+                    break;
+                case 'all':
+                    totalMembers = "2,428";
+                    todayVisits = "342";
+                    activeNow = "184";
+                    break;
+            }
+
+            // Update DOM elements
+            document.getElementById('total-members').textContent = totalMembers;
+            document.getElementById('today-visits').textContent = todayVisits;
+            document.getElementById('active-members').textContent = activeNow;
+            document.getElementById('active-now').textContent = activeNow;
+
+            // Update status text
+            const statusText = document.querySelector('.status-text span');
+            const peakHours = document.querySelector('.peak-hours');
+
+            if (sport === 'all') {
+                statusText.textContent = "Complex Open • Peak Hours";
+                peakHours.textContent = "Currently Active Members";
+            } else {
+                const sportNames = {
+                    'indoor': 'Indoor Facilities',
+                    'outdoor': 'Outdoor Facilities',
+                    'aquatic': 'Aquatic Center',
+                    'gym': 'Fitness Center'
+                };
+                statusText.textContent = `${sportNames[sport]} • Peak Hours`;
+                peakHours.textContent = `Currently Active in ${sportNames[sport]}`;
+            }
+        }
+
+        // Function to simulate live data updates
+        function simulateLiveUpdates() {
+            // Update active members (peak/off-peak variations)
+            const now = new Date();
+            const currentHour = now.getHours();
+            const activeElement = document.getElementById('active-members');
+            const activeNowElement = document.getElementById('active-now');
+            let currentActive = parseInt(activeElement.textContent);
+
+            // Peak hours (6-8 AM, 4-8 PM) vs off-peak
+            const isPeakHour = (currentHour >= 6 && currentHour < 8) || (currentHour >= 16 && currentHour < 20);
+
+            // Random change based on peak/off-peak
+            let change;
+            if (isPeakHour) {
+                // During peak: more likely to increase, larger changes
+                change = Math.floor(Math.random() * 6) - 1; // -1 to +4
+            } else {
+                // During off-peak: more likely to decrease
+                change = Math.floor(Math.random() * 6) - 3; // -3 to +2
+            }
+
+            let newActive = currentActive + change;
+
+            // Ensure values stay within reasonable bounds (50-300 for all facilities)
+            newActive = Math.max(50, Math.min(300, newActive));
+
+            activeElement.textContent = newActive;
+            activeNowElement.textContent = newActive;
+
+            // Update today's visits (only during open hours 5 AM - 10 PM)
+            if (currentHour >= 5 && currentHour < 22) {
+                const visitsElement = document.getElementById('today-visits');
+                let currentVisits = parseInt(visitsElement.textContent);
+
+                // Add between 1-5 visits every update during open hours
+                const visitChange = Math.floor(Math.random() * 5) + 1;
+                let newVisits = currentVisits + visitChange;
+                visitsElement.textContent = newVisits;
+            }
+
+            // Simulate match score updates for live match
+            if (Math.random() > 0.7) { // 30% chance to update score
+                const liveScoreElement = document.querySelector('.live-match .match-details span:last-child');
+                if (liveScoreElement) {
+                    const scores = liveScoreElement.textContent.split('-');
+                    if (scores.length === 2) {
+                        let score1 = parseInt(scores[0]);
+                        let score2 = parseInt(scores[1]);
+
+                        // Randomly increment one score
+                        if (Math.random() > 0.5) {
+                            score1 += 1;
+                        } else {
+                            score2 += 1;
+                        }
+
+                        // Ensure scores are reasonable
+                        score1 = Math.min(25, score1);
+                        score2 = Math.min(25, score2);
+
+                        liveScoreElement.textContent = `${score1}-${score2}`;
+                    }
+                }
+            }
+        }
+
+        // Update statistics every 6 seconds to simulate live data
+        setInterval(simulateLiveUpdates, 6000);
+
+        // Initialize with default values
+        updateSportStats('all');
+    </script>
+</body>
+</html>

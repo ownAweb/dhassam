@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Library Statistics Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(44, 62, 80, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            transform: translate(30%, -30%);
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.1rem;
+            max-width: 600px;
+        }
+
+        .library-logo {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 25px;
+            border-radius: 12px;
+            backdrop-filter: blur(5px);
+        }
+
+        .logo-icon {
+            font-size: 2.5rem;
+            margin-right: 15px;
+            color: #3498db;
+        }
+
+        .logo-text {
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+            padding: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 5px solid #3498db;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 18px;
+            font-size: 1.8rem;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .stat-item {
+            background-color: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            transition: background-color 0.2s;
+            border: 1px solid #f0f0f0;
+        }
+
+        .stat-item:hover {
+            background-color: #f0f7ff;
+        }
+
+        .stat-value {
+            font-size: 2.4rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: #5f6368;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .content-list {
+            list-style-type: none;
+        }
+
+        .content-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 18px;
+            padding: 15px;
+            border-radius: 10px;
+            transition: background-color 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .content-item:hover {
+            background-color: #f8fafc;
+            border-color: #e1e8f0;
+        }
+
+        .content-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 18px;
+            color: white;
+            font-size: 1.3rem;
+        }
+
+        .content-info {
+            flex: 1;
+        }
+
+        .content-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+            font-size: 1.1rem;
+        }
+
+        .content-count {
+            color: #5f6368;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .progress-container {
+            margin-top: 10px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: #e0e6ed;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+        }
+
+        .category-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .category-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .category-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            margin-right: 15px;
+        }
+
+        .category-label {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .category-percentage {
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        .user-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .user-stat-item {
+            background-color: #f8fafc;
+            padding: 18px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .user-stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .user-stat-label {
+            color: #5f6368;
+            font-size: 0.9rem;
+        }
+
+        .top-content {
+            margin-top: 20px;
+        }
+
+        .top-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px dashed #e0e6ed;
+        }
+
+        .top-item:last-child {
+            border-bottom: none;
+        }
+
+        .top-rank {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #3498db;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .top-info {
+            flex: 1;
+        }
+
+        .top-title {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .top-meta {
+            color: #7b8793;
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .downloads-chart {
+            margin-top: 20px;
+        }
+
+        .download-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .download-day {
+            width: 80px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .download-bar-container {
+            flex: 1;
+            margin-left: 15px;
+        }
+
+        .download-count {
+            width: 60px;
+            text-align: right;
+            font-weight: 600;
+            color: #3498db;
+        }
+
+        .download-bar {
+            height: 24px;
+            background-color: #e0e6ed;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .download-fill {
+            height: 100%;
+            border-radius: 12px;
+        }
+
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 12px 24px;
+            background-color: white;
+            border: 1px solid #d1d9e6;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+            color: #5f6368;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-btn:hover {
+            background-color: #f0f7ff;
+            border-color: #3498db;
+            color: #3498db;
+        }
+
+        .filter-btn.active {
+            background-color: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+
+        .filter-btn i {
+            font-size: 1.1rem;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 1px solid #e1e5eb;
+            color: #7b8793;
+            font-size: 0.9rem;
+        }
+
+        .update-time {
+            font-weight: 600;
+            color: #3498db;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid, .user-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .library-logo {
+                margin-top: 20px;
+                align-self: stretch;
+                justify-content: center;
+            }
+
+            .filters {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div>
+                    <h1>Digital Library Statistics Dashboard</h1>
+                    <p class="subtitle">Track usage, content metrics, user engagement, and resource analytics for your digital library</p>
+                </div>
+                <div class="library-logo">
+                    <i class="fas fa-digital-tachograph logo-icon"></i>
+                    <div>
+                        <div class="logo-text">E-Library Analytics</div>
+                        <div>Version 3.2 • Academic Access</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="filters">
+            <button class="filter-btn active" data-period="today">
+                <i class="fas fa-calendar-day"></i> Today
+            </button>
+            <button class="filter-btn" data-period="week">
+                <i class="fas fa-calendar-week"></i> This Week
+            </button>
+            <button class="filter-btn" data-period="month">
+                <i class="fas fa-calendar-alt"></i> This Month
+            </button>
+            <button class="filter-btn" data-period="year">
+                <i class="fas fa-calendar"></i> This Year
+            </button>
+            <button class="filter-btn" data-period="all">
+                <i class="fas fa-infinity"></i> All Time
+            </button>
+        </div>
+
+        <div class="dashboard">
+            <!-- Library Overview Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);">
+                        <i class="fas fa-book-reader"></i>
+                    </div>
+                    <h2 class="card-title">Library Overview</h2>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="total-items">42,857</div>
+                        <div class="stat-label">Total Items</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="active-users">3,248</div>
+                        <div class="stat-label">Active Users</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="today-downloads">1,842</div>
+                        <div class="stat-label">Today's Downloads</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="avg-rating">4.6</div>
+                        <div class="stat-label">Avg. Rating</div>
+                    </div>
+                </div>
+
+                <div class="progress-container">
+                    <div class="content-count" style="margin: 15px 0 8px 0;">
+                        <span>Storage Usage</span>
+                        <span>4.2 TB / 10 TB</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 42%; background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content by Type Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #3498db 0%, #2ecc71 100%);">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h2 class="card-title">Content by Type</h2>
+                </div>
+
+                <ul class="content-list">
+                    <li class="content-item">
+                        <div class="content-icon" style="background-color: #3498db;">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <div class="content-info">
+                            <div class="content-name">E-Books & PDFs</div>
+                            <div class="content-count">
+                                <span>18,425 items</span>
+                                <span>43% of total</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 43%; background-color: #3498db;"></div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="content-item">
+                        <div class="content-icon" style="background-color: #2ecc71;">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <div class="content-info">
+                            <div class="content-name">Video Lectures</div>
+                            <div class="content-count">
+                                <span>9,842 items</span>
+                                <span>23% of total</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 23%; background-color: #2ecc71;"></div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="content-item">
+                        <div class="content-icon" style="background-color: #e74c3c;">
+                            <i class="fas fa-microphone-alt"></i>
+                        </div>
+                        <div class="content-info">
+                            <div class="content-name">Audio Books & Podcasts</div>
+                            <div class="content-count">
+                                <span>6,318 items</span>
+                                <span>15% of total</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 15%; background-color: #e74c3c;"></div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="content-item">
+                        <div class="content-icon" style="background-color: #f39c12;">
+                            <i class="fas fa-newspaper"></i>
+                        </div>
+                        <div class="content-info">
+                            <div class="content-name">Research Papers & Journals</div>
+                            <div class="content-count">
+                                <span>5,724 items</span>
+                                <span>13% of total</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 13%; background-color: #f39c12;"></div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="content-item">
+                        <div class="content-icon" style="background-color: #9b59b6;">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <div class="content-info">
+                            <div class="content-name">Interactive Courses</div>
+                            <div class="content-count">
+                                <span>2,548 items</span>
+                                <span>6% of total</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 6%; background-color: #9b59b6;"></div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- User Statistics Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #e74c3c 0%, #f39c12 100%);">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h2 class="card-title">User Statistics</h2>
+                </div>
+
+                <div class="user-stats">
+                    <div class="user-stat-item">
+                        <div class="user-stat-value" id="total-users">15,842</div>
+                        <div class="user-stat-label">Total Registered Users</div>
+                    </div>
+                    <div class="user-stat-item">
+                        <div class="user-stat-value" id="active-now">428</div>
+                        <div class="user-stat-label">Currently Active</div>
+                    </div>
+                    <div class="user-stat-item">
+                        <div class="user-stat-value">68%</div>
+                        <div class="user-stat-label">Returning Users</div>
+                    </div>
+                    <div class="user-stat-item">
+                        <div class="user-stat-value">12.4</div>
+                        <div class="user-stat-label">Avg. Sessions/Month</div>
+                    </div>
+                </div>
+
+                <div class="category-chart">
+                    <h3 style="margin: 20px 0 15px 0; color: #2c3e50;">User Categories</h3>
+                    <div class="category-item">
+                        <div class="category-color" style="background-color: #3498db;"></div>
+                        <div class="category-label">Students</div>
+                        <div class="category-percentage">62%</div>
+                    </div>
+                    <div class="category-item">
+                        <div class="category-color" style="background-color: #2ecc71;"></div>
+                        <div class="category-label">Researchers</div>
+                        <div class="category-percentage">18%</div>
+                    </div>
+                    <div class="category-item">
+                        <div class="category-color" style="background-color: #f39c12;"></div>
+                        <div class="category-label">Faculty</div>
+                        <div class="category-percentage">12%</div>
+                    </div>
+                    <div class="category-item">
+                        <div class="category-color" style="background-color: #9b59b6;"></div>
+                        <div class="category-label">Public Users</div>
+                        <div class="category-percentage">8%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Top Content Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #9b59b6 0%, #e74c3c 100%);">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h2 class="card-title">Top Content This Week</h2>
+                </div>
+
+                <div class="top-content">
+                    <div class="top-item">
+                        <div class="top-rank" style="background-color: #f39c12;">1</div>
+                        <div class="top-info">
+                            <div class="top-title">Artificial Intelligence: A Modern Approach</div>
+                            <div class="top-meta">
+                                <span>E-Book • Computer Science</span>
+                                <span>1,248 downloads</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="top-item">
+                        <div class="top-rank" style="background-color: #bdc3c7;">2</div>
+                        <div class="top-info">
+                            <div class="top-title">Introduction to Quantum Mechanics</div>
+                            <div class="top-meta">
+                                <span>Video Course • Physics</span>
+                                <span>987 downloads</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="top-item">
+                        <div class="top-rank" style="background-color: #d35400;">3</div>
+                        <div class="top-info">
+                            <div class="top-title">The History of Ancient Civilizations</div>
+                            <div class="top-meta">
+                                <span>Audio Book • History</span>
+                                <span>842 downloads</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="top-item">
+                        <div class="top-rank">4</div>
+                        <div class="top-info">
+                            <div class="top-title">Data Structures and Algorithms</div>
+                            <div class="top-meta">
+                                <span>Interactive Course • CS</span>
+                                <span>721 downloads</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="top-item">
+                        <div class="top-rank">5</div>
+                        <div class="top-info">
+                            <div class="top-title">Research Methods in Social Sciences</div>
+                            <div class="top-meta">
+                                <span>PDF Collection • Research</span>
+                                <span>658 downloads</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="downloads-chart">
+                    <h3 style="margin: 25px 0 15px 0; color: #2c3e50;">Daily Downloads</h3>
+                    <div class="download-item">
+                        <div class="download-day">Monday</div>
+                        <div class="download-bar-container">
+                            <div class="download-bar">
+                                <div class="download-fill" style="width: 85%; background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);"></div>
+                            </div>
+                        </div>
+                        <div class="download-count">2,458</div>
+                    </div>
+                    <div class="download-item">
+                        <div class="download-day">Tuesday</div>
+                        <div class="download-bar-container">
+                            <div class="download-bar">
+                                <div class="download-fill" style="width: 92%; background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);"></div>
+                            </div>
+                        </div>
+                        <div class="download-count">2,842</div>
+                    </div>
+                    <div class="download-item">
+                        <div class="download-day">Wednesday</div>
+                        <div class="download-bar-container">
+                            <div class="download-bar">
+                                <div class="download-fill" style="width: 78%; background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);"></div>
+                            </div>
+                        </div>
+                        <div class="download-count">2,318</div>
+                    </div>
+                    <div class="download-item">
+                        <div class="download-day">Thursday</div>
+                        <div class="download-bar-container">
+                            <div class="download-bar">
+                                <div class="download-fill" style="width: 88%; background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);"></div>
+                            </div>
+                        </div>
+                        <div class="download-count">2,675</div>
+                    </div>
+                    <div class="download-item">
+                        <div class="download-day">Friday</div>
+                        <div class="download-bar-container">
+                            <div class="download-bar">
+                                <div class="download-fill" style="width: 72%; background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);"></div>
+                            </div>
+                        </div>
+                        <div class="download-count">2,124</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Platform & Access Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <h2 class="card-title">Platform & Access</h2>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">98.7%</div>
+                        <div class="stat-label">Uptime This Month</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">1.2s</div>
+                        <div class="stat-label">Avg. Load Time</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">24/7</div>
+                        <div class="stat-label">Access Availability</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">99.5%</div>
+                        <div class="stat-label">User Satisfaction</div>
+                    </div>
+                </div>
+
+                <div class="category-chart">
+                    <h3 style="margin: 20px 0 15px 0; color: #2c3e50;">Access By Device</h3>
+                    <div class="category-item">
+                        <div class="category-color" style="background-color: #3498db;"></div>
+                        <div class="category-label">Desktop Computers</div>
+                        <div class="category-percentage">52%</div>
+                    </div>
+                    <div class="category-item">
+                        <div class="category-color" style="background-color: #2ecc71;"></div>
+                        <div class="category-label">Mobile Devices</div>
+                        <div class="category-percentage">38%</div>
+                    </div>
+                    <div class="category-item">
+                        <div class="category-color" style="background-color: #f39c12;"></div>
+                        <div class="category-label">Tablets</div>
+                        <div class="category-percentage">10%</div>
+                    </div>
+                </div>
+
+                <div class="top-content" style="margin-top: 25px;">
+                    <h3 style="margin: 0 0 15px 0; color: #2c3e50;">Recent Additions</h3>
+                    <div class="top-item" style="padding: 12px 0;">
+                        <div class="content-icon" style="width: 40px; height: 40px; margin-right: 12px; background-color: #3498db;">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="top-info">
+                            <div class="top-title">Machine Learning Yearning (New Edition)</div>
+                            <div class="top-meta">
+                                <span>Added 2 days ago</span>
+                                <span>Already 342 downloads</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="top-item" style="padding: 12px 0;">
+                        <div class="content-icon" style="width: 40px; height: 40px; margin-right: 12px; background-color: #2ecc71;">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <div class="top-info">
+                            <div class="top-title">Climate Change Documentary Series</div>
+                            <div class="top-meta">
+                                <span>Added 5 days ago</span>
+                                <span>218 downloads</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Collections & Categories Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #f39c12 0%, #d35400 100%);">
+                        <i class="fas fa-folder-open"></i>
+                    </div>
+                    <h2 class="card-title">Collections & Categories</h2>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">28</div>
+                        <div class="stat-label">Total Collections</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">142</div>
+                        <div class="stat-label">Categories</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">96</div>
+                        <div class="stat-label">Publishers</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">24</div>
+                        <div class="stat-label">Languages</div>
+                    </div>
+                </div>
+
+                <div class="category-chart">
+                    <h3 style="margin: 20px 0 15px 0; color: #2c3e50;">Top Categories by Usage</h3>
+                    <div class="category-item">
+                        <div class="category-color" style="background-color: #3498db;"></div>
+                        <div class="category-label">Computer Science</div>
+                        <div class="category-percentage">24%</div>
+                    </div>
+                    <div class="category-item">
+                        <div class="category-color" style="background-color: #2ecc71;"></div>
+                        <div class="category-label">Business & Economics</div>
+                        <div class="category-percentage">18%</div>
+                    </div>
+                    <div class="category-item">
+                        <div class="category-color" style="background-color: #e74c3c;"></div>
+                        <div class="category-label">Health & Medicine</div>
+                        <div class="category-percentage">15%</div>
+                    </div>
+                    <div class="category-item">
+                        <div class="category-color" style="background-color: #f39c12;"></div>
+                        <div class="category-label">Engineering</div>
+                        <div class="category-percentage">12%</div>
+                    </div>
+                    <div class="category-item">
+                        <div class="category-color" style="background-color: #9b59b6;"></div>
+                        <div class="category-label">Social Sciences</div>
+                        <div class="category-percentage">10%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Digital Library Statistics Dashboard • Last updated: <span class="update-time" id="update-time"></span> • Data refreshes automatically every 5 minutes</p>
+            <p style="margin-top: 8px;">© 2023 E-Library Analytics System • <i class="fas fa-shield-alt"></i> Secure & Encrypted</p>
+        </div>
+    </div>
+
+    <script>
+        // Set current update time
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('update-time').textContent = timeString;
+        }
+
+        // Initial call
+        updateTime();
+
+        // Update time every second
+        setInterval(updateTime, 1000);
+
+        // Filter buttons functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+
+                // Add active class to clicked button
+                this.classList.add('active');
+
+                const period = this.getAttribute('data-period');
+                updateLibraryStats(period);
+            });
+        });
+
+        // Function to update statistics based on selected period
+        function updateLibraryStats(period) {
+            let totalItems, activeUsers, todayDownloads, totalUsers, activeNow;
+
+            switch(period) {
+                case 'today':
+                    totalItems = "42,857";
+                    activeUsers = "3,248";
+                    todayDownloads = "1,842";
+                    totalUsers = "15,842";
+                    activeNow = "428";
+                    break;
+                case 'week':
+                    totalItems = "42,972";
+                    activeUsers = "8,452";
+                    todayDownloads = "12,874";
+                    totalUsers = "15,927";
+                    activeNow = "512";
+                    break;
+                case 'month':
+                    totalItems = "43,215";
+                    activeUsers = "12,847";
+                    todayDownloads = "52,418";
+                    totalUsers = "16,248";
+                    activeNow = "621";
+                    break;
+                case 'year':
+                    totalItems = "45,842";
+                    activeUsers = "28,451";
+                    todayDownloads = "624,812";
+                    totalUsers = "18,942";
+                    activeNow = "842";
+                    break;
+                case 'all':
+                    totalItems = "48,127";
+                    activeUsers = "32,847";
+                    todayDownloads = "2,842,157";
+                    totalUsers = "24,812";
+                    activeNow = "942";
+                    break;
+            }
+
+            // Update DOM elements
+            document.getElementById('total-items').textContent = totalItems;
+            document.getElementById('active-users').textContent = activeUsers;
+            document.getElementById('today-downloads').textContent = todayDownloads;
+            document.getElementById('total-users').textContent = totalUsers;
+            document.getElementById('active-now').textContent = activeNow;
+        }
+
+        // Function to simulate live data updates
+        function simulateLiveUpdates() {
+            // Update "active now" users
+            const activeNowElement = document.getElementById('active-now');
+            let currentActive = parseInt(activeNowElement.textContent.replace(',', ''));
+
+            // Random change between -15 and +20
+            const change = Math.floor(Math.random() * 36) - 15;
+            let newActive = currentActive + change;
+
+            // Ensure values stay within reasonable bounds
+            newActive = Math.max(300, Math.min(1200, newActive));
+            activeNowElement.textContent = newActive.toLocaleString();
+
+            // Update today's downloads
+            const downloadsElement = document.getElementById('today-downloads');
+            let currentDownloads = parseInt(downloadsElement.textContent.replace(',', ''));
+
+            // Add between 5-25 downloads every update
+            const downloadChange = Math.floor(Math.random() * 21) + 5;
+            let newDownloads = currentDownloads + downloadChange;
+            downloadsElement.textContent = newDownloads.toLocaleString();
+
+            // Update active users (more slowly)
+            if (Math.random() > 0.7) { // 30% chance to update
+                const activeUsersElement = document.getElementById('active-users');
+                let currentActiveUsers = parseInt(activeUsersElement.textContent.replace(',', ''));
+
+                // Small change between -50 and +80
+                const userChange = Math.floor(Math.random() * 131) - 50;
+                let newActiveUsers = currentActiveUsers + userChange;
+
+                // Ensure values stay within reasonable bounds
+                newActiveUsers = Math.max(2500, Math.min(5000, newActiveUsers));
+                activeUsersElement.textContent = newActiveUsers.toLocaleString();
+            }
+        }
+
+        // Update statistics every 8 seconds to simulate live data
+        setInterval(simulateLiveUpdates, 8000);
+
+        // Initialize with default values
+        updateLibraryStats('today');
+    </script>
+</body>
+</html>

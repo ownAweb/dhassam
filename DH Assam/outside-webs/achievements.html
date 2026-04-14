@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Darul Huda Assam Centre - Achievements & Excellence</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #2c5f2d;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #4a8c4a;
+            padding: 0.5rem;
+        }
+
+        .nav-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            margin: 0.2rem;
+            background-color: #3a7b3a;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-link:hover {
+            background-color: #2c5f2d;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .welcome {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .achievement-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            color: #2c5f2d;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #4a8c4a;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .achievement-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .achievement-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .achievement-content {
+            padding: 1.5rem;
+        }
+
+        .achievement-title {
+            color: #2c5f2d;
+            margin-bottom: 0.8rem;
+        }
+
+        .achievement-description {
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        .achievement-date {
+            color: #888;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            min-width: 150px;
+        }
+
+        .stat-number {
+            color: #2c5f2d;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #555;
+            font-size: 1rem;
+        }
+
+        footer {
+            background-color: #2c5f2d;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.8rem 1.5rem;
+            background-color: #3a7b3a;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .back-link:hover {
+            background-color: #2c5f2d;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>DARUL HUDA ASSAM CENTRE</h1>
+        <p>ACHIEVEMENTS & EXCELLENCE</p>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="#academic" class="nav-link">Academic Excellence</a>
+            <a href="#competitions" class="nav-link">Competitions</a>
+            <a href="#community" class="nav-link">Publications</a>
+            <a href="#sports" class="nav-link">Sports Achievements</a>
+        </div>
+    </nav>
+
+    <main>
+        <section class="welcome">
+            <h2>Celebrating Student Success</h2>
+            <p>At Darul Huda Assam Centre, we take immense pride in the remarkable achievements of our students. This page highlights their academic excellence, competition victories, community service initiatives, and sports accomplishments that exemplify our institution's commitment to holistic education.</p>
+        </section>
+
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-number">95%</div>
+                <div class="stat-label">HSLC Pass Rate</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">42</div>
+                <div class="stat-label">Awards in 2025</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">150+</div>
+                <div class="stat-label">Community Projects</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">27</div>
+                <div class="stat-label">Sports Championships</div>
+            </div>
+        </div>
+
+        <section id="academic" class="achievement-section">
+            <h2 class="section-title">Academic Excellence</h2>
+            <div class="achievement-grid">
+                <div class="achievement-card">
+                    <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Academic Awards Ceremony" class="achievement-image">
+                    <div class="achievement-content">
+                        <h3 class="achievement-title">State Topper in HSLC Exam</h3>
+                        <p class="achievement-description">Mohammed Aarif secured 1st rank in the state HSLC examination with 98.5% marks, bringing honor to our institution.</p>
+                        <p class="achievement-date">March 2025</p>
+                    </div>
+                </div>
+                <div class="achievement-card">
+                    <img src="https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Science Exhibition" class="achievement-image">
+                    <div class="achievement-content">
+                        <h3 class="achievement-title">National Science Fair Winners</h3>
+                        <p class="achievement-description">Our student team won 2nd prize at the National Level Science Exhibition for their innovative water purification project.</p>
+                        <p class="achievement-date">November 2025</p>
+                    </div>
+                </div>
+                <div class="achievement-card">
+                    <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Scholarship Awards" class="achievement-image">
+                    <div class="achievement-content">
+                        <h3 class="achievement-title">University Scholarships</h3>
+                        <p class="achievement-description">12 students received full scholarships for higher education at prestigious universities across India.</p>
+                        <p class="achievement-date">August 2025</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="competitions" class="achievement-section">
+            <h2 class="section-title">Competition Achievements</h2>
+            <div class="achievement-grid">
+                <div class="achievement-card">
+                    <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Debate Competition" class="achievement-image">
+                    <div class="achievement-content">
+                        <h3 class="achievement-title">Inter-School Debate Champions</h3>
+                        <p class="achievement-description">Our debate team emerged victorious in the All Assam Inter-School Debate Competition, showcasing exceptional oratory skills.</p>
+                        <p class="achievement-date">February 2025</p>
+                    </div>
+                </div>
+                <div class="achievement-card">
+                    <img src="https://images.unsplash.com/photo-1516937941344-00b4e0337589?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Quran Competition" class="achievement-image">
+                    <div class="achievement-content">
+                        <h3 class="achievement-title">Quran Recitation Excellence</h3>
+                        <p class="achievement-description">Fatima Ahmed secured 1st place in the National Quran Recitation Competition held in Delhi.</p>
+                        <p class="achievement-date">January 2025</p>
+                    </div>
+                </div>
+                <div class="achievement-card">
+                    <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Art Competition" class="achievement-image">
+                    <div class="achievement-content">
+                        <h3 class="achievement-title">Art & Calligraphy Awards</h3>
+                        <p class="achievement-description">Students won multiple awards in the State Level Art and Islamic Calligraphy Competition.</p>
+                        <p class="achievement-date">October 2025</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="publications" class="achievement-section">
+            <h2 class="section-title">Publications</h2>
+            <div class="achievement-grid">
+                <div class="achievement-card">
+                    <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Flood Relief" class="achievement-image">
+                    <div class="achievement-content">
+                        <h3 class="achievement-title">Flood Relief Campaign</h3>
+                        <p class="achievement-description">Students organized a successful relief campaign for flood-affected communities, providing essential supplies to 500+ families.</p>
+                        <p class="achievement-date">July 2025</p>
+                    </div>
+                </div>
+                <div class="achievement-card">
+                    <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Literacy Drive" class="achievement-image">
+                    <div class="achievement-content">
+                        <h3 class="achievement-title">Adult Literacy Drive</h3>
+                        <p class="achievement-description">Our students taught basic literacy skills to 200+ adults in surrounding villages over a 6-month period.</p>
+                        <p class="achievement-date">June 2025</p>
+                    </div>
+                </div>
+                <div class="achievement-card">
+                    <img src="https://images.unsplash.com/photo-1559028012-481c04fa702d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Environmental Cleanup" class="achievement-image">
+                    <div class="achievement-content">
+                        <h3 class="achievement-title">Environmental Awareness Campaign</h3>
+                        <p class="achievement-description">Students led a successful plastic-free campus initiative and tree plantation drive across the district.</p>
+                        <p class="achievement-date">April 2025</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sports" class="achievement-section">
+            <h2 class="section-title">Sports Achievements</h2>
+            <div class="achievement-grid">
+                <div class="achievement-card">
+                    <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Football Tournament" class="achievement-image">
+                    <div class="achievement-content">
+                        <h3 class="achievement-title">Inter-School Football Champions</h3>
+                        <p class="achievement-description">Our football team won the District Level Inter-School Football Tournament for the third consecutive year.</p>
+                        <p class="achievement-date">September 2025</p>
+                    </div>
+                </div>
+                <div class="achievement-card">
+                    <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Athletics Meet" class="achievement-image">
+                    <div class="achievement-content">
+                        <h3 class="achievement-title">Athletics Meet Medalists</h3>
+                        <p class="achievement-description">Students won 15 medals in the State School Athletics Meet, including 5 gold medals in track events.</p>
+                        <p class="achievement-date">December 2025</p>
+                    </div>
+                </div>
+                <div class="achievement-card">
+                    <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Cricket Team" class="achievement-image">
+                    <div class="achievement-content">
+                        <h3 class="achievement-title">Cricket Tournament Runners-up</h3>
+                        <p class="achievement-description">Our cricket team secured 2nd position in the Inter-Islamic Institution Cricket Championship.</p>
+                        <p class="achievement-date">November 2025</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div style="text-align: center;">
+            <a href="../index.html" class="back-link">Back to Home Page</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>Darul Huda Assam Centre &copy; 2026 | Achievements & Excellence | Contact: info@dhassam.edu | Phone: +91 00000 00000</p>
+    </footer>
+</body>
+</html>
