@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Auditorium Statistics Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #2c3e50;
+            line-height: 1.6;
+            background-image: radial-gradient(#e0e7ff 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(30%, -30%);
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .auditorium-info {
+            flex: 1;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            font-weight: 800;
+        }
+
+        .school-name {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.1rem;
+            max-width: 600px;
+        }
+
+        .auditorium-status {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            min-width: 280px;
+        }
+
+        .status-indicator {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: #10b981;
+            margin-right: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        .status-text {
+            font-weight: 700;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .current-event {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            text-align: center;
+        }
+
+        .event-time {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fbbf24;
+            margin-top: 5px;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 18px;
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.08);
+            padding: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 6px solid #4f46e5;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .card-icon {
+            width: 65px;
+            height: 65px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 18px;
+            font-size: 2rem;
+            color: white;
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-title {
+            font-size: 1.6rem;
+            color: #4f46e5;
+            font-weight: 700;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .stat-item {
+            background-color: #f8fafc;
+            padding: 22px;
+            border-radius: 14px;
+            text-align: center;
+            transition: background-color 0.2s;
+            border: 1px solid #e5e7eb;
+        }
+
+        .stat-item:hover {
+            background-color: #f0f9ff;
+        }
+
+        .stat-value {
+            font-size: 2.6rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: #4b5563;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .event-list {
+            list-style-type: none;
+        }
+
+        .event-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 18px;
+            border-radius: 12px;
+            transition: background-color 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .event-item:hover {
+            background-color: #f8fafc;
+            border-color: #e5e7eb;
+        }
+
+        .event-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .event-info {
+            flex: 1;
+        }
+
+        .event-name {
+            font-weight: 700;
+            margin-bottom: 6px;
+            font-size: 1.2rem;
+        }
+
+        .event-details {
+            color: #4b5563;
+            font-size: 0.95rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .progress-container {
+            margin-top: 12px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background-color: #e5e7eb;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 5px;
+        }
+
+        .calendar-schedule {
+            margin-top: 20px;
+        }
+
+        .schedule-item {
+            display: flex;
+            align-items: center;
+            padding: 18px 0;
+            border-bottom: 2px dashed #e5e7eb;
+        }
+
+        .schedule-item:last-child {
+            border-bottom: none;
+        }
+
+        .schedule-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 18px;
+            color: white;
+            font-size: 1.3rem;
+        }
+
+        .schedule-info {
+            flex: 1;
+        }
+
+        .schedule-title {
+            font-weight: 700;
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+
+        .schedule-meta {
+            color: #4b5563;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .current-occupancy {
+            background-color: #f0f9ff;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 10px;
+            border: 2px solid #4f46e5;
+        }
+
+        .seating-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .seating-item {
+            background-color: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .seating-value {
+            font-size: 1.9rem;
+            font-weight: 800;
+            color: #4f46e5;
+            margin-bottom: 6px;
+        }
+
+        .seating-label {
+            color: #4b5563;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .booking-stats {
+            margin-top: 20px;
+        }
+
+        .booking-item {
+            display: flex;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px dashed #e5e7eb;
+        }
+
+        .booking-item:last-child {
+            border-bottom: none;
+        }
+
+        .booking-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 18px;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .booking-info {
+            flex: 1;
+        }
+
+        .booking-name {
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .booking-details {
+            color: #4b5563;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .equipment-tracker {
+            margin-top: 20px;
+        }
+
+        .equipment-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .equipment-type {
+            width: 140px;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        .equipment-bar-container {
+            flex: 1;
+            margin-left: 20px;
+        }
+
+        .equipment-status {
+            width: 80px;
+            text-align: right;
+            font-weight: 700;
+            color: #4f46e5;
+        }
+
+        .equipment-bar {
+            height: 24px;
+            background-color: #e5e7eb;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .equipment-fill {
+            height: 100%;
+            border-radius: 12px;
+        }
+
+        .usage-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .usage-item {
+            background-color: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .usage-value {
+            font-size: 1.9rem;
+            font-weight: 800;
+            color: #10b981;
+            margin-bottom: 6px;
+        }
+
+        .usage-label {
+            color: #4b5563;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .student-board {
+            background: linear-gradient(135deg, #f8fafc 0%, #f0f9ff 100%);
+            border: 2px solid #e5e7eb;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .board-title {
+            font-weight: 700;
+            color: #4f46e5;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .student-message {
+            color: #2c3e50;
+            font-style: italic;
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 10px;
+            border-left: 4px solid #4f46e5;
+        }
+
+        .student-author {
+            text-align: right;
+            color: #4b5563;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .alert-banner {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 2px solid #f59e0b;
+            border-radius: 12px;
+            padding: 18px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .alert-icon {
+            color: #92400e;
+            font-size: 1.8rem;
+            margin-right: 20px;
+        }
+
+        .alert-content {
+            flex: 1;
+        }
+
+        .alert-title {
+            font-weight: 700;
+            color: #92400e;
+            margin-bottom: 6px;
+            font-size: 1.2rem;
+        }
+
+        .alert-message {
+            color: #92400e;
+            font-size: 1rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            background: white;
+            padding: 18px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .tab-btn {
+            padding: 14px 28px;
+            background-color: #f8fafc;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+            color: #4b5563;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.05rem;
+        }
+
+        .tab-btn:hover {
+            background-color: #f0f9ff;
+            border-color: #4f46e5;
+            color: #4f46e5;
+        }
+
+        .tab-btn.active {
+            background-color: #4f46e5;
+            color: white;
+            border-color: #4f46e5;
+        }
+
+        .tab-btn i {
+            font-size: 1.2rem;
+        }
+
+        .grade-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        .grade-primary {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+
+        .grade-middle {
+            background-color: #fce7f3;
+            color: #be185d;
+        }
+
+        .grade-high {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+
+        .grade-staff {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .grade-external {
+            background-color: #e0e7ff;
+            color: #3730a3;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 2px solid #e5e7eb;
+            color: #4b5563;
+            font-size: 0.95rem;
+        }
+
+        .update-time {
+            font-weight: 700;
+            color: #4f46e5;
+        }
+
+        .motto {
+            font-style: italic;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            color: #4f46e5;
+            font-weight: 600;
+        }
+
+        .live-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #ef4444;
+            margin-right: 8px;
+            animation: pulse 1s infinite;
+        }
+
+        .seating-map {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .seat {
+            width: 25px;
+            height: 25px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .seat-occupied {
+            background-color: #ef4444;
+        }
+
+        .seat-available {
+            background-color: #10b981;
+        }
+
+        .seat-reserved {
+            background-color: #f59e0b;
+        }
+
+        .seat-legend {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 3px;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid, .seating-grid, .usage-metrics {
+                grid-template-columns: 1fr;
+            }
+
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .auditorium-status {
+                margin-top: 25px;
+                align-self: stretch;
+            }
+
+            .tabs {
+                justify-content: center;
+            }
+
+            .seating-map {
+                grid-template-columns: repeat(8, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="auditorium-info">
+                    <h1>School Auditorium Dashboard</h1>
+                    <div class="school-name">St. Michael's High School</div>
+                    <p class="subtitle">Tracking events, bookings, equipment, and seating for school performances, assemblies, and activities</p>
+                </div>
+                <div class="auditorium-status">
+                    <div class="status-text">
+                        <div class="status-indicator"></div>
+                        <span id="status-text">Auditorium Occupied</span>
+                    </div>
+                    <div class="current-event" id="current-event">Annual Science Fair Presentations</div>
+                    <div class="event-time" id="event-time">10:30 AM - 12:00 PM</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-view="today">
+                <i class="fas fa-calendar-day"></i> Today
+            </button>
+            <button class="tab-btn" data-view="week">
+                <i class="fas fa-calendar-week"></i> This Week
+            </button>
+            <button class="tab-btn" data-view="month">
+                <i class="fas fa-calendar-alt"></i> This Month
+            </button>
+            <button class="tab-btn" data-view="academic">
+                <i class="fas fa-graduation-cap"></i> Academic Year
+            </button>
+        </div>
+
+        <div class="dashboard">
+            <!-- Auditorium Overview Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);">
+                        <i class="fas fa-theater-masks"></i>
+                    </div>
+                    <h2 class="card-title">Auditorium Overview</h2>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="total-seats">450</div>
+                        <div class="stat-label">Total Seating Capacity</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="current-occupancy">85%</div>
+                        <div class="stat-label">Current Occupancy</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">18</div>
+                        <div class="stat-label">Events This Month</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">4.7</div>
+                        <div class="stat-label">Avg. Event Rating</div>
+                    </div>
+                </div>
+
+                <div class="current-occupancy">
+                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                        <div class="schedule-icon" style="background-color: #4f46e5;">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div>
+                            <div class="schedule-title" style="color: #4f46e5;">Current Audience: 382 Students & Staff</div>
+                            <div class="schedule-meta">
+                                <span>Grades 9-12 + Teachers</span>
+                                <span>85% capacity</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="seating-map">
+                        <!-- Row 1 -->
+                        <div class="seat seat-occupied">1</div>
+                        <div class="seat seat-occupied">2</div>
+                        <div class="seat seat-occupied">3</div>
+                        <div class="seat seat-occupied">4</div>
+                        <div class="seat seat-occupied">5</div>
+                        <div class="seat seat-occupied">6</div>
+                        <div class="seat seat-occupied">7</div>
+                        <div class="seat seat-occupied">8</div>
+                        <div class="seat seat-occupied">9</div>
+                        <div class="seat seat-occupied">10</div>
+
+                        <!-- Row 2 -->
+                        <div class="seat seat-occupied">11</div>
+                        <div class="seat seat-occupied">12</div>
+                        <div class="seat seat-occupied">13</div>
+                        <div class="seat seat-available">14</div>
+                        <div class="seat seat-available">15</div>
+                        <div class="seat seat-occupied">16</div>
+                        <div class="seat seat-occupied">17</div>
+                        <div class="seat seat-occupied">18</div>
+                        <div class="seat seat-reserved">19</div>
+                        <div class="seat seat-reserved">20</div>
+                    </div>
+
+                    <div class="seat-legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: #ef4444;"></div>
+                            <span>Occupied</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: #10b981;"></div>
+                            <span>Available</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: #f59e0b;"></div>
+                            <span>Reserved</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Today's Schedule Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h2 class="card-title">Today's Schedule</h2>
+                </div>
+
+                <div class="calendar-schedule">
+                    <div class="schedule-item">
+                        <div class="schedule-icon" style="background-color: #ef4444;">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <div class="schedule-info">
+                            <div class="schedule-title">Morning Assembly</div>
+                            <div class="schedule-meta">
+                                <span>8:00 AM - 8:30 AM</span>
+                                <span>All Students</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="schedule-icon" style="background-color: #10b981;">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <div class="schedule-info">
+                            <div class="schedule-title">Science Fair Presentations</div>
+                            <div class="schedule-meta">
+                                <span>10:30 AM - 12:00 PM (Current)</span>
+                                <span>Grades 9-12</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="schedule-icon" style="background-color: #8b5cf6;">
+                            <i class="fas fa-music"></i>
+                        </div>
+                        <div class="schedule-info">
+                            <div class="schedule-title">Music Club Practice</div>
+                            <div class="schedule-meta">
+                                <span>2:00 PM - 4:00 PM</span>
+                                <span>Music Club (35 students)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="schedule-icon" style="background-color: #3b82f6;">
+                            <i class="fas fa-theater-masks"></i>
+                        </div>
+                        <div class="schedule-info">
+                            <div class="schedule-title">Drama Club Rehearsal</div>
+                            <div class="schedule-meta">
+                                <span>4:30 PM - 6:30 PM</span>
+                                <span>"Romeo & Juliet" Cast</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="seating-grid">
+                    <div class="seating-item">
+                        <div class="seating-value">4</div>
+                        <div class="seating-label">Events Today</div>
+                    </div>
+                    <div class="seating-item">
+                        <div class="seating-value">6.5</div>
+                        <div class="seating-label">Hours Booked</div>
+                    </div>
+                    <div class="seating-item">
+                        <div class="seating-value">85%</div>
+                        <div class="seating-label">Time Utilization</div>
+                    </div>
+                    <div class="seating-item">
+                        <div class="seating-value">3</div>
+                        <div class="seating-label">Clubs Using</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upcoming Events Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                        <i class="fas fa-calendar-plus"></i>
+                    </div>
+                    <h2 class="card-title">Upcoming Events</h2>
+                </div>
+
+                <div class="event-list">
+                    <div class="event-item">
+                        <div class="event-icon" style="background-color: #ef4444;">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="event-info">
+                            <div class="event-name">Annual Prize Distribution</div>
+                            <div class="event-details">
+                                <span>Friday, 10:00 AM</span>
+                                <span>
+                                    <span class="grade-badge grade-high">High School</span>
+                                    <span class="grade-badge grade-staff">Staff</span>
+                                </span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 100%; background-color: #ef4444;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-icon" style="background-color: #8b5cf6;">
+                            <i class="fas fa-theater-masks"></i>
+                        </div>
+                        <div class="event-info">
+                            <div class="event-name">Drama Club Performance</div>
+                            <div class="event-details">
+                                <span>Next Monday, 6:00 PM</span>
+                                <span>
+                                    <span class="grade-badge grade-high">Grade 11-12</span>
+                                    <span class="grade-badge grade-external">Parents</span>
+                                </span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 85%; background-color: #8b5cf6;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-icon" style="background-color: #3b82f6;">
+                            <i class="fas fa-microphone-alt"></i>
+                        </div>
+                        <div class="event-info">
+                            <div class="event-name">Debate Competition Finals</div>
+                            <div class="event-details">
+                                <span>Next Wednesday, 2:00 PM</span>
+                                <span>
+                                    <span class="grade-badge grade-middle">Grade 6-8</span>
+                                </span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 70%; background-color: #3b82f6;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-icon" style="background-color: #f59e0b;">
+                            <i class="fas fa-music"></i>
+                        </div>
+                        <div class="event-info">
+                            <div class="event-name">Winter Choir Concert</div>
+                            <div class="event-details">
+                                <span>Next Friday, 5:30 PM</span>
+                                <span>
+                                    <span class="grade-badge grade-high">Choir Members</span>
+                                    <span class="grade-badge grade-external">Public</span>
+                                </span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 60%; background-color: #f59e0b;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-grid" style="margin-top: 20px;">
+                    <div class="stat-item">
+                        <div class="stat-value">12</div>
+                        <div class="stat-label">Events This Month</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">7</div>
+                        <div class="stat-label">External Events</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Requests Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <h2 class="card-title">Booking Requests</h2>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">8</div>
+                        <div class="stat-label">Pending Requests</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">24</div>
+                        <div class="stat-label">Approved This Month</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">3</div>
+                        <div class="stat-label">Rejected This Month</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">94%</div>
+                        <div class="stat-label">Approval Rate</div>
+                    </div>
+                </div>
+
+                <div class="booking-stats">
+                    <h3 style="margin: 20px 0 15px 0; color: #4f46e5;">Recent Requests</h3>
+                    <div class="booking-item">
+                        <div class="booking-avatar" style="background-color: #4f46e5;">
+                            MR
+                        </div>
+                        <div class="booking-info">
+                            <div class="booking-name">Math Club - Pi Day Celebration</div>
+                            <div class="booking-details">
+                                <span>Mr. Rajesh • Math Department</span>
+                                <span>Pending</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="booking-item">
+                        <div class="booking-avatar" style="background-color: #10b981;">
+                            SP
+                        </div>
+                        <div class="booking-info">
+                            <div class="booking-name">Science Olympiad Practice</div>
+                            <div class="booking-details">
+                                <span>Mrs. Priya • Science Dept</span>
+                                <span>Approved</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="booking-item">
+                        <div class="booking-avatar" style="background-color: #f59e0b;">
+                            AS
+                        </div>
+                        <div class="booking-info">
+                            <div class="booking-name">Art Exhibition Setup</div>
+                            <div class="booking-details">
+                                <span>Art Club • Grade 10</span>
+                                <span>Approved</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="booking-item">
+                        <div class="booking-avatar" style="background-color: #ef4444;">
+                            PT
+                        </div>
+                        <div class="booking-info">
+                            <div class="booking-name">PTA Meeting</div>
+                            <div class="booking-details">
+                                <span>Parent-Teacher Association</span>
+                                <span>Pending</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Equipment & Facilities Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h2 class="card-title">Equipment & Facilities</h2>
+                </div>
+
+                <div class="equipment-tracker">
+                    <h3 style="margin: 0 0 15px 0; color: #4f46e5;">Equipment Status</h3>
+                    <div class="equipment-item">
+                        <div class="equipment-type">Sound System</div>
+                        <div class="equipment-bar-container">
+                            <div class="equipment-bar">
+                                <div class="equipment-fill" style="width: 95%; background: linear-gradient(135deg, #10b981 0%, #059669 100%);"></div>
+                            </div>
+                        </div>
+                        <div class="equipment-status">Optimal</div>
+                    </div>
+                    <div class="equipment-item">
+                        <div class="equipment-type">Projector & Screen</div>
+                        <div class="equipment-bar-container">
+                            <div class="equipment-bar">
+                                <div class="equipment-fill" style="width: 88%; background: linear-gradient(135deg, #10b981 0%, #059669 100%);"></div>
+                            </div>
+                        </div>
+                        <div class="equipment-status">Good</div>
+                    </div>
+                    <div class="equipment-item">
+                        <div class="equipment-type">Stage Lighting</div>
+                        <div class="equipment-bar-container">
+                            <div class="equipment-bar">
+                                <div class="equipment-fill" style="width: 65%; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);"></div>
+                            </div>
+                        </div>
+                        <div class="equipment-status">Needs Check</div>
+                    </div>
+                    <div class="equipment-item">
+                        <div class="equipment-type">Microphones</div>
+                        <div class="equipment-bar-container">
+                            <div class="equipment-bar">
+                                <div class="equipment-fill" style="width: 92%; background: linear-gradient(135deg, #10b981 0%, #059669 100%);"></div>
+                            </div>
+                        </div>
+                        <div class="equipment-status">Optimal</div>
+                    </div>
+                </div>
+
+                <div class="usage-metrics">
+                    <div class="usage-item">
+                        <div class="usage-value">42</div>
+                        <div class="usage-label">Total Equipment Items</div>
+                    </div>
+                    <div class="usage-item">
+                        <div class="usage-value">96%</div>
+                        <div class="usage-label">Operational Status</div>
+                    </div>
+                    <div class="usage-item">
+                        <div class="usage-value">8</div>
+                        <div class="usage-label">Pending Repairs</div>
+                    </div>
+                    <div class="usage-item">
+                        <div class="usage-value">₹24,850</div>
+                        <div class="usage-label">Maintenance Budget</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Student Feedback & Impact Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);">
+                        <i class="fas fa-comment-alt"></i>
+                    </div>
+                    <h2 class="card-title">Student Feedback & Impact</h2>
+                </div>
+
+                <div class="usage-metrics">
+                    <div class="usage-item">
+                        <div class="usage-value">4.7/5</div>
+                        <div class="usage-label">Avg. Event Rating</div>
+                    </div>
+                    <div class="usage-item">
+                        <div class="usage-value">428</div>
+                        <div class="usage-label">Feedback Surveys</div>
+                    </div>
+                    <div class="usage-item">
+                        <div class="usage-value">92%</div>
+                        <div class="usage-label">Student Satisfaction</div>
+                    </div>
+                    <div class="usage-item">
+                        <div class="usage-value">18</div>
+                        <div class="usage-label">Clubs Using Facility</div>
+                    </div>
+                </div>
+
+                <div class="student-board">
+                    <div class="board-title">Student Voices</div>
+                    <div class="student-message">
+                        "The auditorium has given me the confidence to speak in front of large audiences. Our debate competitions here have been transformative for my public speaking skills."
+                    </div>
+                    <div class="student-author">- Ananya, Grade 11 (Debate Club President)</div>
+
+                    <div class="student-message" style="margin-top: 20px;">
+                        "Performing in the annual drama production was the highlight of my school year. The lighting and sound systems make it feel like a real theater!"
+                    </div>
+                    <div class="student-author">- Rohit, Grade 12 (Drama Club)</div>
+                </div>
+
+                <div class="alert-banner" style="margin-top: 20px; background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); border-color: #10b981;">
+                    <div class="alert-icon" style="color: #065f46;">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <div class="alert-content">
+                        <div class="alert-title" style="color: #065f46;">Student Suggestion</div>
+                        <div class="alert-message" style="color: #065f46;">More movie screenings for educational purposes requested by 85% of surveyed students.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>St. Michael's High School Auditorium Dashboard • Last updated: <span class="update-time" id="update-time"></span> • School Admin Access Only</p>
+            <p class="motto">"Where young minds find their voice and talents take center stage."</p>
+            <p style="margin-top: 8px;">© 2023 St. Michael's High School • Auditorium Manager: Mrs. Sharma • <i class="fas fa-phone-alt"></i> Ext: 245</p>
+        </div>
+    </div>
+
+    <script>
+        // Set current update time
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('update-time').textContent = timeString;
+
+            // Update current event based on time
+            updateCurrentEvent(now);
+        }
+
+        // Update current event based on time of day
+        function updateCurrentEvent(now) {
+            const currentHour = now.getHours();
+            const currentMinute = now.getMinutes();
+            const statusElement = document.getElementById('status-text');
+            const eventElement = document.getElementById('current-event');
+            const timeElement = document.getElementById('event-time');
+
+            if (currentHour >= 8 && currentHour < 8.5) {
+                statusElement.textContent = "Auditorium Occupied";
+                eventElement.textContent = "Morning Assembly";
+                timeElement.textContent = "8:00 AM - 8:30 AM";
+            } else if (currentHour >= 10.5 && currentHour < 12) {
+                statusElement.textContent = "Auditorium Occupied";
+                eventElement.textContent = "Science Fair Presentations";
+                timeElement.textContent = "10:30 AM - 12:00 PM";
+            } else if (currentHour >= 14 && currentHour < 16) {
+                statusElement.textContent = "Auditorium Occupied";
+                eventElement.textContent = "Music Club Practice";
+                timeElement.textContent = "2:00 PM - 4:00 PM";
+            } else if (currentHour >= 16.5 && currentHour < 18.5) {
+                statusElement.textContent = "Auditorium Occupied";
+                eventElement.textContent = "Drama Club Rehearsal";
+                timeElement.textContent = "4:30 PM - 6:30 PM";
+            } else {
+                statusElement.textContent = "Auditorium Available";
+                eventElement.textContent = "No scheduled events";
+                timeElement.textContent = "Available for booking";
+            }
+        }
+
+        // Initial call
+        updateTime();
+
+        // Update time every second
+        setInterval(updateTime, 1000);
+
+        // Tab buttons functionality
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+
+                // Add active class to clicked button
+                this.classList.add('active');
+
+                const view = this.getAttribute('data-view');
+                updateAuditoriumStats(view);
+            });
+        });
+
+        // Function to update statistics based on selected view
+        function updateAuditoriumStats(view) {
+            let totalSeats, currentOccupancy, pendingRequests;
+
+            switch(view) {
+                case 'today':
+                    totalSeats = "450";
+                    currentOccupancy = "85%";
+                    pendingRequests = "8";
+                    break;
+                case 'week':
+                    totalSeats = "450";
+                    currentOccupancy = "72%";
+                    pendingRequests = "12";
+                    break;
+                case 'month':
+                    totalSeats = "450";
+                    currentOccupancy = "68%";
+                    pendingRequests = "24";
+                    break;
+                case 'academic':
+                    totalSeats = "450";
+                    currentOccupancy = "64%";
+                    pendingRequests = "42";
+                    break;
+            }
+
+            // Update DOM elements
+            document.getElementById('total-seats').textContent = totalSeats;
+            document.getElementById('current-occupancy').textContent = currentOccupancy;
+
+            // Update pending requests in booking card
+            const pendingElement = document.querySelector('.stats-grid .stat-item:nth-child(1) .stat-value');
+            if (pendingElement) {
+                pendingElement.textContent = pendingRequests;
+            }
+        }
+
+        // Function to simulate live data updates
+        function simulateLiveUpdates() {
+            // Update current occupancy (simulate students entering/leaving)
+            const occupancyElement = document.getElementById('current-occupancy');
+            let currentOccupancy = parseInt(occupancyElement.textContent);
+
+            // Random change between -3% and +3%
+            const change = Math.floor(Math.random() * 7) - 3;
+            let newOccupancy = currentOccupancy + change;
+
+            // Ensure values stay within reasonable bounds (0-100%)
+            newOccupancy = Math.max(0, Math.min(100, newOccupancy));
+            occupancyElement.textContent = newOccupancy + "%";
+
+            // Update seating map visualization
+            updateSeatingMap(newOccupancy);
+
+            // Occasionally update pending requests
+            if (Math.random() > 0.8) { // 20% chance
+                const pendingElement = document.querySelector('.stats-grid .stat-item:nth-child(1) .stat-value');
+                if (pendingElement) {
+                    let currentPending = parseInt(pendingElement.textContent);
+                    const change = Math.random() > 0.5 ? 1 : -1;
+                    let newPending = currentPending + change;
+
+                    // Ensure values stay within reasonable bounds (0-15)
+                    newPending = Math.max(0, Math.min(15, newPending));
+                    pendingElement.textContent = newPending;
+                }
+            }
+        }
+
+        // Function to update seating map based on occupancy
+        function updateSeatingMap(occupancy) {
+            const seats = document.querySelectorAll('.seat');
+            const occupiedPercentage = occupancy / 100;
+
+            seats.forEach(seat => {
+                const random = Math.random();
+
+                // Clear existing classes
+                seat.classList.remove('seat-occupied', 'seat-available', 'seat-reserved');
+
+                if (random < occupiedPercentage * 0.7) {
+                    // 70% of occupancy are regular occupied seats
+                    seat.classList.add('seat-occupied');
+                } else if (random < occupiedPercentage) {
+                    // Remaining occupancy are reserved seats
+                    seat.classList.add('seat-reserved');
+                } else {
+                    // The rest are available
+                    seat.classList.add('seat-available');
+                }
+            });
+        }
+
+        // Update statistics every 10 seconds to simulate live data
+        setInterval(simulateLiveUpdates, 10000);
+
+        // Initialize with default values
+        updateAuditoriumStats('today');
+        updateSeatingMap(85); // Initial occupancy
+    </script>
+</body>
+</html>

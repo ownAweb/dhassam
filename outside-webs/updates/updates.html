@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>More Updates – Darul Huda Assam Centre</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ------------------------------------------------------------
+           MAIN SITE HEADER STYLES (identical to index, but no nav/bell)
+        ------------------------------------------------------------ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        :root {
+            --primary: #1a365d;
+            --secondary: #2d3748;
+            --accent: #c53030;
+            --gold: #b7791f;
+            --light: #f7fafc;
+            --dark: #1a202c;
+            --gray: #718096;
+            --gradient-primary: linear-gradient(45deg, var(--secondary), var(--accent));
+            --gradient-accent: linear-gradient(135deg, #b7791f 0%, #975a16 100%);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
+            --shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.07);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            line-height: 1.7;
+            color: #2d3748;
+            background-color: #f8fafc;
+            scroll-behavior: smooth; /* for smooth back to top */
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* ----- HEADER (same as main page, logo bg removed to match white) ----- */
+        header {
+            background-color: rgba(255, 255, 255, 0.97);
+            color: var(--primary);
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            position: sticky;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        header.scrolled {
+            padding: 0.7rem 0;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.98);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
+        }
+
+        .logo-icon {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* no background at all – pure transparent */
+            background: transparent;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            display: block;
+        }
+
+        .logo-text h1 {
+            font-size: 1.6rem;
+            background: linear-gradient(45deg, var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        .logo-text p {
+            font-size: 0.75rem;
+            color: var(--gray);
+            margin-top: 2px;
+            font-weight: 500;
+        }
+
+        /* right side: only the back home button */
+        .header-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .back-home-btn {
+            background: var(--accent);
+            color: white;
+            padding: 0.7rem 1.8rem;
+            border-radius: 2px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+            border: 1px solid var(--accent);
+            text-transform: uppercase;
+        }
+
+        .back-home-btn:hover {
+            background: #9b2c2c;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* no mobile menu, no bell */
+        .mobile-menu-btn, .notification-toggle {
+            display: none;
+        }
+
+        /* ------------------------------------------------------------
+           PAGE SPECIFIC STYLES (archive grid, title, etc.)
+        ------------------------------------------------------------ */
+        .page-title {
+            text-align: center;
+            margin: 2.5rem 0 3rem;
+        }
+        .page-title h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            font-family: 'Georgia', serif;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+        .page-title h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--accent);
+        }
+        .page-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 1rem auto 0;
+            font-size: 1.1rem;
+        }
+
+        /* news grid – 3 cards per row (identical to previous) */
+        .updates-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 3rem 0 4rem;
+        }
+
+        .update-card {
+            background: white;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            height: 100%;
+        }
+        .update-card:hover {
+            box-shadow: 0 12px 24px -10px rgba(197,48,48,0.15);
+            transform: translateY(-6px);
+        }
+        .card-img {
+            height: 210px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            background-color: #edf2f7;
+        }
+        .card-content {
+            padding: 1.8rem 1.8rem 2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .card-date {
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+        }
+        .card-content h3 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            font-family: 'Georgia', serif;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+        .card-content p {
+            color: var(--gray);
+            line-height: 1.6;
+            font-size: 0.95rem;
+            margin-bottom: 1.2rem;
+            flex-grow: 1;
+        }
+        .read-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: auto;
+            font-size: 0.9rem;
+            border-bottom: 1px solid transparent;
+            width: fit-content;
+            transition: var(--transition);
+        }
+        .read-link:hover {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        .read-link i {
+            font-size: 0.75rem;
+            transition: transform 0.2s;
+        }
+        .read-link:hover i {
+            transform: translateX(5px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 0.8rem 2.5rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            border-radius: 2px;
+        }
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(26,54,93,0.15);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 3rem 0 2rem;
+        }
+        .page-item {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border: 1px solid #e2e8f0;
+            color: var(--primary);
+            font-weight: 600;
+            cursor: default;
+        }
+        .page-item.active-page {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+        .page-item:first-child, .page-item:last-child {
+            width: auto;
+            padding: 0 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .page-item:first-child:hover, .page-item:last-child:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* ----- BACK TO TOP BUTTON (floating, smooth) ----- */
+        .back-to-top {
+            position: fixed;
+            bottom: 2.5rem;
+            right: 2rem;
+            background: var(--accent);
+            color: white;
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 10px 25px rgba(197, 48, 48, 0.3);
+            transition: var(--transition);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+            font-size: 1.3rem;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: #9b2c2c;
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 18px 30px rgba(197, 48, 48, 0.4);
+        }
+
+        /* ------------------------------------------------------------
+           NEW FOOTER – exactly matching main page text and structure
+           (border-top REMOVED)
+        ------------------------------------------------------------ */
+        .main-footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 1.0rem 0 1.5rem;
+            margin-top: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, var(--secondary), var(--accent));
+        }
+
+        .footer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 0.5rem;
+        }
+
+        /* copyright section – border-top REMOVED (no line) */
+        .copyright {
+            text-align: center;
+            padding-top: 1.0rem;
+            /* border-top: 1px solid rgba(255, 255, 255, 0.1);  <-- removed as requested */
+            color: #888;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .copyright a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .copyright a:hover {
+            text-decoration: underline;
+        }
+
+        /* responsive */
+        @media (max-width: 992px) {
+            .updates-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 768px) {
+            .logo-text h1 {
+                font-size: 1.3rem;
+            }
+            .back-home-btn {
+                padding: 0.5rem 1.2rem;
+                font-size: 0.8rem;
+            }
+            .back-to-top { bottom: 1.5rem; right: 1.5rem; width: 48px; height: 48px; }
+        }
+        @media (max-width: 600px) {
+            .updates-grid {
+                grid-template-columns: 1fr;
+            }
+            .page-title h1 {
+                font-size: 2rem;
+            }
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        /* image fallback: if logo fails, show "DH" with transparent bg */
+        .logo-icon img {
+            content: url('https://i.ibb.co/whW6QdYL/logo.png');
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER – identical to main page, transparent logo bg, no nav/bell -->
+    <header id="mainHeader">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">
+                    <img src="https://i.ibb.co/whW6QdYL/logo.png" alt="Darul Huda Assam Centre Logo" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'font-size:1.8rem; font-weight:bold; color:var(--primary);\'>DH</span>';">
+                </div>
+                <div class="logo-text">
+                    <h1>DH ASSAM</h1>
+                    <p>Soaring for Excellence..</p>
+                </div>
+            </a>
+
+            <div class="header-right">
+                <a href="../../index.html" class="back-home-btn">
+                    <i class="fas fa-arrow-left"></i> GO BACK
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- BACK TO TOP BUTTON (floating) -->
+    <a href="#" class="back-to-top" id="backToTopBtn" title="Back to top"><i class="fas fa-arrow-up"></i></a>
+
+    <main class="container">
+        <div class="page-title">
+            <h1>LATEST UPDATES</h1>
+            <p>News, events & announcements from Darul Huda Assam Centre</p>
+        </div>
+
+        <!-- UPDATES GRID (9 cards – same content as before) -->
+        <div class="updates-grid">
+            <!-- card 1 (SLF) -->
+            <div class="update-card">
+                <div class="card-img" style="background-image: url('https://i.ibb.co/spRXXfvP/IMG-20260117-WA0055.jpg');"></div>
+                <div class="card-content">
+                    <div class="card-date"><i class="far fa-calendar-alt"></i> 20-25 Dec 2025</div>
+                    <h3>Sidra Literature Festival 2025</h3>
+                    <p>Inaugural Sidra Literature Festival celebrated Assamese literary heritage with authors, students, and cultural performances across campus.</p>
+                    <a href="update1.html" class="read-link">Read entry <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <!-- card 2 (Qur'an Hizb Workshop) -->
+            <div class="update-card">
+                <div class="card-img" style="background-image: url('https://i.ibb.co/mFD8yKmB/IMG-20251202-153358350-HDR.jpg');"></div>
+                <div class="card-content">
+                    <div class="card-date"><i class="far fa-calendar-alt"></i> 1 Nov 2025</div>
+                    <h3>2nd Triennial Qur'an Hizb Workshop</h3>
+                    <p>Specialized training for degree students led by Ismail Hudawi; focus on Qur'anic hizb methodology and faculty development.</p>
+                    <a href="#" class="read-link">Read entry <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <!-- card 3 (Language Assembly) -->
+            <div class="update-card">
+                <div class="card-img" style="background-image: url('https://i.ibb.co/gb5R25NN/IMG-20251204-085610202-HDR-AE.jpg');"></div>
+                <div class="card-content">
+                    <div class="card-date"><i class="far fa-calendar-alt"></i> 14 Jan 2026</div>
+                    <h3>Junior Language Assembly: Time Management</h3>
+                    <p>Students presented themes of punctuality and time management in English, with skits and speeches attended by staff.</p>
+                    <a href="#" class="read-link">Read entry <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <!-- card 4 (admission) -->
+            <div class="update-card">
+                <div class="card-img" style="background-image: url('https://i.ibb.co/DHMZgKnj/IMG-20250913-170743423-AE.jpg'); background-position: top;"></div>
+                <div class="card-content">
+                    <div class="card-date"><i class="far fa-calendar-alt"></i> 10 Mar 2026</div>
+                    <h3>Admission 2026-27 – First List Published</h3>
+                    <p>Provisional list of selected candidates for the academic session 2026-27 is out. Document verification starts 20 March.</p>
+                    <a href="#" class="read-link">Read entry <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <!-- card 5 (ramadan) -->
+            <div class="update-card">
+                <div class="card-img" style="background-image: url('https://i.ibb.co/whW6QdYL/logo.png'); background-size: contain; background-color: #f1f5f9;"></div>
+                <div class="card-content">
+                    <div class="card-date"><i class="far fa-calendar-alt"></i> 28 Feb 2026</div>
+                    <h3>Ramadan Timetable & Iftar Program</h3>
+                    <p>Special taraweeh schedule and iftar gatherings for resident students. Donors welcome to sponsor daily iftar.</p>
+                    <a href="#" class="read-link">Read entry <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <!-- card 6 (quiz) -->
+            <div class="update-card">
+                <div class="card-img" style="background-image: url('https://i.ibb.co/bjH2P3xV/1769164810884.jpg');"></div>
+                <div class="card-content">
+                    <div class="card-date"><i class="far fa-calendar-alt"></i> 5 Feb 2026</div>
+                    <h3>Inter-School Islamic Quiz 2026</h3>
+                    <p>DH Assam hosted regional quiz competition with 15 schools; winners awarded by director Sayyid Mueenuddin Hudawi.</p>
+                    <a href="#" class="read-link">Read entry <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <!-- card 7 (faculty publication) -->
+            <div class="update-card">
+                <div class="card-img" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/500px-Unknown_person.jpg'); background-size: cover; background-position: center 20%;"></div>
+                <div class="card-content">
+                    <div class="card-date"><i class="far fa-calendar-alt"></i> 12 Jan 2026</div>
+                    <h3>Faculty Research Publication</h3>
+                    <p>Dr. Abdul Hameed's paper on "Integrating Islamic Ethics in Science Education" published in international journal.</p>
+                    <a href="#" class="read-link">Read entry <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <!-- card 8 (sports) -->
+            <div class="update-card">
+                <div class="card-img" style="background-image: url('https://i.ibb.co/bwH4xbB/1769164810991.jpg');"></div>
+                <div class="card-content">
+                    <div class="card-date"><i class="far fa-calendar-alt"></i> 18 Dec 2025</div>
+                    <h3>Annual Sports Meet 2025</h3>
+                    <p>Cricket, volleyball and athletics competitions held with enthusiastic participation from all grades.</p>
+                    <a href="#" class="read-link">Read entry <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <!-- card 9 (community iftar) -->
+            <div class="update-card">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'); background-position: 50% 30%;"></div>
+                <div class="card-content">
+                    <div class="card-date"><i class="far fa-calendar-alt"></i> 2 Apr 2026</div>
+                    <h3>Neighbourhood Iftar Meet</h3>
+                    <p>DH Assam Centre hosts annual community iftar; all local residents and well-wishers cordially invited.</p>
+                    <a href="#" class="read-link">Read entry <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- pagination (demo) -->
+        <div class="pagination">
+            <span class="page-item"><i class="fas fa-chevron-left"></i> Prev</span>
+            <span class="page-item active-page">1</span>
+            <span class="page-item">2</span>
+            <span class="page-item">3</span>
+            <span class="page-item">Next <i class="fas fa-chevron-right"></i></span>
+        </div>
+
+        <!-- optional extra home link (kept for convenience) -->
+        <div style="text-align: center; margin: 2rem 0 3rem;">
+            <a href="../../index.html" class="btn-outline"><i class="fas fa-home"></i> Return to Homepage</a>
+        </div>
+    </main>
+
+    <!-- FOOTER – border-top removed, back to top present -->
+    <footer class="main-footer">
+        <div class="container footer-container">
+            <div class="copyright">
+                <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a></p>
+                <p>&copy; 2026 Darul Huda Assam Centre. All rights reserved.</p>
+                <p style="margin-top: 0.8rem;"><small>Powered by <i class="fas fa-globe" style="color: var(--accent);"></i> <a href="#">OwnAWeb</a>.</small></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- minimal script: header scrolled + back to top logic + dummy pagination -->
+    <script>
+        (function() {
+            const header = document.getElementById('mainHeader');
+            const backBtn = document.getElementById('backToTopBtn');
+
+            // header scroll effect
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+
+                // back to top button visibility
+                if (window.scrollY > 400) {
+                    backBtn.classList.add('show');
+                } else {
+                    backBtn.classList.remove('show');
+                }
+            });
+
+            // back to top smooth click
+            backBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // dummy pagination alerts (same as original)
+            const prev = document.querySelector('.page-item:first-child');
+            const next = document.querySelector('.page-item:last-child');
+            if (prev) prev.addEventListener('click', () => alert('Archive: first page (demo).'));
+            if (next) next.addEventListener('click', () => alert('Archive: next page (demo).'));
+        })();
+    </script>
+</body>
+</html>

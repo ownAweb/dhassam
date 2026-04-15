@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Science Laboratory Statistics Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(15, 118, 110, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(30%, -30%);
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+            max-width: 600px;
+        }
+
+        .lab-status {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px 25px;
+            border-radius: 12px;
+            backdrop-filter: blur(5px);
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #10b981;
+            margin-right: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .status-text {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            padding: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 5px solid #0f766e;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 18px;
+            font-size: 1.8rem;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            color: #0f766e;
+            font-weight: 600;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .stat-item {
+            background-color: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            transition: background-color 0.2s;
+            border: 1px solid #f1f5f9;
+        }
+
+        .stat-item:hover {
+            background-color: #f0f9ff;
+        }
+
+        .stat-value {
+            font-size: 2.4rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .equipment-list {
+            list-style-type: none;
+        }
+
+        .equipment-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 18px;
+            padding: 15px;
+            border-radius: 10px;
+            transition: background-color 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .equipment-item:hover {
+            background-color: #f8fafc;
+            border-color: #e2e8f0;
+        }
+
+        .equipment-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 18px;
+            color: white;
+            font-size: 1.3rem;
+        }
+
+        .equipment-info {
+            flex: 1;
+        }
+
+        .equipment-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+            font-size: 1.1rem;
+        }
+
+        .equipment-status {
+            color: #64748b;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-operational {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-maintenance {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-critical {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        .progress-container {
+            margin-top: 10px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+        }
+
+        .lab-usage-chart {
+            margin-top: 20px;
+        }
+
+        .usage-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .usage-label {
+            width: 150px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .usage-bar-container {
+            flex: 1;
+            margin-left: 15px;
+        }
+
+        .usage-percentage {
+            width: 60px;
+            text-align: right;
+            font-weight: 600;
+            color: #0f766e;
+        }
+
+        .usage-bar {
+            height: 20px;
+            background-color: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .usage-fill {
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        .safety-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .safety-item {
+            background-color: #f8fafc;
+            padding: 18px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .safety-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0f766e;
+            margin-bottom: 5px;
+        }
+
+        .safety-label {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .experiment-stats {
+            margin-top: 20px;
+        }
+
+        .experiment-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+
+        .experiment-item:last-child {
+            border-bottom: none;
+        }
+
+        .experiment-type {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: white;
+            font-size: 1.1rem;
+        }
+
+        .experiment-info {
+            flex: 1;
+        }
+
+        .experiment-name {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .experiment-meta {
+            color: #64748b;
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .chemicals-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .chemical-item {
+            background-color: #f8fafc;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border-left: 4px solid;
+        }
+
+        .chemical-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        .chemical-quantity {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .alert-banner {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 1px solid #fbbf24;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .alert-icon {
+            color: #92400e;
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+
+        .alert-content {
+            flex: 1;
+        }
+
+        .alert-title {
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 5px;
+        }
+
+        .alert-message {
+            color: #92400e;
+            font-size: 0.9rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            background-color: #f1f5f9;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-btn:hover {
+            background-color: #e2e8f0;
+            color: #0f766e;
+        }
+
+        .tab-btn.active {
+            background-color: #0f766e;
+            color: white;
+        }
+
+        .tab-btn i {
+            font-size: 1.1rem;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 1px solid #e2e8f0;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .update-time {
+            font-weight: 600;
+            color: #0f766e;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid, .safety-metrics, .chemicals-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .lab-status {
+                margin-top: 20px;
+                align-self: stretch;
+                justify-content: center;
+            }
+
+            .tabs {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div>
+                    <h1>Science Laboratory Statistics Dashboard</h1>
+                    <p class="subtitle">Monitor equipment status, safety metrics, experiment logs, and laboratory utilization in real-time</p>
+                </div>
+                <div class="lab-status">
+                    <div class="status-indicator"></div>
+                    <div class="status-text">Laboratory Operational • All Systems Normal</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-lab="main">
+                <i class="fas fa-flask"></i> Main Chemistry Lab
+            </button>
+            <button class="tab-btn" data-lab="biology">
+                <i class="fas fa-dna"></i> Biology Laboratory
+            </button>
+            <button class="tab-btn" data-lab="physics">
+                <i class="fas fa-atom"></i> Physics Laboratory
+            </button>
+            <button class="tab-btn" data-lab="research">
+                <i class="fas fa-microscope"></i> Research Lab
+            </button>
+            <button class="tab-btn" data-lab="all">
+                <i class="fas fa-building"></i> All Laboratories
+            </button>
+        </div>
+
+        <div class="dashboard">
+            <!-- Laboratory Overview Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);">
+                        <i class="fas fa-vial"></i>
+                    </div>
+                    <h2 class="card-title">Laboratory Overview</h2>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="total-equipment">142</div>
+                        <div class="stat-label">Total Equipment</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="active-experiments">18</div>
+                        <div class="stat-label">Active Experiments</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="lab-utilization">78%</div>
+                        <div class="stat-label">Lab Utilization</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="safety-score">96</div>
+                        <div class="stat-label">Safety Score</div>
+                    </div>
+                </div>
+
+                <div class="lab-usage-chart">
+                    <h3 style="margin: 20px 0 15px 0; color: #0f766e;">Weekly Utilization</h3>
+                    <div class="usage-item">
+                        <div class="usage-label">Monday</div>
+                        <div class="usage-bar-container">
+                            <div class="usage-bar">
+                                <div class="usage-fill" style="width: 85%; background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);"></div>
+                            </div>
+                        </div>
+                        <div class="usage-percentage">85%</div>
+                    </div>
+                    <div class="usage-item">
+                        <div class="usage-label">Tuesday</div>
+                        <div class="usage-bar-container">
+                            <div class="usage-bar">
+                                <div class="usage-fill" style="width: 92%; background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);"></div>
+                            </div>
+                        </div>
+                        <div class="usage-percentage">92%</div>
+                    </div>
+                    <div class="usage-item">
+                        <div class="usage-label">Wednesday</div>
+                        <div class="usage-bar-container">
+                            <div class="usage-bar">
+                                <div class="usage-fill" style="width: 78%; background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);"></div>
+                            </div>
+                        </div>
+                        <div class="usage-percentage">78%</div>
+                    </div>
+                    <div class="usage-item">
+                        <div class="usage-label">Thursday</div>
+                        <div class="usage-bar-container">
+                            <div class="usage-bar">
+                                <div class="usage-fill" style="width: 88%; background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);"></div>
+                            </div>
+                        </div>
+                        <div class="usage-percentage">88%</div>
+                    </div>
+                    <div class="usage-item">
+                        <div class="usage-label">Friday</div>
+                        <div class="usage-bar-container">
+                            <div class="usage-bar">
+                                <div class="usage-fill" style="width: 72%; background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);"></div>
+                            </div>
+                        </div>
+                        <div class="usage-percentage">72%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Equipment Status Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #14b8a6 0%, #2dd4bf 100%);">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h2 class="card-title">Equipment Status</h2>
+                </div>
+
+                <ul class="equipment-list">
+                    <li class="equipment-item">
+                        <div class="equipment-icon" style="background-color: #0f766e;">
+                            <i class="fas fa-microscope"></i>
+                        </div>
+                        <div class="equipment-info">
+                            <div class="equipment-name">Electron Microscope</div>
+                            <div class="equipment-status">
+                                <span>Lab: Chemistry • Last Calibration: 2 days ago</span>
+                                <span class="status-badge status-operational">Operational</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 95%; background-color: #10b981;"></div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="equipment-item">
+                        <div class="equipment-icon" style="background-color: #0891b2;">
+                            <i class="fas fa-temperature-high"></i>
+                        </div>
+                        <div class="equipment-info">
+                            <div class="equipment-name">Gas Chromatograph</div>
+                            <div class="equipment-status">
+                                <span>Lab: Chemistry • Last Service: 1 week ago</span>
+                                <span class="status-badge status-operational">Operational</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 88%; background-color: #10b981;"></div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="equipment-item">
+                        <div class="equipment-icon" style="background-color: #7c3aed;">
+                            <i class="fas fa-vial"></i>
+                        </div>
+                        <div class="equipment-info">
+                            <div class="equipment-name">Spectrophotometer</div>
+                            <div class="equipment-status">
+                                <span>Lab: Biology • Last Calibration: 5 days ago</span>
+                                <span class="status-badge status-maintenance">Needs Calibration</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 65%; background-color: #f59e0b;"></div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="equipment-item">
+                        <div class="equipment-icon" style="background-color: #dc2626;">
+                            <i class="fas fa-dna"></i>
+                        </div>
+                        <div class="equipment-info">
+                            <div class="equipment-name">PCR Machine</div>
+                            <div class="equipment-status">
+                                <span>Lab: Biology • Last Service: 3 weeks ago</span>
+                                <span class="status-badge status-operational">Operational</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 92%; background-color: #10b981;"></div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="equipment-item">
+                        <div class="equipment-icon" style="background-color: #ea580c;">
+                            <i class="fas fa-centrifuge"></i>
+                        </div>
+                        <div class="equipment-info">
+                            <div class="equipment-name">Ultracentrifuge</div>
+                            <div class="equipment-status">
+                                <span>Lab: Research • Last Service: 2 days ago</span>
+                                <span class="status-badge status-critical">Critical Alert</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 30%; background-color: #dc2626;"></div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Safety & Compliance Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h2 class="card-title">Safety & Compliance</h2>
+                </div>
+
+                <div class="safety-metrics">
+                    <div class="safety-item">
+                        <div class="safety-value" id="days-safe">248</div>
+                        <div class="safety-label">Days Since Last Incident</div>
+                    </div>
+                    <div class="safety-item">
+                        <div class="safety-value">100%</div>
+                        <div class="safety-label">Safety Gear Compliance</div>
+                    </div>
+                    <div class="safety-item">
+                        <div class="safety-value">24</div>
+                        <div class="safety-label">Safety Inspections This Month</div>
+                    </div>
+                    <div class="safety-item">
+                        <div class="safety-value">98%</div>
+                        <div class="safety-label">Equipment Certification</div>
+                    </div>
+                </div>
+
+                <div class="alert-banner">
+                    <div class="alert-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="alert-content">
+                        <div class="alert-title">Safety Alert: Chemical Storage</div>
+                        <div class="alert-message">Chemical storage temperature exceeds recommended levels. Please check refrigeration units in Section B.</div>
+                    </div>
+                </div>
+
+                <div class="chemicals-grid">
+                    <div class="chemical-item" style="border-left-color: #10b981;">
+                        <div class="chemical-name">Non-Hazardous</div>
+                        <div class="chemical-quantity">84 Chemicals • All within limits</div>
+                    </div>
+                    <div class="chemical-item" style="border-left-color: #f59e0b;">
+                        <div class="chemical-name">Flammable</div>
+                        <div class="chemical-quantity">32 Chemicals • 2 approaching limits</div>
+                    </div>
+                    <div class="chemical-item" style="border-left-color: #dc2626;">
+                        <div class="chemical-name">Toxic</div>
+                        <div class="chemical-quantity">18 Chemicals • All within limits</div>
+                    </div>
+                    <div class="chemical-item" style="border-left-color: #8b5cf6;">
+                        <div class="chemical-name">Corrosive</div>
+                        <div class="chemical-quantity">26 Chemicals • 1 approaching limit</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Experiment Tracking Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%);">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <h2 class="card-title">Experiment Tracking</h2>
+                </div>
+
+                <div class="experiment-stats">
+                    <div class="experiment-item">
+                        <div class="experiment-type" style="background-color: #0f766e;">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <div class="experiment-info">
+                            <div class="experiment-name">Organic Synthesis - Compound X-42</div>
+                            <div class="experiment-meta">
+                                <span>Dr. Robertson • Chemistry Lab</span>
+                                <span>Day 14 of 21</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="experiment-item">
+                        <div class="experiment-type" style="background-color: #0891b2;">
+                            <i class="fas fa-dna"></i>
+                        </div>
+                        <div class="experiment-info">
+                            <div class="experiment-name">Gene Sequencing - Sample B7</div>
+                            <div class="experiment-meta">
+                                <span>Dr. Chen • Biology Lab</span>
+                                <span>Day 7 of 10</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="experiment-item">
+                        <div class="experiment-type" style="background-color: #dc2626;">
+                            <i class="fas fa-atom"></i>
+                        </div>
+                        <div class="experiment-info">
+                            <div class="experiment-name">Particle Collision Analysis</div>
+                            <div class="experiment-meta">
+                                <span>Dr. Sharma • Physics Lab</span>
+                                <span>Day 28 of 30</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="experiment-item">
+                        <div class="experiment-type" style="background-color: #ea580c;">
+                            <i class="fas fa-virus"></i>
+                        </div>
+                        <div class="experiment-info">
+                            <div class="experiment-name">Viral Culture Study</div>
+                            <div class="experiment-meta">
+                                <span>Dr. Wilson • Research Lab</span>
+                                <span>Day 42 of 60</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="experiment-item">
+                        <div class="experiment-type" style="background-color: #7c3aed;">
+                            <i class="fas fa-temperature-high"></i>
+                        </div>
+                        <div class="experiment-info">
+                            <div class="experiment-name">Thermal Conductivity Testing</div>
+                            <div class="experiment-meta">
+                                <span>Dr. Garcia • Physics Lab</span>
+                                <span>Day 5 of 14</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-grid" style="margin-top: 20px;">
+                    <div class="stat-item">
+                        <div class="stat-value">18</div>
+                        <div class="stat-label">Active Experiments</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">7</div>
+                        <div class="stat-label">Pending Approval</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">42</div>
+                        <div class="stat-label">Completed This Month</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">92%</div>
+                        <div class="stat-label">Success Rate</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resource Inventory Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);">
+                        <i class="fas fa-boxes"></i>
+                    </div>
+                    <h2 class="card-title">Resource Inventory</h2>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">1,248</div>
+                        <div class="stat-label">Chemical Stocks</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">842</div>
+                        <div class="stat-label">Glassware Items</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">314</div>
+                        <div class="stat-label">Consumables</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">96%</div>
+                        <div class="stat-label">Inventory Accuracy</div>
+                    </div>
+                </div>
+
+                <div class="lab-usage-chart">
+                    <h3 style="margin: 20px 0 15px 0; color: #0f766e;">Stock Levels (Critical Items)</h3>
+                    <div class="usage-item">
+                        <div class="usage-label">Petri Dishes</div>
+                        <div class="usage-bar-container">
+                            <div class="usage-bar">
+                                <div class="usage-fill" style="width: 35%; background-color: #dc2626;"></div>
+                            </div>
+                        </div>
+                        <div class="usage-percentage">35%</div>
+                    </div>
+                    <div class="usage-item">
+                        <div class="usage-label">Gloves (Nitrile)</div>
+                        <div class="usage-bar-container">
+                            <div class="usage-bar">
+                                <div class="usage-fill" style="width: 42%; background-color: #f59e0b;"></div>
+                            </div>
+                        </div>
+                        <div class="usage-percentage">42%</div>
+                    </div>
+                    <div class="usage-item">
+                        <div class="usage-label">Ethanol (95%)</div>
+                        <div class="usage-bar-container">
+                            <div class="usage-bar">
+                                <div class="usage-fill" style="width: 68%; background-color: #10b981;"></div>
+                            </div>
+                        </div>
+                        <div class="usage-percentage">68%</div>
+                    </div>
+                    <div class="usage-item">
+                        <div class="usage-label">Agar Powder</div>
+                        <div class="usage-bar-container">
+                            <div class="usage-bar">
+                                <div class="usage-fill" style="width: 28%; background-color: #dc2626;"></div>
+                            </div>
+                        </div>
+                        <div class="usage-percentage">28%</div>
+                    </div>
+                    <div class="usage-item">
+                        <div class="usage-label">Microscope Slides</div>
+                        <div class="usage-bar-container">
+                            <div class="usage-bar">
+                                <div class="usage-fill" style="width: 75%; background-color: #10b981;"></div>
+                            </div>
+                        </div>
+                        <div class="usage-percentage">75%</div>
+                    </div>
+                </div>
+
+                <div class="alert-banner" style="margin-top: 20px; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);">
+                    <div class="alert-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="alert-content">
+                        <div class="alert-title">Re-order Required</div>
+                        <div class="alert-message">7 critical items below minimum stock levels. Automatic re-order initiated.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Environmental Monitoring Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%);">
+                        <i class="fas fa-thermometer-half"></i>
+                    </div>
+                    <h2 class="card-title">Environmental Monitoring</h2>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">21.5°C</div>
+                        <div class="stat-label">Average Temperature</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">45%</div>
+                        <div class="stat-label">Humidity Level</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">12</div>
+                        <div class="stat-label">Air Changes/Hour</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">0.3 ppm</div>
+                        <div class="stat-label">VOC Level</div>
+                    </div>
+                </div>
+
+                <div class="lab-usage-chart">
+                    <h3 style="margin: 20px 0 15px 0; color: #0f766e;">Lab Zone Conditions</h3>
+                    <div class="usage-item">
+                        <div class="usage-label">Chemistry Lab</div>
+                        <div class="usage-bar-container">
+                            <div class="usage-bar">
+                                <div class="usage-fill" style="width: 95%; background-color: #10b981;"></div>
+                            </div>
+                        </div>
+                        <div class="usage-percentage">Optimal</div>
+                    </div>
+                    <div class="usage-item">
+                        <div class="usage-label">Biology Lab</div>
+                        <div class="usage-bar-container">
+                            <div class="usage-bar">
+                                <div class="usage-fill" style="width: 82%; background-color: #f59e0b;"></div>
+                            </div>
+                        </div>
+                        <div class="usage-percentage">Humidity High</div>
+                    </div>
+                    <div class="usage-item">
+                        <div class="usage-label">Physics Lab</div>
+                        <div class="usage-bar-container">
+                            <div class="usage-bar">
+                                <div class="usage-fill" style="width: 98%; background-color: #10b981;"></div>
+                            </div>
+                        </div>
+                        <div class="usage-percentage">Optimal</div>
+                    </div>
+                    <div class="usage-item">
+                        <div class="usage-label">Research Lab</div>
+                        <div class="usage-bar-container">
+                            <div class="usage-bar">
+                                <div class="usage-fill" style="width: 65%; background-color: #dc2626;"></div>
+                            </div>
+                        </div>
+                        <div class="usage-percentage">Temp Fluctuation</div>
+                    </div>
+                </div>
+
+                <div class="experiment-stats">
+                    <h3 style="margin: 20px 0 15px 0; color: #0f766e;">System Status</h3>
+                    <div class="experiment-item" style="padding: 12px 0;">
+                        <div class="experiment-type" style="background-color: #10b981; width: 35px; height: 35px;">
+                            <i class="fas fa-fan"></i>
+                        </div>
+                        <div class="experiment-info">
+                            <div class="experiment-name">Ventilation System</div>
+                            <div class="experiment-meta">
+                                <span>Operating at 95% capacity</span>
+                                <span>Normal</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="experiment-item" style="padding: 12px 0;">
+                        <div class="experiment-type" style="background-color: #f59e0b; width: 35px; height: 35px;">
+                            <i class="fas fa-tint"></i>
+                        </div>
+                        <div class="experiment-info">
+                            <div class="experiment-name">Deionized Water System</div>
+                            <div class="experiment-meta">
+                                <span>Reserve at 42%</span>
+                                <span>Refill Scheduled</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="experiment-item" style="padding: 12px 0;">
+                        <div class="experiment-type" style="background-color: #10b981; width: 35px; height: 35px;">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="experiment-info">
+                            <div class="experiment-name">Backup Power</div>
+                            <div class="experiment-meta">
+                                <span>Fully charged</span>
+                                <span>Ready</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Science Laboratory Statistics Dashboard • Last updated: <span class="update-time" id="update-time"></span> • Real-time monitoring active</p>
+            <p style="margin-top: 8px;">© 2023 Advanced Laboratory Management System • <i class="fas fa-user-shield"></i> Authorized Personnel Only</p>
+        </div>
+    </div>
+
+    <script>
+        // Set current update time
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('update-time').textContent = timeString;
+        }
+
+        // Initial call
+        updateTime();
+
+        // Update time every second
+        setInterval(updateTime, 1000);
+
+        // Tab buttons functionality
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+
+                // Add active class to clicked button
+                this.classList.add('active');
+
+                const lab = this.getAttribute('data-lab');
+                updateLabStats(lab);
+            });
+        });
+
+        // Function to update statistics based on selected lab
+        function updateLabStats(lab) {
+            let totalEquipment, activeExperiments, labUtilization, safetyScore, daysSafe;
+
+            switch(lab) {
+                case 'chemistry':
+                    totalEquipment = "87";
+                    activeExperiments = "8";
+                    labUtilization = "82%";
+                    safetyScore = "94";
+                    daysSafe = "142";
+                    break;
+                case 'biology':
+                    totalEquipment = "64";
+                    activeExperiments = "5";
+                    labUtilization = "75%";
+                    safetyScore = "97";
+                    daysSafe = "312";
+                    break;
+                case 'physics':
+                    totalEquipment = "52";
+                    activeExperiments = "3";
+                    labUtilization = "68%";
+                    safetyScore = "99";
+                    daysSafe = "428";
+                    break;
+                case 'research':
+                    totalEquipment = "38";
+                    activeExperiments = "2";
+                    labUtilization = "92%";
+                    safetyScore = "91";
+                    daysSafe = "87";
+                    break;
+                case 'all':
+                    totalEquipment = "142";
+                    activeExperiments = "18";
+                    labUtilization = "78%";
+                    safetyScore = "96";
+                    daysSafe = "248";
+                    break;
+                default: // main (chemistry)
+                    totalEquipment = "87";
+                    activeExperiments = "8";
+                    labUtilization = "82%";
+                    safetyScore = "94";
+                    daysSafe = "142";
+            }
+
+            // Update DOM elements
+            document.getElementById('total-equipment').textContent = totalEquipment;
+            document.getElementById('active-experiments').textContent = activeExperiments;
+            document.getElementById('lab-utilization').textContent = labUtilization;
+            document.getElementById('safety-score').textContent = safetyScore;
+            document.getElementById('days-safe').textContent = daysSafe;
+
+            // Update lab status text
+            const statusText = document.querySelector('.status-text');
+            if (lab === 'all') {
+                statusText.textContent = "All Laboratories Operational • Systems Normal";
+            } else {
+                const labNames = {
+                    'chemistry': 'Chemistry Lab',
+                    'biology': 'Biology Lab',
+                    'physics': 'Physics Lab',
+                    'research': 'Research Lab'
+                };
+                statusText.textContent = `${labNames[lab]} Operational • Systems Normal`;
+            }
+        }
+
+        // Function to simulate live data updates
+        function simulateLiveUpdates() {
+            // Update active experiments (small random changes)
+            const activeExpElement = document.getElementById('active-experiments');
+            let currentExp = parseInt(activeExpElement.textContent);
+
+            // 20% chance to change
+            if (Math.random() > 0.8) {
+                const change = Math.random() > 0.5 ? 1 : -1;
+                let newExp = currentExp + change;
+
+                // Ensure values stay within reasonable bounds (1-25)
+                newExp = Math.max(1, Math.min(25, newExp));
+                activeExpElement.textContent = newExp;
+            }
+
+            // Update safety score (small fluctuations)
+            const safetyElement = document.getElementById('safety-score');
+            let currentSafety = parseInt(safetyElement.textContent);
+
+            // 30% chance to change
+            if (Math.random() > 0.7) {
+                const change = Math.floor(Math.random() * 3) - 1; // -1, 0, or 1
+                let newSafety = currentSafety + change;
+
+                // Ensure values stay within reasonable bounds (85-100)
+                newSafety = Math.max(85, Math.min(100, newSafety));
+                safetyElement.textContent = newSafety;
+            }
+
+            // Update days safe (increment)
+            const daysSafeElement = document.getElementById('days-safe');
+            let currentDays = parseInt(daysSafeElement.textContent);
+
+            // 5% chance to reset (simulating incident)
+            if (Math.random() > 0.95) {
+                daysSafeElement.textContent = "0";
+                document.querySelector('.status-indicator').style.backgroundColor = "#dc2626";
+                document.querySelector('.status-text').textContent = "SAFETY INCIDENT REPORTED • Investigation Ongoing";
+
+                // Reset to normal after 10 seconds
+                setTimeout(() => {
+                    document.querySelector('.status-indicator').style.backgroundColor = "#10b981";
+                    document.querySelector('.status-text').textContent = "Laboratory Operational • All Systems Normal";
+                }, 10000);
+            } else if (Math.random() > 0.8) {
+                // Otherwise increment occasionally
+                daysSafeElement.textContent = (currentDays + 1).toString();
+            }
+        }
+
+        // Update statistics every 10 seconds to simulate live data
+        setInterval(simulateLiveUpdates, 10000);
+
+        // Initialize with default values
+        updateLabStats('all');
+    </script>
+</body>
+</html>

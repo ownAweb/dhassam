@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Room Statistics Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e1e5eb;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            color: #2c3e50;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .stat-item {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #3498db;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .facilities-list {
+            list-style-type: none;
+        }
+
+        .facility-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .facility-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .facility-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: white;
+            font-size: 1.1rem;
+        }
+
+        .facility-name {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .facility-count {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .room-types {
+            margin-top: 20px;
+        }
+
+        .room-type {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px dashed #eee;
+        }
+
+        .room-type:last-child {
+            border-bottom: none;
+        }
+
+        .room-type-name {
+            font-weight: 600;
+        }
+
+        .room-type-stats {
+            display: flex;
+            gap: 15px;
+        }
+
+        .room-stat {
+            text-align: center;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background-color: #ecf0f1;
+            border-radius: 5px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 5px;
+            background-color: #3498db;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e1e5eb;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Hotel Room Statistics Dashboard</h1>
+            <p class="subtitle">Real-time overview of room occupancy, facilities, and amenities</p>
+        </header>
+
+        <div class="dashboard">
+            <!-- Room Count Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background-color: #3498db;">
+                        <i class="fas fa-bed"></i>
+                    </div>
+                    <h2 class="card-title">Room Statistics</h2>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="total-rooms">42</div>
+                        <div class="stat-label">Total Rooms</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="occupied-rooms">28</div>
+                        <div class="stat-label">Occupied Rooms</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="available-rooms">14</div>
+                        <div class="stat-label">Available Rooms</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">67%</div>
+                        <div class="stat-label">Occupancy Rate</div>
+                    </div>
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 67%;"></div>
+                </div>
+            </div>
+
+            <!-- Bed Statistics Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background-color: #2ecc71;">
+                        <i class="fas fa-bed"></i>
+                    </div>
+                    <h2 class="card-title">Bed Statistics</h2>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="total-beds">86</div>
+                        <div class="stat-label">Total Beds</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="single-beds">52</div>
+                        <div class="stat-label">Single Beds</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="double-beds">34</div>
+                        <div class="stat-label">Double Beds</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2.05</div>
+                        <div class="stat-label">Avg Beds per Room</div>
+                    </div>
+                </div>
+
+                <div class="room-types">
+                    <div class="room-type">
+                        <div class="room-type-name">Single Rooms</div>
+                        <div class="room-type-stats">
+                            <div class="room-stat">
+                                <div class="stat-value">18</div>
+                                <div class="stat-label">Rooms</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="room-type">
+                        <div class="room-type-name">Double Rooms</div>
+                        <div class="room-type-stats">
+                            <div class="room-stat">
+                                <div class="stat-value">16</div>
+                                <div class="stat-label">Rooms</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="room-type">
+                        <div class="room-type-name">Suite Rooms</div>
+                        <div class="room-type-stats">
+                            <div class="room-stat">
+                                <div class="stat-value">8</div>
+                                <div class="stat-label">Rooms</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Facilities Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background-color: #e74c3c;">
+                        <i class="fas fa-concierge-bell"></i>
+                    </div>
+                    <h2 class="card-title">Room Facilities</h2>
+                </div>
+
+                <ul class="facilities-list">
+                    <li class="facility-item">
+                        <div class="facility-icon" style="background-color: #f39c12;">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <div class="facility-info">
+                            <div class="facility-name">LED Lights</div>
+                            <div class="facility-count">Available in all 42 rooms</div>
+                        </div>
+                    </li>
+                    <li class="facility-item">
+                        <div class="facility-icon" style="background-color: #3498db;">
+                            <i class="fas fa-fan"></i>
+                        </div>
+                        <div class="facility-info">
+                            <div class="facility-name">Ceiling Fans</div>
+                            <div class="facility-count">Available in 38 rooms</div>
+                        </div>
+                    </li>
+                    <li class="facility-item">
+                        <div class="facility-icon" style="background-color: #9b59b6;">
+                            <i class="fas fa-tv"></i>
+                        </div>
+                        <div class="facility-info">
+                            <div class="facility-name">Smart TV</div>
+                            <div class="facility-count">Available in 35 rooms</div>
+                        </div>
+                    </li>
+                    <li class="facility-item">
+                        <div class="facility-icon" style="background-color: #1abc9c;">
+                            <i class="fas fa-snowflake"></i>
+                        </div>
+                        <div class="facility-info">
+                            <div class="facility-name">Air Conditioning</div>
+                            <div class="facility-count">Available in 40 rooms</div>
+                        </div>
+                    </li>
+                    <li class="facility-item">
+                        <div class="facility-icon" style="background-color: #e67e22;">
+                            <i class="fas fa-wifi"></i>
+                        </div>
+                        <div class="facility-info">
+                            <div class="facility-name">Wi-Fi</div>
+                            <div class="facility-count">Available in all 42 rooms</div>
+                        </div>
+                    </li>
+                    <li class="facility-item">
+                        <div class="facility-icon" style="background-color: #2ecc71;">
+                            <i class="fas fa-shower"></i>
+                        </div>
+                        <div class="facility-info">
+                            <div class="facility-name">Hot Water</div>
+                            <div class="facility-count">Available in all 42 rooms</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Additional Statistics Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background-color: #9b59b6;">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h2 class="card-title">Additional Statistics</h2>
+                </div>
+
+                <ul class="facilities-list">
+                    <li class="facility-item">
+                        <div class="facility-icon" style="background-color: #34495e;">
+                            <i class="fas fa-door-closed"></i>
+                        </div>
+                        <div class="facility-info">
+                            <div class="facility-name">Bathrooms per Room</div>
+                            <div class="facility-count">Average: 1.2 bathrooms per room</div>
+                        </div>
+                    </li>
+                    <li class="facility-item">
+                        <div class="facility-icon" style="background-color: #d35400;">
+                            <i class="fas fa-cube"></i>
+                        </div>
+                        <div class="facility-info">
+                            <div class="facility-name">Room Sizes</div>
+                            <div class="facility-count">Average: 320 sq.ft per room</div>
+                        </div>
+                    </li>
+                    <li class="facility-item">
+                        <div class="facility-icon" style="background-color: #27ae60;">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="facility-info">
+                            <div class="facility-name">Average Stay Duration</div>
+                            <div class="facility-count">2.3 nights per booking</div>
+                        </div>
+                    </li>
+                    <li class="facility-item">
+                        <div class="facility-icon" style="background-color: #8e44ad;">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div class="facility-info">
+                            <div class="facility-name">Direct Dial Phones</div>
+                            <div class="facility-count">Available in 30 rooms</div>
+                        </div>
+                    </li>
+                    <li class="facility-item">
+                        <div class="facility-icon" style="background-color: #c0392b;">
+                            <i class="fas fa-coffee"></i>
+                        </div>
+                        <div class="facility-info">
+                            <div class="facility-name">Coffee Maker</div>
+                            <div class="facility-count">Available in 25 rooms</div>
+                        </div>
+                    </li>
+                    <li class="facility-item">
+                        <div class="facility-icon" style="background-color: #16a085;">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="facility-info">
+                            <div class="facility-name">In-room Safe</div>
+                            <div class="facility-count">Available in 20 rooms</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Hotel Room Statistics Dashboard • Last updated: <span id="current-date"></span> • Data refreshes every 15 minutes</p>
+        </div>
+    </div>
+
+    <script>
+        // Set current date
+        document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // Function to update statistics randomly (simulating live data)
+        function updateStatistics() {
+            // Randomly adjust room statistics
+            const totalRooms = 42;
+            const occupied = Math.floor(Math.random() * 10) + 25; // Between 25-34
+            const available = totalRooms - occupied;
+            const occupancyRate = Math.round((occupied / totalRooms) * 100);
+
+            document.getElementById('occupied-rooms').textContent = occupied;
+            document.getElementById('available-rooms').textContent = available;
+
+            // Update occupancy progress bar
+            document.querySelector('.progress-fill').style.width = `${occupancyRate}%`;
+
+            // Update bed statistics
+            const singleBeds = Math.floor(Math.random() * 5) + 50; // Between 50-54
+            const doubleBeds = Math.floor(Math.random() * 5) + 32; // Between 32-36
+            const totalBeds = singleBeds + doubleBeds;
+
+            document.getElementById('total-beds').textContent = totalBeds;
+            document.getElementById('single-beds').textContent = singleBeds;
+            document.getElementById('double-beds').textContent = doubleBeds;
+
+            // Update average beds per room
+            document.querySelectorAll('.stat-value')[3].textContent = (totalBeds / totalRooms).toFixed(2);
+        }
+
+        // Update statistics every 10 seconds to simulate live data
+        setInterval(updateStatistics, 10000);
+
+        // Initial call to set random values
+        updateStatistics();
+    </script>
+</body>
+</html>

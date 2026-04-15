@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students - Darul Huda Assam Centre</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset and Base Styles - MATCHING HOME PAGE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        :root {
+            --primary: #1a365d;
+            --secondary: #2d3748;
+            --accent: #c53030;
+            --gold: #b7791f;
+            --light: #f7fafc;
+            --dark: #1a202c;
+            --gray: #718096;
+            --gradient-primary: linear-gradient(45deg, var(--secondary), var(--accent));
+            --gradient-accent: linear-gradient(135deg, #b7791f 0%, #975a16 100%);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
+            --shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.07);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            line-height: 1.7;
+            color: #2d3748;
+            background-color: #ffffff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header - EXACTLY LIKE HOME PAGE */
+        header {
+            background-color: rgba(255, 255, 255, 0.97);
+            color: var(--primary);
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        header.scrolled {
+            padding: 0.7rem 0;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.98);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
+        }
+
+        .logo-icon {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .logo-text h1 {
+            font-size: 1.6rem;
+            background: linear-gradient(45deg, var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        .logo-text p {
+            font-size: 0.75rem;
+            color: var(--gray);
+            margin-top: 2px;
+            font-weight: 500;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 0;
+            transition: var(--transition);
+            position: relative;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        nav a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--gradient-accent);
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        nav a:hover::before {
+            width: 100%;
+        }
+
+        nav a.active {
+            color: var(--accent);
+        }
+
+        nav a.active::before {
+            width: 100%;
+        }
+
+        nav i {
+            font-size: 0.85rem;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--primary);
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .mobile-menu-btn:hover {
+            color: var(--accent);
+        }
+
+        /* FORMAL PAGE HERO - REDUCED LENGTH & TEXT */
+        .page-hero {
+            position: relative;
+            background:
+                linear-gradient(to right, rgba(26, 54, 93, 0.85), rgba(26, 54, 93, 0.7)),
+                url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtQLOa2i3hEYP0FBz2k6ee734_KHOzwHt9YQ&s');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 8rem 0 6.5rem; /* Reduced from 12rem/5rem */
+            text-align: center;
+            margin-top: 80px; /* Header height */
+            min-height: auto; /* Removed min-height */
+            display: flex;
+            align-items: center;
+        }
+
+        .page-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .page-hero h1 {
+            font-size: 2.5rem; /* Reduced from 3.2rem */
+            margin-bottom: 0.75rem; /* Reduced */
+            font-weight: 700;
+            line-height: 1.2;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            font-family: 'Georgia', serif;
+            letter-spacing: -0.5px;
+        }
+
+        .page-hero p {
+            font-size: 1.1rem; /* Reduced from 1.3rem */
+            max-width: 600px;
+            margin: 0 auto 1rem; /* Reduced bottom margin */
+            opacity: 0.95;
+            line-height: 1.6; /* Tighter */
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* FORMAL SECTIONS - MATCHING HOME PAGE */
+        section {
+            padding: 5rem 0;
+            background-color: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+            color: var(--primary);
+            font-weight: 700;
+            font-family: 'Georgia', serif;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            max-width: 700px;
+            margin: 1.5rem auto 0;
+            color: var(--gray);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        /* FORMAL STUDENT STATS SECTION */
+        .students-stats-section {
+            background: #f8f9fa;
+            padding: 5rem 0;
+            margin-bottom: 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Horizontal scrolling container */
+        .students-stats-wrapper {
+            position: relative;
+            padding: 0 40px;
+            margin-bottom: 3rem;
+        }
+
+        .students-stats {
+            display: flex;
+            gap: 1.5rem;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 20px 10px 30px;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
+            cursor: grab;
+            scroll-snap-type: x proximity;
+        }
+
+        .students-stats::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+
+        .students-stats.scrolling {
+            scroll-snap-type: none;
+        }
+
+        .class-card {
+            flex: 0 0 auto;
+            width: 180px;
+            background-color: white;
+            border-radius: 2px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            scroll-snap-align: start;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .class-card:hover {
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(0, 0, 0, 0.12);
+        }
+
+        .class-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            font-family: 'Georgia', serif;
+        }
+
+        .student-count {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .class-card p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Scroll navigation buttons */
+        .scroll-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: white;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 2px;
+            color: var(--primary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+        }
+
+        .scroll-nav:hover {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .scroll-nav.prev {
+            left: 0;
+        }
+
+        .scroll-nav.next {
+            right: 0;
+        }
+
+        .scroll-nav.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* Scroll indicator dots */
+        .scroll-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+
+        .scroll-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: rgba(197, 48, 48, 0.3);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .scroll-dot.active {
+            background-color: var(--accent);
+            transform: scale(1.3);
+        }
+
+        /* FORMAL VISIT CLASSES BUTTON */
+        .visit-classes-container {
+            text-align: center;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .visit-classes-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2.2rem;
+            border-radius: 2px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: 1px solid var(--primary);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .visit-classes-btn:hover {
+            background: #2d3748;
+            border-color: #2d3748;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .visit-classes-btn i {
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .visit-classes-btn:hover i {
+            transform: translateX(5px);
+        }
+
+        /* FORMAL TOTAL STUDENTS CARD */
+        .total-students {
+            background: var(--primary);
+            color: white;
+            padding: 3rem;
+            border-radius: 2px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            margin: 0 auto 4rem;
+            max-width: 800px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .total-students h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            font-family: 'Georgia', serif;
+        }
+
+        .total-count {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: white;
+            font-family: 'Georgia', serif;
+        }
+
+        .total-students p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .total-students .info {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .total-students .info i {
+            color: var(--gold);
+        }
+
+        /* FORMAL STUDENT LIFE FEATURES */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: 2px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .feature-card:hover {
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(0, 0, 0, 0.12);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            width: 90px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(197, 48, 48, 0.1);
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1.2rem;
+            color: var(--primary);
+            font-size: 1.5rem;
+            font-weight: 600;
+            font-family: 'Georgia', serif;
+        }
+
+        .feature-card p {
+            color: var(--gray);
+            line-height: 1.7;
+            flex-grow: 1;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        /* FORMAL FEATURE BUTTONS */
+        .feature-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 2px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--primary);
+            text-transform: uppercase;
+            text-decoration: none;
+            margin-top: auto;
+        }
+
+        .feature-btn:hover {
+            background: #2d3748;
+            border-color: #2d3748;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-btn .btn-icon {
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-btn:hover .btn-icon {
+            transform: translateX(5px);
+        }
+
+        /* FORMAL BUTTONS - MATCHING HOME PAGE */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--accent);
+            color: white;
+            padding: 1rem 2.2rem;
+            border-radius: 2px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            background: #9b2c2c;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: 1px solid var(--primary);
+        }
+
+        .btn-primary:hover {
+            background: #2d3748;
+            border-color: #2d3748;
+        }
+
+        /* Footer - EXACTLY LIKE HOME PAGE */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, var(--secondary), var(--accent));
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 2.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-logo h2 {
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .footer-logo span {
+            background: linear-gradient(45deg, #4a90e2, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+        }
+
+        .footer-logo p {
+            color: #aaa;
+            margin: 1rem 0;
+            line-height: 1.7;
+        }
+
+        .footer-links h3, .footer-contact h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 8px;
+        }
+
+        .footer-links h3::after, .footer-contact h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(45deg, var(--secondary), var(--accent));
+            border-radius: 3px;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .footer-contact p {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            color: #bbb;
+        }
+
+        .footer-contact i {
+            color: var(--accent);
+            width: 20px;
+            margin-top: 3px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+
+        .social-icons a:hover {
+            background: linear-gradient(45deg, var(--secondary), var(--accent));
+            transform: translateY(-5px);
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #888;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .copyright a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .copyright a:hover {
+            text-decoration: underline;
+        }
+
+        /* FORMAL Back to Top Button - MATCHING HOME PAGE */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 45px;
+            height: 45px;
+            background: var(--primary);
+            color: white;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            transition: var(--transition);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1000;
+            border: none;
+            outline: none;
+            transform: translateY(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            background: var(--accent);
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== RESPONSIVE STYLES - MATCHING HOME PAGE ========== */
+        @media (max-width: 1024px) {
+            .page-hero h1 {
+                font-size: 2.2rem; /* Adjusted for responsive */
+            }
+
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+
+            .students-stats {
+                gap: 1.2rem;
+            }
+
+            .class-card {
+                width: 160px;
+                padding: 1.8rem 1.2rem;
+            }
+
+            .total-count {
+                font-size: 3.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-hero {
+                padding: 5rem 0 2rem; /* Slightly reduced for mobile */
+                margin-top: 70px;
+            }
+
+            .page-hero h1 {
+                font-size: 1.8rem;
+                line-height: 1.3;
+                margin-bottom: 0.6rem;
+            }
+
+            .page-hero p {
+                font-size: 1rem;
+                margin-bottom: 1rem;
+                line-height: 1.5;
+            }
+
+            .header-container {
+                flex-direction: row;
+                align-items: center;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            nav {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background: white;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+                border-radius: 12px;
+                margin: 0 15px;
+                padding: 20px;
+                display: none;
+                z-index: 999;
+            }
+
+            nav.active {
+                display: block;
+                animation: fadeInUp 0.3s ease;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            nav li {
+                width: 100%;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            }
+
+            nav li:last-child {
+                border-bottom: none;
+            }
+
+            nav a {
+                display: flex;
+                padding: 1rem 0;
+                color: var(--primary);
+                font-size: 1rem;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title h2 {
+                font-size: 1.9rem;
+            }
+
+            .students-stats-wrapper {
+                padding: 0 30px;
+            }
+
+            .class-card {
+                width: 150px;
+                padding: 1.5rem 1rem;
+            }
+
+            .student-count {
+                font-size: 2.2rem;
+            }
+
+            .scroll-nav {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+
+            .total-students {
+                padding: 2rem;
+                margin: 0 1rem 4rem;
+            }
+
+            .visit-classes-btn {
+                padding: 0.8rem 1.8rem;
+                font-size: 0.95rem;
+                max-width: 200px;
+            }
+
+            .back-to-top {
+                width: 40px;
+                height: 40px;
+                font-size: 0.9rem;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .page-hero p {
+                font-size: 0.9rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.6rem;
+            }
+
+            .students-stats-wrapper {
+                padding: 0 20px;
+            }
+
+            .class-card {
+                width: 140px;
+                padding: 1.2rem 0.8rem;
+            }
+
+            .class-card h3 {
+                font-size: 1rem;
+            }
+
+            .student-count {
+                font-size: 1.8rem;
+            }
+
+            .total-count {
+                font-size: 2.8rem;
+            }
+
+            .feature-card, .class-card {
+                padding: 1.8rem 1.5rem;
+            }
+
+            .feature-btn, .visit-classes-btn {
+                padding: 0.7rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .scroll-nav {
+                width: 30px;
+                height: 30px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header - EXACTLY LIKE HOME PAGE -->
+    <header id="mainHeader">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">
+                    <img src="https://i.ibb.co/whW6QdYL/logo.png" alt="Darul Huda Assam Centre Logo">
+                </div>
+                <div class="logo-text">
+                    <h1>DH ASSAM</h1>
+                    <p>Soaring for Excellence..</p>
+                </div>
+            </a>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle mobile menu">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+                    <li><a href="academics.html"><i class="fas fa-graduation-cap"></i> Academics</a></li>
+                    <li><a href="students.html" class="active"><i class="fas fa-users"></i> Students</a></li>
+                    <li><a href="staff.html"><i class="fas fa-chalkboard-teacher"></i> Staff</a></li>
+                    <li><a href="admissions.html"><i class="fas fa-file-signature"></i> Admissions</a></li>
+                    <li><a href="contact.html"><i class="fas fa-phone-alt"></i> Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Hero - REDUCED LENGTH & TEXT -->
+    <section class="page-hero">
+        <div class="container page-hero-content">
+            <h1>Our Student Community</h1>
+            <p>A vibrant community of 480+ students pursuing excellence.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container page-content">
+            <!-- Student Statistics -->
+            <div class="students-stats-section">
+                <div class="section-title">
+                    <h2>Student Statistics 2026</h2>
+                    <p class="section-subtitle">Class-wise distribution of our growing student community across ten academic years</p>
+                </div>
+
+                <div class="students-stats-wrapper">
+                    <button class="scroll-nav prev" id="scrollPrev" aria-label="Scroll left">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+
+                    <div class="students-stats" id="studentsStats">
+                        <!-- First Year to Tenth Year boxes -->
+                        <div class="class-card">
+                            <h3>First Year</h3>
+                            <div class="student-count">70</div>
+                            <p>Primary studies students</p>
+                        </div>
+
+                        <div class="class-card">
+                            <h3>Second Year</h3>
+                            <div class="student-count">50</div>
+                            <p>Intermediate studies students</p>
+                        </div>
+
+                        <div class="class-card">
+                            <h3>Third Year</h3>
+                            <div class="student-count">40</div>
+                            <p>Advanced studies students</p>
+                        </div>
+
+                        <div class="class-card">
+                            <h3>Fourth Year</h3>
+                            <div class="student-count">30</div>
+                            <p>Specialized studies students</p>
+                        </div>
+
+                        <div class="class-card">
+                            <h3>Fifth Year</h3>
+                            <div class="student-count">30</div>
+                            <p>Final year students</p>
+                        </div>
+
+                        <div class="class-card">
+                            <h3>Sixth Year</h3>
+                            <div class="student-count">12</div>
+                            <p>Post-graduate studies</p>
+                        </div>
+
+                        <div class="class-card">
+                            <h3>Seventh Year</h3>
+                            <div class="student-count">21</div>
+                            <p>Research scholars</p>
+                        </div>
+
+                        <div class="class-card">
+                            <h3>Eighth Year</h3>
+                            <div class="student-count">15</div>
+                            <p>Advanced research</p>
+                        </div>
+
+                        <div class="class-card">
+                            <h3>Ninth Year</h3>
+                            <div class="student-count">00</div>
+                            <p>Doctoral candidates</p>
+                        </div>
+
+                        <div class="class-card">
+                            <h3>Tenth Year</h3>
+                            <div class="student-count">14</div>
+                            <p>Senior doctoral fellows</p>
+                        </div>
+                    </div>
+
+                    <button class="scroll-nav next" id="scrollNext" aria-label="Scroll right">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+
+                <!-- Scroll indicators -->
+                <div class="scroll-indicators" id="scrollIndicators">
+                    <!-- Indicators will be generated by JavaScript -->
+                </div>
+
+                <!-- Visit Classes Button -->
+                <div class="visit-classes-container">
+                    <a href="outside-webs/classes/classes.html" class="visit-classes-btn">
+                        <i class="fas fa-door-open"></i>
+                        Visit Classes
+                    </a>
+                </div>
+            </div>
+
+            <!-- Total Students Card -->
+            <div class="total-students">
+                <h3>Total Student Strength</h3>
+                <div class="total-count">480</div>
+                <p>Bright minds shaping their future at Darul Huda Assam Centre</p>
+                <p style="margin-top: 1rem; font-size: 1rem; opacity: 0.9;">
+                    Committed to nurturing ethical leaders through integrated Islamic and modern education
+                </p>
+                <div class="info">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Updated: December 2023 | Student-Teacher Ratio: 12:1</span>
+                </div>
+            </div>
+
+            <!-- Student Life & Activities -->
+            <div class="section-title">
+                <h2>Student Life & Activities</h2>
+                <p class="section-subtitle">Beyond academics - A vibrant campus life with diverse activities and opportunities for holistic development</p>
+            </div>
+
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Student Union</h3>
+                    <p>The Campus Student Union (SIDRA) with several clubs like, Debate Forum, Etc.</p>
+                    <a href="outside-webs/maintenance-page.html" class="feature-btn" target="_blank">
+                        <span>Visit Student Union</span>
+                        <i class="fas fa-arrow-right btn-icon"></i>
+                    </a>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>Achievements & Excellence</h3>
+                    <p>Our students have won 25+ awards in regional and national competitions in Quran memorization, academic olympiads, sports tournaments, and cultural festivals.</p>
+                    <a href="outside-webs/achievements.html" class="feature-btn" target="_blank">
+                        <span>See Achievements</span>
+                        <i class="fas fa-trophy btn-icon"></i>
+                    </a>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3>Community Outreach</h3>
+                    <p>Regular community service projects benefiting 500+ families annually through educational programs, health camps, and environmental conservation initiatives.</p>
+                    <a href="outside-webs/community-outreach.html" class="feature-btn" target="_blank">
+                        <span>Join Projects</span>
+                        <i class="fas fa-hands-helping btn-icon"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer - EXACTLY LIKE HOME PAGE -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-logo">
+                    <h2>DARUL HUDA <span>ASSAM</span></h2>
+                    <p>Excellence in Islamic & Modern Education since 2013. We are committed to nurturing ethical leaders and knowledgeable Muslims for the modern world.</p>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                        <li><a href="academics.html"><i class="fas fa-chevron-right"></i> Academics</a></li>
+                        <li><a href="students.html" class="active"><i class="fas fa-chevron-right"></i> Student Life</a></li>
+                        <li><a href="admissions.html"><i class="fas fa-chevron-right"></i> Admissions</a></li>
+                        <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Barpeta, Bhogdia, Baisha-Barmara<br>Assam, PIN-781305</p>
+                    <p><i class="fas fa-phone"></i> +91 8399902373</p>
+                    <p><i class="fas fa-envelope"></i> info@darulhudaassam.edu</p>
+                    <p><i class="fas fa-clock"></i> Saturday - Thursday: 7:00 AM - 3:00 PM</p>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a></p>
+                <p>&copy; 2026 Darul Huda Assam Centre. All rights reserved.</p>
+                <p style="margin-top: 0.8rem;"><small>Powered by <i class="fas fa-globe" style="color: var(--accent);"></i> <a href="https://ownaweb.netlify.app/" target="_blank">OwnAWeb</a>.</small></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button - MATCHING HOME PAGE -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- JavaScript - PRESERVING ALL FUNCTIONALITY -->
+    <script>
+        // Mobile Menu Toggle - MATCHING HOME PAGE
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        const mainHeader = document.getElementById('mainHeader');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            const icon = mobileMenuBtn.querySelector('i');
+            if (mainNav.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+                document.body.style.overflow = 'hidden';
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mainNav.contains(e.target) && !mobileMenuBtn.contains(e.target) && mainNav.classList.contains('active')) {
+                mainNav.classList.remove('active');
+                mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+                mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                mainHeader.classList.add('scrolled');
+            } else {
+                mainHeader.classList.remove('scrolled');
+            }
+
+            // Back to top button visibility
+            toggleBackToTopButton();
+        });
+
+        // Set active navigation link
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const navLinks = document.querySelectorAll('nav a, .footer-links a');
+
+            navLinks.forEach(link => {
+                const linkPage = link.getAttribute('href');
+                if (linkPage === currentPage) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+
+            // Add scroll class if page loads scrolled
+            if (window.scrollY > 100) {
+                mainHeader.classList.add('scrolled');
+            }
+
+            // Animate elements on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements for animation
+            document.querySelectorAll('.class-card, .feature-card, .total-students, .visit-classes-btn').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        });
+
+        // Back to Top Button
+        const backToTopButton = document.getElementById('backToTop');
+
+        function toggleBackToTopButton() {
+            if (window.scrollY > 500) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        }
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        backToTopButton.addEventListener('click', scrollToTop);
+
+        // Initialize button state on page load
+        document.addEventListener('DOMContentLoaded', toggleBackToTopButton);
+
+        // Add hover effect to cards
+        document.querySelectorAll('.class-card, .feature-card, .total-students, .visit-classes-btn').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.zIndex = '10';
+            });
+
+            card.addEventListener('mouseleave', function() {
+                this.style.zIndex = '1';
+            });
+        });
+
+        // Count animation for student numbers
+        function animateCount(element, finalValue) {
+            let currentValue = 0;
+            const increment = finalValue / 50;
+            const timer = setInterval(() => {
+                currentValue += increment;
+                if (currentValue >= finalValue) {
+                    element.textContent = finalValue;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(currentValue);
+                }
+            }, 20);
+        }
+
+        // Animate student counts when they come into view
+        const countObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const countElement = entry.target.querySelector('.student-count');
+                    if (countElement && !countElement.classList.contains('animated')) {
+                        const finalValue = parseInt(countElement.textContent);
+                        animateCount(countElement, finalValue);
+                        countElement.classList.add('animated');
+                    }
+                    countObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        // Animate total count when the total-students section comes into view
+        const totalCountObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const totalCount = document.querySelector('.total-count');
+                    if (totalCount && !totalCount.classList.contains('animated')) {
+                        const finalTotal = parseInt(totalCount.textContent);
+                        animateCount(totalCount, finalTotal);
+                        totalCount.classList.add('animated');
+                    }
+                    totalCountObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        // Horizontal Scrolling Functionality - PRESERVED
+        const studentsStats = document.getElementById('studentsStats');
+        const scrollPrev = document.getElementById('scrollPrev');
+        const scrollNext = document.getElementById('scrollNext');
+        const scrollIndicators = document.getElementById('scrollIndicators');
+        const classCards = document.querySelectorAll('.class-card');
+
+        // Create scroll indicators
+        function createScrollIndicators() {
+            scrollIndicators.innerHTML = '';
+            const cardCount = classCards.length;
+            const visibleCards = Math.floor(studentsStats.clientWidth / 200); // Approximate cards visible
+            const indicatorCount = Math.ceil(cardCount / visibleCards);
+
+            for (let i = 0; i < indicatorCount; i++) {
+                const dot = document.createElement('div');
+                dot.classList.add('scroll-dot');
+                if (i === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => {
+                    scrollToIndex(i);
+                });
+                scrollIndicators.appendChild(dot);
+            }
+        }
+
+        // Scroll to specific index
+        function scrollToIndex(index) {
+            const cardWidth = classCards[0].offsetWidth + 24; // width + gap
+            const visibleCards = Math.floor(studentsStats.clientWidth / cardWidth);
+            studentsStats.scrollTo({
+                left: index * visibleCards * cardWidth,
+                behavior: 'smooth'
+            });
+            updateScrollIndicators();
+        }
+
+        // Update scroll indicators based on current scroll position
+        function updateScrollIndicators() {
+            const scrollLeft = studentsStats.scrollLeft;
+            const scrollWidth = studentsStats.scrollWidth - studentsStats.clientWidth;
+            const dots = document.querySelectorAll('.scroll-dot');
+
+            if (scrollLeft <= 0) {
+                scrollPrev.classList.add('hidden');
+            } else {
+                scrollPrev.classList.remove('hidden');
+            }
+
+            if (scrollLeft >= scrollWidth - 10) {
+                scrollNext.classList.add('hidden');
+            } else {
+                scrollNext.classList.remove('hidden');
+            }
+
+            // Update active dot
+            const cardWidth = classCards[0].offsetWidth + 24;
+            const visibleCards = Math.floor(studentsStats.clientWidth / cardWidth);
+            const activeIndex = Math.floor(scrollLeft / (visibleCards * cardWidth));
+
+            dots.forEach((dot, index) => {
+                if (index === activeIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        // Scroll navigation
+        scrollPrev.addEventListener('click', () => {
+            studentsStats.scrollBy({
+                left: -studentsStats.clientWidth * 0.8,
+                behavior: 'smooth'
+            });
+        });
+
+        scrollNext.addEventListener('click', () => {
+            studentsStats.scrollBy({
+                left: studentsStats.clientWidth * 0.8,
+                behavior: 'smooth'
+            });
+        });
+
+        // Update indicators on scroll
+        studentsStats.addEventListener('scroll', updateScrollIndicators);
+
+        // Initialize horizontal scrolling
+        let isDragging = false;
+        let startX;
+        let scrollLeft;
+
+        studentsStats.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            studentsStats.classList.add('scrolling');
+            startX = e.pageX - studentsStats.offsetLeft;
+            scrollLeft = studentsStats.scrollLeft;
+        });
+
+        studentsStats.addEventListener('mouseleave', () => {
+            isDragging = false;
+            studentsStats.classList.remove('scrolling');
+        });
+
+        studentsStats.addEventListener('mouseup', () => {
+            isDragging = false;
+            studentsStats.classList.remove('scrolling');
+        });
+
+        studentsStats.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            const x = e.pageX - studentsStats.offsetLeft;
+            const walk = (x - startX) * 2;
+            studentsStats.scrollLeft = scrollLeft - walk;
+        });
+
+        // Touch support for mobile
+        studentsStats.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].pageX - studentsStats.offsetLeft;
+            scrollLeft = studentsStats.scrollLeft;
+        });
+
+        studentsStats.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            const x = e.touches[0].pageX - studentsStats.offsetLeft;
+            const walk = (x - startX) * 2;
+            studentsStats.scrollLeft = scrollLeft - walk;
+        });
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            createScrollIndicators();
+            updateScrollIndicators();
+
+            // Observe all class cards for count animation
+            document.querySelectorAll('.class-card').forEach(card => {
+                countObserver.observe(card);
+            });
+
+            // Observe the total students section for animation
+            const totalStudentsSection = document.querySelector('.total-students');
+            if (totalStudentsSection) {
+                totalCountObserver.observe(totalStudentsSection);
+            }
+
+            // Update indicators on window resize
+            window.addEventListener('resize', () => {
+                createScrollIndicators();
+                updateScrollIndicators();
+            });
+        });
+    </script>
+</body>
+</html>

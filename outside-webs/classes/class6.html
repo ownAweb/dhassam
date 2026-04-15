@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>First Year · classroom dashboard · Darul Huda Assam</title>
+    <!-- Font Awesome (same as main site) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ------------------------------------------------------------
+           MAIN SITE HEADER STYLES (exactly from classes.html)
+        ------------------------------------------------------------ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        :root {
+            --primary: #1a365d;
+            --secondary: #2d3748;
+            --accent: #c53030;
+            --gold: #b7791f;
+            --light: #f7fafc;
+            --dark: #1a202c;
+            --gray: #718096;
+            --gradient-primary: linear-gradient(45deg, var(--secondary), var(--accent));
+            --gradient-accent: linear-gradient(135deg, #b7791f 0%, #975a16 100%);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
+            --shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.07);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            line-height: 1.7;
+            color: #2d3748;
+            background-color: #f8fafc;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* ----- HEADER (same as main page) ----- */
+        header {
+            background-color: rgba(255, 255, 255, 0.97);
+            color: var(--primary);
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            position: sticky;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        header.scrolled {
+            padding: 0.7rem 0;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.98);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
+        }
+
+        .logo-icon {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            display: block;
+        }
+
+        .logo-text h1 {
+            font-size: 1.6rem;
+            background: linear-gradient(45deg, var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        .logo-text p {
+            font-size: 0.75rem;
+            color: var(--gray);
+            margin-top: 2px;
+            font-weight: 500;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .back-home-btn {
+            background: var(--accent);
+            color: white;
+            padding: 0.7rem 1.8rem;
+            border-radius: 2px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+            border: 1px solid var(--accent);
+            text-transform: uppercase;
+        }
+
+        .back-home-btn:hover {
+            background: #9b2c2c;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* ------------------------------------------------------------
+           PAGE SPECIFIC – DASHBOARD FOR A SINGLE CLASS (First year)
+        ------------------------------------------------------------ */
+        .page-head {
+            padding: 4rem 0 3rem;
+            background: linear-gradient(135deg, #0a141e 0%, #1e2a3a 100%);
+            color: white;
+            position: relative;
+            isolation: isolate;
+        }
+        .page-head::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            width: 80%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), var(--accent), transparent);
+            z-index: 0;
+        }
+        .page-head h1 {
+            font-size: 2.8rem;
+            color: white;
+            font-family: Georgia, serif;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            display: inline-block;
+            background: rgba(0,0,0,0.25);
+            padding: 0.2rem 1rem 0.2rem 0;
+            border-radius: 0 4px 4px 0;
+            backdrop-filter: blur(2px);
+        }
+        .page-head p {
+            color: #f0f0f0;
+            font-size: 1.2rem;
+            max-width: 700px;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(3px);
+            display: inline-block;
+            padding: 0.3rem 1.5rem;
+            border-left: 5px solid var(--accent);
+        }
+
+        /* dashboard grid */
+        .dashboard {
+            padding: 3rem 0 4rem;
+        }
+
+        .class-identity {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            background: white;
+            padding: 1.5rem 2rem;
+            box-shadow: var(--shadow);
+            border-left: 8px solid var(--accent);
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+        .class-identity i {
+            font-size: 3.5rem;
+            color: var(--gold);
+        }
+        .class-identity h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            font-family: Georgia, serif;
+        }
+        .class-identity .meta-badge {
+            margin-left: auto;
+            background: #e9ecef;
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .detail-panels {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        .panel {
+            background: white;
+            border: 1px solid rgba(0,0,0,0.05);
+            box-shadow: var(--shadow);
+            padding: 1.8rem 1.5rem;
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+        .panel:hover {
+            box-shadow: var(--shadow-hover);
+        }
+        .panel h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary);
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px dashed #dee2e6;
+            padding-bottom: 0.7rem;
+        }
+        .panel h3 i {
+            color: var(--accent);
+        }
+        .info-row {
+            display: flex;
+            margin-bottom: 1rem;
+            border-bottom: 1px dotted #edf2f7;
+            padding-bottom: 0.5rem;
+        }
+        .info-label {
+            width: 110px;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+        .info-value {
+            color: var(--dark);
+        }
+        .badge-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 1rem 0;
+        }
+        .badge {
+            background: #edf2f7;
+            padding: 0.3rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .teacher-note-card {
+            background: #fef5f5;
+            padding: 1rem;
+            border-left: 3px solid var(--accent);
+            margin: 1.2rem 0 0;
+            font-style: italic;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .full-width-card {
+            background: white;
+            padding: 2rem;
+            margin: 2rem 0 3rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .full-width-card h3 {
+            color: var(--primary);
+            margin-bottom: 1.8rem;
+            font-size: 1.8rem;
+            font-family: Georgia, serif;
+        }
+
+        .timetable-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+        }
+        .day-card {
+            background: #f8fafc;
+            padding: 1rem;
+            border-left: 4px solid var(--gold);
+        }
+        .day-card h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        .day-card p {
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+
+        .student-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        .student-table th {
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem;
+            font-weight: 500;
+            text-align: left;
+        }
+        .student-table td {
+            padding: 0.8rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .student-table tr:hover {
+            background: #f7fafc;
+        }
+
+        /* ----- NEW: Group photo gallery styles ----- */
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0 1rem;
+        }
+        .photo-card {
+            background: #f8fafc;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .photo-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+        }
+        .photo-img {
+            width: 100%;
+            height: 200px;
+            background-color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-size: 3rem;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+        /* simulated group images with gradient + icon overlay — actual photos can replace background-image */
+        .photo-img.section-a {
+            background-image: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+        }
+        .photo-img.section-b {
+            background-image: linear-gradient(135deg, #744210 0%, #b7791f 100%);
+        }
+        .photo-img.section-c {
+            background-image: linear-gradient(135deg, #702459 0%, #97266d 100%);
+        }
+        .photo-img.section-d {
+            background-image: linear-gradient(135deg, #1e4a4a 0%, #285e5e 100%);
+        }
+        .photo-img i {
+            background: rgba(255,255,255,0.2);
+            padding: 1rem;
+            border-radius: 50%;
+            backdrop-filter: blur(4px);
+            color: white;
+            font-size: 2.5rem;
+        }
+        .photo-caption {
+            padding: 1rem 1.2rem 1.2rem;
+            background: white;
+        }
+        .photo-caption h4 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+        .photo-caption p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        .photo-caption .badge {
+            background: var(--accent);
+            color: white;
+            display: inline-block;
+        }
+
+        .back-links {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 2rem;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 2px;
+            transition: var(--transition);
+            border: 1px solid var(--primary);
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        .btn:hover {
+            background: #2d3748;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 2.5rem;
+            right: 2rem;
+            background: var(--accent);
+            color: white;
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 10px 25px rgba(197,48,48,0.3);
+            transition: var(--transition);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+            font-size: 1.3rem;
+        }
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .back-to-top:hover {
+            background: #9b2c2c;
+            transform: translateY(-8px) scale(1.05);
+        }
+
+        .main-footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 1.0rem 0 1.5rem;
+            margin-top: 2rem;
+            position: relative;
+        }
+        .main-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, var(--secondary), var(--accent));
+        }
+        .footer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 0.5rem;
+        }
+        .copyright {
+            text-align: center;
+            padding-top: 1.0rem;
+            color: #888;
+            font-size: 0.9rem;
+        }
+        .copyright a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .logo-icon img {
+            content: url('https://i.ibb.co/whW6QdYL/logo.png');
+        }
+
+        @media (max-width: 992px) {
+            .detail-panels { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .detail-panels { grid-template-columns: 1fr; }
+            .class-identity { flex-direction: column; align-items: start; }
+            .class-identity .meta-badge { margin-left: 0; }
+            .page-head h1 { font-size: 2rem; }
+            .back-to-top { width: 48px; height: 48px; }
+        }
+    </style>
+</head>
+<body>
+    <header id="mainHeader">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">
+                    <img src="https://i.ibb.co/whW6QdYL/logo.png" alt="Darul Huda Assam Centre Logo" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'font-size:1.8rem; font-weight:bold; color:var(--primary);\'>DH</span>';">
+                </div>
+                <div class="logo-text">
+                    <h1>DH ASSAM</h1>
+                    <p>Soaring for Excellence..</p>
+                </div>
+            </a>
+            <div class="header-right">
+                <a href="classes.html" class="back-home-btn">
+                    <i class="fas fa-arrow-left"></i> BACK TO CLASSES
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <a href="#" class="back-to-top" id="backToTopBtn"><i class="fas fa-arrow-up"></i></a>
+
+    <!-- page head specific for first year -->
+    <div class="page-head">
+        <div class="container">
+            <h1><i class="fas fa-seedling" style="margin-right: 15px;"></i>First year · foundational</h1>
+            <p>Class teacher: Ustadh A. Rahman | 70 students (4 sections)</p>
+        </div>
+    </div>
+
+    <main class="dashboard">
+        <div class="container">
+
+            <!-- identity strip -->
+            <div class="class-identity">
+                <i class="fas fa-door-open"></i>
+                <h2>Classroom 101–104 (ground floor)</h2>
+                <span class="meta-badge"><i class="far fa-clock"></i> 7:30 – 12:45</span>
+            </div>
+
+            <!-- three detail panels (teacher, strength, curriculum) -->
+            <div class="detail-panels">
+                <!-- panel: teacher & contact -->
+                <div class="panel">
+                    <h3><i class="fas fa-chalkboard-teacher"></i> Teacher & mentors</h3>
+                    <div class="info-row"><span class="info-label">Class teacher</span><span class="info-value">Ustadh A. Rahman</span></div>
+                    <div class="info-row"><span class="info-label">Assistant</span><span class="info-value">Ustadh F. Islam</span></div>
+                    <div class="info-row"><span class="info-label">Qur’an specialist</span><span class="info-value">Qari M. Idris</span></div>
+                    <div class="info-row"><span class="info-label">Office hours</span><span class="info-value">Mon, Wed 10–12</span></div>
+                    <div class="teacher-note-card">
+                        <i class="fas fa-quote-right" style="color: var(--accent); opacity:0.8;"></i> "Focus on tajweed and basic aqeedah. Additional support for new students."
+                    </div>
+                </div>
+                <!-- panel: students & sections -->
+                <div class="panel">
+                    <h3><i class="fas fa-users"></i> Students & sections</h3>
+                    <div class="info-row"><span class="info-label">Total strength</span><span class="info-value">70 (4 divisions)</span></div>
+                    <div class="info-row"><span class="info-label">Section A</span><span class="info-value">18 students (boys)</span></div>
+                    <div class="info-row"><span class="info-label">Section B</span><span class="info-value">19 students (boys)</span></div>
+                    <div class="info-row"><span class="info-label">Section C (girls)</span><span class="info-value">17 students</span></div>
+                    <div class="info-row"><span class="info-label">Section D (girls)</span><span class="info-value">16 students</span></div>
+                    <div class="badge-list">
+                        <span class="badge"><i class="fas-regular fa-flag"></i> 6 hafiz</span>
+                        <span class="badge"><i class="fas-regular fa-school"></i> 12 new</span>
+                    </div>
+                </div>
+                <!-- panel: subjects & timetable -->
+                <div class="panel">
+                    <h3><i class="fas fa-book"></i> Core subjects</h3>
+                    <div class="badge-list" style="margin-top:0;">
+                        <span class="badge">Qur’an (tajweed)</span>
+                        <span class="badge">Fiqh (ibadah)</span>
+                        <span class="badge">English grammar</span>
+                        <span class="badge">Mathematics</span>
+                        <span class="badge">Arabic morphology</span>
+                        <span class="badge">Aqeedah</span>
+                        <span class="badge">Islamic history</span>
+                    </div>
+                    <div class="info-row" style="margin-top:1.5rem;"><span class="info-label">Daily sessions</span><span class="info-value">7 periods (40 min each)</span></div>
+                    <div class="info-row"><span class="info-label">Hifdh support</span><span class="info-value">2 afternoon slots</span></div>
+                </div>
+            </div>
+
+            <!-- ========== NEW: GROUP PHOTO GALLERY (FOUR SECTIONS) ========== -->
+            <div class="full-width-card" style="margin-bottom: 2rem;">
+                <h3><i class="fas fa-camera-retro" style="color: var(--accent); margin-right: 10px;"></i> Section group photos (2026 batch)</h3>
+                <div class="photo-gallery">
+                    <!-- section A -->
+                    <div class="photo-card">
+                        <div class="photo-img section-a">
+                            <i class="fas fa-users fa-3x"></i>
+                        </div>
+                        <div class="photo-caption">
+                            <h4>Section A · boys</h4>
+                            <p>18 students · Ustadh A. Rahman (teacher)</p>
+                            <span class="badge"><i class="far fa-image"></i> group photo</span>
+                        </div>
+                    </div>
+                    <!-- section B -->
+                    <div class="photo-card">
+                        <div class="photo-img section-b">
+                            <i class="fas fa-users fa-3x"></i>
+                        </div>
+                        <div class="photo-caption">
+                            <h4>Section B · boys</h4>
+                            <p>19 students · Ustadh F. Islam (mentor)</p>
+                            <span class="badge"><i class="far fa-image"></i> group photo</span>
+                        </div>
+                    </div>
+                    <!-- section C (girls) -->
+                    <div class="photo-card">
+                        <div class="photo-img section-c">
+                            <i class="fas fa-female fa-3x"></i>
+                        </div>
+                        <div class="photo-caption">
+                            <h4>Section C · girls</h4>
+                            <p>17 students · Ustadha N. Khatun</p>
+                            <span class="badge"><i class="far fa-image"></i> group photo</span>
+                        </div>
+                    </div>
+                    <!-- section D (girls) -->
+                    <div class="photo-card">
+                        <div class="photo-img section-d">
+                            <i class="fas fa-female fa-3x"></i>
+                        </div>
+                        <div class="photo-caption">
+                            <h4>Section D · girls</h4>
+                            <p>16 students · Ustadha R. Begum</p>
+                            <span class="badge"><i class="far fa-image"></i> group photo</span>
+                        </div>
+                    </div>
+                </div>
+                <p style="margin-top: 1.5rem; color: var(--gray); font-size:0.95rem; background: #f1f5f9; padding: 0.8rem 1.2rem; border-radius: 4px;">
+                    <i class="fas fa-info-circle" style="color: var(--accent);"></i>
+                    Actual group images can be placed here — the coloured cards simulate photos. Replace the background images or the <code>&lt;i&gt;</code> icon with <code>&lt;img&gt;</code> tags for real class photographs.
+                </p>
+            </div>
+
+            <!-- full width: weekly timetable (demo) -->
+            <div class="full-width-card">
+                <h3><i class="fas fa-calendar-alt" style="color: var(--accent);"></i> Weekly timetable – section A (boys)</h3>
+                <div class="timetable-grid">
+                    <div class="day-card"><h4>Saturday</h4><p>Qur’an (8:00-8:40)<br>Fiqh (9:00-9:40)<br>English (10:00-10:40)<br>Maths (11:00-11:40)</p></div>
+                    <div class="day-card"><h4>Sunday</h4><p>Arabic Sarf<br>Tajweed practice<br>History<br>Aqeedah</p></div>
+                    <div class="day-card"><h4>Monday</h4><p>Qur’an<br>Fiqh<br>English<br>Maths</p></div>
+                    <div class="day-card"><h4>Tuesday</h4><p>Arabic<br>Tajweed<br>History<br>Aqeedah</p></div>
+                    <div class="day-card"><h4>Wednesday</h4><p>Qur’an revision<br>Fiqh<br>English<br>Maths</p></div>
+                    <div class="day-card"><h4>Thursday</h4><p>Arabic<br>Tajweed<br>History<br>Review</p></div>
+                </div>
+                <p style="margin-top:1.5rem; color: var(--gray);"><i class="fas fa-info-circle"></i> Break: 9:40–10:00 | Zuhr break: 12:00–12:30. Sections B, C, D have rotated order.</p>
+            </div>
+
+            <!-- student list preview (first 5) + link -->
+            <div class="full-width-card">
+                <h3><i class="fas fa-address-book"></i> Student roll – section A (sample)</h3>
+                <table class="student-table">
+                    <thead><tr><th>Name</th><th>ID</th><th>Guardian</th><th>Attendance %</th></tr></thead>
+                    <tbody>
+                        <tr><td>Abdullah R.</td><td>DH24101</td><td>Rafiqul Islam</td><td>94%</td></tr>
+                        <tr><td>Ibrahim K.</td><td>DH24102</td><td>Karim Ali</td><td>88%</td></tr>
+                        <tr><td>Umar Farooq</td><td>DH24103</td><td>Shamsudeen</td><td>91%</td></tr>
+                        <tr><td>Zaynab H.</td><td>DH24104</td><td>Harun Rashid</td><td>97%</td></tr>
+                        <tr><td>Aisha K.</td><td>DH24105</td><td>Khalilur Rahman</td><td>82%</td></tr>
+                    </tbody>
+                </table>
+                <p style="margin-top:1rem;"><a href="#" style="color: var(--accent);" onclick="alert('Full attendance portal (demo) – would show all 70 students'); return false;"><i class="fas-regular fa-eye"></i> View full class list →</a></p>
+            </div>
+
+            <!-- additional info: facilities, exams, notes -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
+                <div style="background: white; padding: 1.8rem; box-shadow: var(--shadow);">
+                    <h4 style="color: var(--primary); margin-bottom:1rem;"><i class="fas fa-door-closed"></i> Room facilities</h4>
+                    <ul style="list-style: none;">
+                        <li><i class="fas fa-check-circle" style="color: var(--accent); width: 20px;"></i> Smart board (installed)</li>
+                        <li><i class="fas fa-check-circle" style="color: var(--accent);"></i> Library corner – 40 books</li>
+                        <li><i class="fas fa-check-circle" style="color: var(--accent);"></i> Wudu area adjacent</li>
+                        <li><i class="fas fa-check-circle" style="color: var(--accent);"></i> AC & fans</li>
+                    </ul>
+                </div>
+                <div style="background: white; padding: 1.8rem; box-shadow: var(--shadow);">
+                    <h4 style="color: var(--primary); margin-bottom:1rem;"><i class="fas fa-pen"></i> Upcoming assessments</h4>
+                    <p><strong>Weekly quiz:</strong> Saturday (Fiqh)</p>
+                    <p><strong>Mid‑term:</strong> 15 March – 22 March</p>
+                    <p><strong>Tajweed check:</strong> Every Thursday</p>
+                </div>
+            </div>
+
+            <!-- back links: exactly what you requested: open one class page, others can be built manually -->
+            <div class="back-links">
+                <a href="classes.html" class="btn btn-outline"><i class="fas fa-arrow-left"></i> All classrooms</a>
+                <div style="display: flex; gap: 1rem;">
+                    <a href="#" class="btn" onclick="alert('🔧 You can now manually build other classes (Second, Third etc.) using this page as template. Use classes.html data.'); return false;"><i class="fas fa-plus-circle"></i> Add another class</a>
+                    <a href="#" class="btn" style="background: var(--accent); border-color: var(--accent);" onclick="alert('📘 Second year dashboard would open – you build it manually from this template.'); return false;"><i class="fas fa-external-link-alt"></i> Try second year (manual)</a>
+                </div>
+            </div>
+
+            <!-- extra demo note -->
+            <div style="margin: 3rem 0 1rem; background: #e9f0f9; padding: 1.2rem; border-left: 6px solid var(--primary);">
+                <i class="fas fa-tools" style="margin-right: 8px;"></i>
+                <strong>Manual builder hint:</strong> This is the page behind the <span style="background:#eee; padding:2px 8px;">view</span> button for First Year. For other classes (Second, Third … Tenth) you can duplicate this HTML and replace the data (class teacher, students, subjects etc.) from the cards in <code>classes.html</code>. The group photo section makes it easy to add real class images.
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container footer-container">
+            <div class="copyright">
+                <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a></p>
+                <p>&copy; 2026 Darul Huda Assam Centre. All rights reserved.</p>
+                <p style="margin-top: 0.8rem;"><small>Powered by <i class="fas fa-globe" style="color: var(--accent);"></i> <a href="#">OwnAWeb</a>.</small></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            const header = document.getElementById('mainHeader');
+            const backBtn = document.getElementById('backToTopBtn');
+
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) header.classList.add('scrolled');
+                else header.classList.remove('scrolled');
+
+                if (window.scrollY > 400) backBtn.classList.add('show');
+                else backBtn.classList.remove('show');
+            });
+
+            backBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // make any "view" like demo links show consistent message
+            document.querySelectorAll('.btn-outline, .btn[onclick*="demo"]').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    if (this.hasAttribute('onclick')) return;
+                    e.preventDefault();
+                    alert('Navigate to another class dashboard (manual build). Use this page as template.');
+                });
+            });
+        })();
+    </script>
+</body>
+</html>

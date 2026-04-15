@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Canteen Statistics Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #fef7ec;
+            color: #5a3921;
+            line-height: 1.6;
+            background-image: radial-gradient(#f0b27a 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(230, 126, 34, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            transform: translate(30%, -30%);
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .canteen-info {
+            flex: 1;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            font-weight: 800;
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.1rem;
+            max-width: 600px;
+        }
+
+        .canteen-status {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            min-width: 280px;
+        }
+
+        .status-indicator {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: #2ecc71;
+            margin-right: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        .status-text {
+            font-weight: 700;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .meal-time {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            text-align: center;
+        }
+
+        .meal-countdown {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #f1c40f;
+            margin-top: 5px;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 18px;
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.08);
+            padding: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 6px solid #e67e22;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f5e6d3;
+        }
+
+        .card-icon {
+            width: 65px;
+            height: 65px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 18px;
+            font-size: 2rem;
+            color: white;
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-title {
+            font-size: 1.6rem;
+            color: #d35400;
+            font-weight: 700;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .stat-item {
+            background-color: #fef9f3;
+            padding: 22px;
+            border-radius: 14px;
+            text-align: center;
+            transition: background-color 0.2s;
+            border: 1px solid #f5e6d3;
+        }
+
+        .stat-item:hover {
+            background-color: #fcf3e7;
+        }
+
+        .stat-value {
+            font-size: 2.6rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: #8b5a2b;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .distribution-list {
+            list-style-type: none;
+        }
+
+        .distribution-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 18px;
+            border-radius: 12px;
+            transition: background-color 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .distribution-item:hover {
+            background-color: #fef9f3;
+            border-color: #f5e6d3;
+        }
+
+        .distribution-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .distribution-info {
+            flex: 1;
+        }
+
+        .distribution-name {
+            font-weight: 700;
+            margin-bottom: 6px;
+            font-size: 1.2rem;
+        }
+
+        .distribution-stats {
+            color: #8b5a2b;
+            font-size: 0.95rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .progress-container {
+            margin-top: 12px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background-color: #f5e6d3;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 5px;
+        }
+
+        .meal-schedule {
+            margin-top: 20px;
+        }
+
+        .meal-item {
+            display: flex;
+            align-items: center;
+            padding: 18px 0;
+            border-bottom: 2px dashed #f5e6d3;
+        }
+
+        .meal-item:last-child {
+            border-bottom: none;
+        }
+
+        .meal-time-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 18px;
+            color: white;
+            font-size: 1.3rem;
+        }
+
+        .meal-info {
+            flex: 1;
+        }
+
+        .meal-name {
+            font-weight: 700;
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+
+        .meal-details {
+            color: #8b5a2b;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .current-meal {
+            background-color: #fef9f3;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 10px;
+            border: 2px solid #e67e22;
+        }
+
+        .nutrition-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .nutrition-item {
+            background-color: #fef9f3;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .nutrition-value {
+            font-size: 1.9rem;
+            font-weight: 800;
+            color: #d35400;
+            margin-bottom: 6px;
+        }
+
+        .nutrition-label {
+            color: #8b5a2b;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .volunteer-stats {
+            margin-top: 20px;
+        }
+
+        .volunteer-item {
+            display: flex;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px dashed #f5e6d3;
+        }
+
+        .volunteer-item:last-child {
+            border-bottom: none;
+        }
+
+        .volunteer-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 18px;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .volunteer-info {
+            flex: 1;
+        }
+
+        .volunteer-name {
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .volunteer-role {
+            color: #8b5a2b;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .donation-tracker {
+            margin-top: 20px;
+        }
+
+        .donation-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .donation-type {
+            width: 120px;
+            font-weight: 700;
+            color: #5a3921;
+        }
+
+        .donation-bar-container {
+            flex: 1;
+            margin-left: 20px;
+        }
+
+        .donation-amount {
+            width: 80px;
+            text-align: right;
+            font-weight: 700;
+            color: #e67e22;
+        }
+
+        .donation-bar {
+            height: 24px;
+            background-color: #f5e6d3;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .donation-fill {
+            height: 100%;
+            border-radius: 12px;
+        }
+
+        .impact-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .impact-item {
+            background-color: #fef9f3;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .impact-value {
+            font-size: 1.9rem;
+            font-weight: 800;
+            color: #27ae60;
+            margin-bottom: 6px;
+        }
+
+        .impact-label {
+            color: #8b5a2b;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .community-board {
+            background: linear-gradient(135deg, #fef9f3 0%, #fcf3e7 100%);
+            border: 2px solid #f5e6d3;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .community-title {
+            font-weight: 700;
+            color: #d35400;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .community-message {
+            color: #5a3921;
+            font-style: italic;
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 10px;
+            border-left: 4px solid #e67e22;
+        }
+
+        .community-author {
+            text-align: right;
+            color: #8b5a2b;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .alert-banner {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 2px solid #f59e0b;
+            border-radius: 12px;
+            padding: 18px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .alert-icon {
+            color: #92400e;
+            font-size: 1.8rem;
+            margin-right: 20px;
+        }
+
+        .alert-content {
+            flex: 1;
+        }
+
+        .alert-title {
+            font-weight: 700;
+            color: #92400e;
+            margin-bottom: 6px;
+            font-size: 1.2rem;
+        }
+
+        .alert-message {
+            color: #92400e;
+            font-size: 1rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            background: white;
+            padding: 18px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .tab-btn {
+            padding: 14px 28px;
+            background-color: #fef9f3;
+            border: 2px solid #f5e6d3;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+            color: #8b5a2b;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.05rem;
+        }
+
+        .tab-btn:hover {
+            background-color: #fcf3e7;
+            border-color: #e67e22;
+            color: #d35400;
+        }
+
+        .tab-btn.active {
+            background-color: #e67e22;
+            color: white;
+            border-color: #e67e22;
+        }
+
+        .tab-btn i {
+            font-size: 1.2rem;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 2px solid #f5e6d3;
+            color: #8b5a2b;
+            font-size: 0.95rem;
+        }
+
+        .update-time {
+            font-weight: 700;
+            color: #e67e22;
+        }
+
+        .motto {
+            font-style: italic;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            color: #d35400;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid, .nutrition-grid, .impact-metrics {
+                grid-template-columns: 1fr;
+            }
+
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .canteen-status {
+                margin-top: 25px;
+                align-self: stretch;
+            }
+
+            .tabs {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="canteen-info">
+                    <h1>Community Hope Canteen</h1>
+                    <div class="tagline">Serving Meals with Compassion, Free for All</div>
+                    <p class="subtitle">Tracking food distribution, nutrition metrics, and community impact since 2015</p>
+                </div>
+                <div class="canteen-status">
+                    <div class="status-text">
+                        <div class="status-indicator"></div>
+                        <span>Serving Now: Lunch</span>
+                    </div>
+                    <div class="meal-time">Next Meal: Dinner</div>
+                    <div class="meal-countdown" id="meal-countdown">3:42:18</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-day="today">
+                <i class="fas fa-calendar-day"></i> Today
+            </button>
+            <button class="tab-btn" data-day="week">
+                <i class="fas fa-calendar-week"></i> This Week
+            </button>
+            <button class="tab-btn" data-day="month">
+                <i class="fas fa-calendar-alt"></i> This Month
+            </button>
+            <button class="tab-btn" data-day="year">
+                <i class="fas fa-calendar"></i> This Year
+            </button>
+        </div>
+
+        <div class="dashboard">
+            <!-- Daily Distribution Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h2 class="card-title">Daily Distribution</h2>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="meals-served">427</div>
+                        <div class="stat-label">Meals Served Today</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="people-fed">382</div>
+                        <div class="stat-label">People Fed Today</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="avg-wait">8.5</div>
+                        <div class="stat-label">Avg Wait Time (mins)</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">94%</div>
+                        <div class="stat-label">Satisfaction Rate</div>
+                    </div>
+                </div>
+
+                <div class="distribution-list">
+                    <div class="distribution-item">
+                        <div class="distribution-icon" style="background-color: #e67e22;">
+                            <i class="fas fa-male"></i>
+                        </div>
+                        <div class="distribution-info">
+                            <div class="distribution-name">Adult Meals</div>
+                            <div class="distribution-stats">
+                                <span>285 served today</span>
+                                <span>67% of total</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 67%; background-color: #e67e22;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="distribution-item">
+                        <div class="distribution-icon" style="background-color: #3498db;">
+                            <i class="fas fa-child"></i>
+                        </div>
+                        <div class="distribution-info">
+                            <div class="distribution-name">Children Meals</div>
+                            <div class="distribution-stats">
+                                <span>98 served today</span>
+                                <span>23% of total</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 23%; background-color: #3498db;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="distribution-item">
+                        <div class="distribution-icon" style="background-color: #2ecc71;">
+                            <i class="fas fa-user-injured"></i>
+                        </div>
+                        <div class="distribution-info">
+                            <div class="distribution-name">Special Needs</div>
+                            <div class="distribution-stats">
+                                <span>44 served today</span>
+                                <span>10% of total</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 10%; background-color: #2ecc71;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meal Schedule & Menu Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h2 class="card-title">Today's Menu & Schedule</h2>
+                </div>
+
+                <div class="current-meal">
+                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                        <div class="meal-time-icon" style="background-color: #e67e22;">
+                            <i class="fas fa-sun"></i>
+                        </div>
+                        <div>
+                            <div class="meal-name" style="color: #d35400;">Currently Serving: LUNCH</div>
+                            <div class="meal-details">
+                                <span>11:30 AM - 2:00 PM</span>
+                                <span>328 served so far</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding-left: 68px;">
+                        <div style="font-weight: 600; color: #5a3921; margin-bottom: 5px;">Menu: Vegetable Biryani, Dal Fry, Salad, Fruit</div>
+                        <div style="font-size: 0.9rem; color: #8b5a2b;">Special: Sugar-free option available for diabetic guests</div>
+                    </div>
+                </div>
+
+                <div class="meal-schedule">
+                    <div class="meal-item">
+                        <div class="meal-time-icon" style="background-color: #9b59b6;">
+                            <i class="fas fa-coffee"></i>
+                        </div>
+                        <div class="meal-info">
+                            <div class="meal-name">Breakfast</div>
+                            <div class="meal-details">
+                                <span>7:00 AM - 9:00 AM</span>
+                                <span>214 served</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="meal-item">
+                        <div class="meal-time-icon" style="background-color: #e67e22;">
+                            <i class="fas fa-sun"></i>
+                        </div>
+                        <div class="meal-info">
+                            <div class="meal-name">Lunch (Current)</div>
+                            <div class="meal-details">
+                                <span>11:30 AM - 2:00 PM</span>
+                                <span>328 served</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="meal-item">
+                        <div class="meal-time-icon" style="background-color: #3498db;">
+                            <i class="fas fa-moon"></i>
+                        </div>
+                        <div class="meal-info">
+                            <div class="meal-name">Dinner</div>
+                            <div class="meal-details">
+                                <span>6:30 PM - 8:30 PM</span>
+                                <span>Starts in 3h 42m</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nutrition-grid">
+                    <div class="nutrition-item">
+                        <div class="nutrition-value">2,150</div>
+                        <div class="nutrition-label">Avg Calories/Meal</div>
+                    </div>
+                    <div class="nutrition-item">
+                        <div class="nutrition-value">68g</div>
+                        <div class="nutrition-label">Protein/Meal</div>
+                    </div>
+                    <div class="nutrition-item">
+                        <div class="nutrition-value">12</div>
+                        <div class="nutrition-label">Vitamins & Minerals</div>
+                    </div>
+                    <div class="nutrition-item">
+                        <div class="nutrition-value">100%</div>
+                        <div class="nutrition-label">Vegetarian Meals</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Volunteer Coordination Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h2 class="card-title">Volunteer Coordination</h2>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="active-volunteers">24</div>
+                        <div class="stat-label">Active Volunteers Today</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="volunteer-hours">142</div>
+                        <div class="stat-label">Volunteer Hours Today</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">48</div>
+                        <div class="stat-label">Total Registered Volunteers</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">12</div>
+                        <div class="stat-label">New Volunteers This Month</div>
+                    </div>
+                </div>
+
+                <div class="volunteer-stats">
+                    <h3 style="margin: 20px 0 15px 0; color: #d35400;">Today's Team</h3>
+                    <div class="volunteer-item">
+                        <div class="volunteer-avatar" style="background-color: #e67e22;">
+                            AS
+                        </div>
+                        <div class="volunteer-info">
+                            <div class="volunteer-name">Anita Sharma</div>
+                            <div class="volunteer-role">
+                                <span>Food Preparation Lead</span>
+                                <span>6 hours today</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="volunteer-item">
+                        <div class="volunteer-avatar" style="background-color: #3498db;">
+                            RJ
+                        </div>
+                        <div class="volunteer-info">
+                            <div class="volunteer-name">Rajesh Kumar</div>
+                            <div class="volunteer-role">
+                                <span>Serving Station</span>
+                                <span>5 hours today</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="volunteer-item">
+                        <div class="volunteer-avatar" style="background-color: #2ecc71;">
+                            MP
+                        </div>
+                        <div class="volunteer-info">
+                            <div class="volunteer-name">Meena Patel</div>
+                            <div class="volunteer-role">
+                                <span>Cleanup Coordinator</span>
+                                <span>4 hours today</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="volunteer-item">
+                        <div class="volunteer-avatar" style="background-color: #9b59b6;">
+                            DS
+                        </div>
+                        <div class="volunteer-info">
+                            <div class="volunteer-name">David Smith</div>
+                            <div class="volunteer-role">
+                                <span>Donation Management</span>
+                                <span>3 hours today</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Donations & Inventory Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);">
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <h2 class="card-title">Donations & Inventory</h2>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">₹42,850</div>
+                        <div class="stat-label">Donations This Month</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">1,248 kg</div>
+                        <div class="stat-label">Food Donations</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">28</div>
+                        <div class="stat-label">Regular Donors</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">94%</div>
+                        <div class="stat-label">Inventory Utilization</div>
+                    </div>
+                </div>
+
+                <div class="donation-tracker">
+                    <h3 style="margin: 20px 0 15px 0; color: #d35400;">Monthly Donation Goals</h3>
+                    <div class="donation-item">
+                        <div class="donation-type">Financial Target</div>
+                        <div class="donation-bar-container">
+                            <div class="donation-bar">
+                                <div class="donation-fill" style="width: 78%; background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);"></div>
+                            </div>
+                        </div>
+                        <div class="donation-amount">₹42,850/₹55,000</div>
+                    </div>
+                    <div class="donation-item">
+                        <div class="donation-type">Rice & Grains</div>
+                        <div class="donation-bar-container">
+                            <div class="donation-bar">
+                                <div class="donation-fill" style="width: 92%; background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);"></div>
+                            </div>
+                        </div>
+                        <div class="donation-amount">920/1000 kg</div>
+                    </div>
+                    <div class="donation-item">
+                        <div class="donation-type">Vegetables</div>
+                        <div class="donation-bar-container">
+                            <div class="donation-bar">
+                                <div class="donation-fill" style="width: 65%; background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);"></div>
+                            </div>
+                        </div>
+                        <div class="donation-amount">325/500 kg</div>
+                    </div>
+                    <div class="donation-item">
+                        <div class="donation-type">Cooking Oil</div>
+                        <div class="donation-bar-container">
+                            <div class="donation-bar">
+                                <div class="donation-fill" style="width: 42%; background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);"></div>
+                            </div>
+                        </div>
+                        <div class="donation-amount">84/200 L</div>
+                    </div>
+                </div>
+
+                <div class="alert-banner">
+                    <div class="alert-icon">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="alert-content">
+                        <div class="alert-title">Urgent Need: Cooking Oil & Lentils</div>
+                        <div class="alert-message">Current stock will last only 4 days. Please consider donating.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Community Impact Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h2 class="card-title">Community Impact</h2>
+                </div>
+
+                <div class="impact-metrics">
+                    <div class="impact-item">
+                        <div class="impact-value">1.24M</div>
+                        <div class="impact-label">Total Meals Served</div>
+                    </div>
+                    <div class="impact-item">
+                        <div class="impact-value">8,428</div>
+                        <div class="impact-label">Families Helped</div>
+                    </div>
+                    <div class="impact-item">
+                        <div class="impact-value">142</div>
+                        <div class="impact-label">Community Partners</div>
+                    </div>
+                    <div class="impact-item">
+                        <div class="impact-value">28,450</div>
+                        <div class="impact-label">Volunteer Hours</div>
+                    </div>
+                </div>
+
+                <div class="community-board">
+                    <div class="community-title">Messages from Our Community</div>
+                    <div class="community-message">
+                        "This canteen has been a blessing for my family during difficult times. The nutritious meals and kind volunteers give us hope and strength."
+                    </div>
+                    <div class="community-author">- Mrs. Geeta, Regular Guest for 2 years</div>
+
+                    <div class="community-message" style="margin-top: 20px;">
+                        "Volunteering here has changed my perspective on life. The gratitude in people's eyes is more rewarding than anything I've experienced."
+                    </div>
+                    <div class="community-author">- Rohan, Volunteer for 6 months</div>
+                </div>
+
+                <div class="nutrition-grid" style="margin-top: 20px;">
+                    <div class="nutrition-item">
+                        <div class="nutrition-value">98%</div>
+                        <div class="nutrition-label">Guest Satisfaction</div>
+                    </div>
+                    <div class="nutrition-item">
+                        <div class="nutrition-value">42</div>
+                        <div class="nutrition-label">Local Employment Created</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Operations & Safety Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h2 class="card-title">Operations & Safety</h2>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">428</div>
+                        <div class="stat-label">Daily Hygiene Checks</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">100%</div>
+                        <div class="stat-label">Food Safety Compliance</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">0</div>
+                        <div class="stat-label">Safety Incidents This Month</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">24/7</div>
+                        <div class="stat-label">Security Coverage</div>
+                    </div>
+                </div>
+
+                <div class="meal-schedule">
+                    <h3 style="margin: 20px 0 15px 0; color: #d35400;">Kitchen Readiness Status</h3>
+                    <div class="meal-item">
+                        <div class="meal-time-icon" style="background-color: #2ecc71;">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="meal-info">
+                            <div class="meal-name">Food Storage & Handling</div>
+                            <div class="meal-details">
+                                <span>All temperatures within limits</span>
+                                <span>Optimal</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="meal-item">
+                        <div class="meal-time-icon" style="background-color: #f39c12;">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="meal-info">
+                            <div class="meal-name">Kitchen Equipment</div>
+                            <div class="meal-details">
+                                <span>2 stoves need maintenance</span>
+                                <span>Attention Required</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="meal-item">
+                        <div class="meal-time-icon" style="background-color: #2ecc71;">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="meal-info">
+                            <div class="meal-name">Sanitation & Cleaning</div>
+                            <div class="meal-details">
+                                <span>All areas sanitized</span>
+                                <span>Optimal</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert-banner" style="margin-top: 20px; background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); border-color: #10b981;">
+                    <div class="alert-icon" style="color: #065f46;">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div class="alert-content">
+                        <div class="alert-title" style="color: #065f46;">Health Advisory: COVID-19 Protocols</div>
+                        <div class="alert-message" style="color: #065f46;">Masks available at entrance. Social distancing markers in place. Temperature checks ongoing.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Community Hope Canteen Dashboard • Last updated: <span class="update-time" id="update-time"></span> • Real-time tracking active</p>
+            <p class="motto">"No one should sleep hungry. Together, we can make a difference."</p>
+            <p style="margin-top: 8px;">© 2023 Community Hope Initiative • Registered Charity No. 12345-CF • <i class="fas fa-phone-alt"></i> Helpline: 1800-123-4567</p>
+        </div>
+    </div>
+
+    <script>
+        // Set current update time
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('update-time').textContent = timeString;
+        }
+
+        // Initial call
+        updateTime();
+
+        // Update time every second
+        setInterval(updateTime, 1000);
+
+        // Meal countdown timer
+        function updateMealCountdown() {
+            const now = new Date();
+            let targetTime;
+
+            // Set target time for next meal (dinner at 6:30 PM)
+            targetTime = new Date();
+            targetTime.setHours(18, 30, 0, 0); // 6:30 PM
+
+            // If it's already past dinner time, set for next day
+            if (now > targetTime) {
+                targetTime.setDate(targetTime.getDate() + 1);
+            }
+
+            const timeDiff = targetTime - now;
+            const hours = Math.floor(timeDiff / (1000 * 60 * 60));
+            const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+            document.getElementById('meal-countdown').textContent =
+                `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+            // Update meal status based on time
+            const statusText = document.querySelector('.status-text span');
+            const currentHour = now.getHours();
+
+            if (currentHour >= 7 && currentHour < 9) {
+                statusText.textContent = "Serving Now: Breakfast";
+            } else if (currentHour >= 11 && currentHour < 14) {
+                statusText.textContent = "Serving Now: Lunch";
+            } else if (currentHour >= 18 && currentHour < 21) {
+                statusText.textContent = "Serving Now: Dinner";
+            } else {
+                statusText.textContent = "Next Meal: Breakfast";
+            }
+        }
+
+        // Update countdown every second
+        setInterval(updateMealCountdown, 1000);
+        updateMealCountdown(); // Initial call
+
+        // Tab buttons functionality
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+
+                // Add active class to clicked button
+                this.classList.add('active');
+
+                const period = this.getAttribute('data-day');
+                updateCanteenStats(period);
+            });
+        });
+
+        // Function to update statistics based on selected period
+        function updateCanteenStats(period) {
+            let mealsServed, peopleFed, avgWait, activeVolunteers, volunteerHours;
+
+            switch(period) {
+                case 'today':
+                    mealsServed = "427";
+                    peopleFed = "382";
+                    avgWait = "8.5";
+                    activeVolunteers = "24";
+                    volunteerHours = "142";
+                    break;
+                case 'week':
+                    mealsServed = "2,842";
+                    peopleFed = "2,518";
+                    avgWait = "9.2";
+                    activeVolunteers = "38";
+                    volunteerHours = "892";
+                    break;
+                case 'month':
+                    mealsServed = "12,847";
+                    peopleFed = "11,428";
+                    avgWait = "8.8";
+                    activeVolunteers = "48";
+                    volunteerHours = "3,842";
+                    break;
+                case 'year':
+                    mealsServed = "148,572";
+                    peopleFed = "132,847";
+                    avgWait = "9.1";
+                    activeVolunteers = "48";
+                    volunteerHours = "42,158";
+                    break;
+            }
+
+            // Update DOM elements
+            document.getElementById('meals-served').textContent = mealsServed;
+            document.getElementById('people-fed').textContent = peopleFed;
+            document.getElementById('avg-wait').textContent = avgWait;
+            document.getElementById('active-volunteers').textContent = activeVolunteers;
+            document.getElementById('volunteer-hours').textContent = volunteerHours;
+        }
+
+        // Function to simulate live data updates
+        function simulateLiveUpdates() {
+            // Update meals served (increment during meal times)
+            const now = new Date();
+            const currentHour = now.getHours();
+            const mealsElement = document.getElementById('meals-served');
+            let currentMeals = parseInt(mealsElement.textContent.replace(',', ''));
+
+            // Only increment during meal service hours
+            if ((currentHour >= 7 && currentHour < 9) ||   // Breakfast
+                (currentHour >= 11 && currentHour < 14) || // Lunch
+                (currentHour >= 18 && currentHour < 21)) { // Dinner
+
+                // Add between 1-5 meals every update
+                const mealChange = Math.floor(Math.random() * 5) + 1;
+                let newMeals = currentMeals + mealChange;
+                mealsElement.textContent = newMeals.toLocaleString();
+
+                // Also update people fed (slightly less than meals)
+                const peopleElement = document.getElementById('people-fed');
+                let currentPeople = parseInt(peopleElement.textContent.replace(',', ''));
+                const peopleChange = Math.floor(mealChange * 0.9); // 90% of meal increase
+                let newPeople = currentPeople + peopleChange;
+                peopleElement.textContent = newPeople.toLocaleString();
+            }
+
+            // Update active volunteers (small random changes)
+            const volunteersElement = document.getElementById('active-volunteers');
+            let currentVolunteers = parseInt(volunteersElement.textContent);
+
+            // 20% chance to change
+            if (Math.random() > 0.8) {
+                const change = Math.random() > 0.5 ? 1 : -1;
+                let newVolunteers = currentVolunteers + change;
+
+                // Ensure values stay within reasonable bounds (15-35)
+                newVolunteers = Math.max(15, Math.min(35, newVolunteers));
+                volunteersElement.textContent = newVolunteers;
+
+                // Update volunteer hours proportionally
+                const hoursElement = document.getElementById('volunteer-hours');
+                let currentHours = parseInt(hoursElement.textContent.replace(',', ''));
+                const hoursChange = change * 6; // Each volunteer = ~6 hours
+                let newHours = currentHours + hoursChange;
+                hoursElement.textContent = newHours.toLocaleString();
+            }
+
+            // Update wait time (small fluctuations)
+            const waitElement = document.getElementById('avg-wait');
+            let currentWait = parseFloat(waitElement.textContent);
+
+            // 30% chance to change
+            if (Math.random() > 0.7) {
+                const change = (Math.random() * 0.6) - 0.3; // -0.3 to +0.3
+                let newWait = currentWait + change;
+
+                // Ensure values stay within reasonable bounds (5-15 minutes)
+                newWait = Math.max(5, Math.min(15, newWait));
+                waitElement.textContent = newWait.toFixed(1);
+            }
+        }
+
+        // Update statistics every 8 seconds to simulate live data
+        setInterval(simulateLiveUpdates, 8000);
+
+        // Initialize with default values
+        updateCanteenStats('today');
+    </script>
+</body>
+</html>
